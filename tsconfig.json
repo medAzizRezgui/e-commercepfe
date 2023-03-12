@@ -20,6 +20,6 @@
       "@/images/*": ["./public/assets/images/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./index.d.ts"],
+  "exclude": ["node_modules", "tailwind.config.js"]
 }

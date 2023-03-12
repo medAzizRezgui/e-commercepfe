@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import React from 'react';
 
+import Header from '../components/shared/Header/Header';
+import Sidebar from '../components/shared/Sidebar/Sidebar';
+
 export default function Home() {
   return (
     <>
@@ -11,7 +14,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main></main>
+      <main className="flex ">
+        <Sidebar />
+        <Header />
+      </main>
     </>
   );
 }

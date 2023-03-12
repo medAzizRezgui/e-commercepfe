@@ -9,6 +9,9 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    boxShadow: {
+      item: '  rgba(149, 157, 165, 0.2) 0px 8px 24px',
+    },
     fontFamily: {
       lato: ['"Lato"', 'cursive'],
     },
@@ -47,9 +50,9 @@ module.exports = {
     },
     fontWeight: {
       regular: '400',
-      medium: '500',
-      semibold: '600',
-      bold: '700',
+      medium: '700',
+      semibold: '700',
+      bold: '900',
     },
     padding: {
       px: '1px',
@@ -127,12 +130,14 @@ module.exports = {
       },
       dark: {
         500: '#192D45',
+        400: '#898E97',
         100: '#898E97',
       },
       gray: {
         100: '#F8F9FC',
         500: '#E5E8EF',
       },
+      white: '#ffffff',
     },
   },
   plugins: [],
