@@ -15,7 +15,7 @@ const Item = ({ index, setActiveIndex, text, activeIndex, svgPath }: Props) => (
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions,react/jsx-filename-extension
   <li
     className={` relative flex items-center ${
-      (index + 1) % 3 === 0 ? 'mb-40' : ''
+      (index + 1) % 3 === 0 ? 'mb-24' : ''
     } 
   `}
     onClick={() => setActiveIndex(index)}
@@ -27,7 +27,7 @@ const Item = ({ index, setActiveIndex, text, activeIndex, svgPath }: Props) => (
     <div
       className={`flex cursor-pointer gap-[10px] items-center ${
         activeIndex === index ? ' shadow-item rounded-[12px]' : ''
-      } ml-16 p-16 w-full`}
+      } ml-16 p-12 w-full`}
     >
       <svg width={26} height={26} xmlns="http://www.w3.org/2000/svg">
         {svgPath && (
