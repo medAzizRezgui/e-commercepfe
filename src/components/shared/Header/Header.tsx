@@ -15,6 +15,7 @@ const Header = () => (
         {new Date().getDate()}{' '}
         {new Date().toLocaleString('default', { month: 'long' })}
       </h1>
+      {/*    Test */}
     </div>
     <div className="flex items-center gap-[36px]">
       {/*   Coupon */}
