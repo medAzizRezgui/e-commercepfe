@@ -13,7 +13,7 @@ module.exports = {
       item: '  rgba(149, 157, 165, 0.2) 0px 8px 24px',
     },
     fontFamily: {
-      lato: ['"Lato"', 'cursive'],
+      Inter: ['"Inter"', 'cursive'],
     },
     screens: {
       sm: '640px',
@@ -118,7 +118,7 @@ module.exports = {
       yellow: {
         100: '#FFF9EB',
         400: '#FFC95F',
-        500: '#FFBE46',
+        500: '#fed700',
         600: '#FFC95F',
       },
       blue: {
@@ -129,9 +129,9 @@ module.exports = {
         700: '#4330BF',
       },
       dark: {
-        500: '#192D45',
-        400: '#898E97',
-        100: '#898E97',
+        500: '#262626',
+        400: '#4C4C4C',
+        100: '#D4D4D4',
       },
       gray: {
         100: '#F8F9FC',

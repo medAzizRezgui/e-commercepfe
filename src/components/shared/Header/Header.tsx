@@ -1,43 +1,41 @@
-import Image from 'next/image';
 import React from 'react';
+import { BiSearch, BiHeart, BiUser, BiShoppingBag } from 'react-icons/bi';
 
-import calendar from '@/icons/calendar.svg';
-import coupon from '@/icons/coupon.svg';
-import hand from '@/icons/hand.svg';
-import reputation from '@/icons/reputation.svg';
+import { Categories } from '../Categories';
+import Logo from '../Logo';
 
 const Header = () => (
-  <div className="w-[80%] px-32 flex items-center justify-between  h-min  py-24">
-    {/*   Date */}
-    <div className="flex items-center gap-[10px]">
-      <Image src={calendar} alt="icon" width={32} height={32} />
-      <h1 className="font-medium uppercase  font-bold text-blue-500 text-text-xl">
-        {new Date().getDate()}{' '}
-        {new Date().toLocaleString('default', { month: 'long' })}
-      </h1>
-      {/*    Test */}
-    </div>
-    <div className="flex items-center gap-[36px]">
-      {/*   Coupon */}
-      <div className="rounded-[200px] bg-white p-4 pr-24 flex gap-[10px] items-center">
-        <Image src={coupon} alt="icon" width={60} height={60} />
-        <h1 className="font-medium ">Micheal15</h1>
-      </div>
-      {/*   Reputation  */}
-      <div className="rounded-[200px] bg-white p-4 pr-24 flex gap-[10px] items-center">
-        <Image src={reputation} alt="icon" width={60} height={60} />
-        <div>
-          <h1 className="font-medium ">Reputation</h1>
-          <p className="text-blue-500 font-medium">
-            40 <span>points</span>
-          </p>
+  <div className="max-w-[1400px] my-20 justify-between flex items-center w-full rounded-[50px] mx-auto py-8 px-20 bg-dark-500 ">
+    <Logo />
+
+    {/* Input */}
+    <div className="flex items-center w-[50%] justify-between rounded-[50px] bg-dark-400">
+      <input
+        type="text"
+        placeholder="Search for Products"
+        className=" px-32 py-4 bg-dark-400 text-text-md placeholder-dark-100 rounded-l-[50px] outline-0 text-white"
+      />
+      <div className="flex gap-[16px] items-center">
+        <Categories />
+
+        <div className="rounded-r-[50px] py-8 flex cursor-pointer items-center justify-center  h-full bg-yellow-500 w-[56px]">
+          <BiSearch className="text-white w-[28px] h-[28px]" />
         </div>
       </div>
     </div>
-    {/*   Welcome */}
-    <div className="flex items-center gap-[10px]">
-      <h1 className="font-bold text-display-xs">Welcome, back [name]!</h1>
-      <Image src={hand} alt="icon" />
+    {/* CTA */}
+    <div className="flex items-center gap-[24px]">
+      <BiHeart className="text-white w-[28px] h-[28px]" />
+      <BiUser className="text-white w-[28px] h-[28px]" />
+      <div className="flex items-center gap-[4px] ">
+        <div className="relative">
+          <span className="absolute text-black bottom-[-7px] left-[12px] text-text-xs font-semibold rounded-full bg-yellow-500 w-[18px] flex items-center justify-center h-[18px]">
+            0
+          </span>
+          <BiShoppingBag className="text-white w-[28px] h-[28px]" />
+        </div>
+        <h1 className="text-white font-medium text-text-md">$0.00</h1>
+      </div>
     </div>
   </div>
 );
