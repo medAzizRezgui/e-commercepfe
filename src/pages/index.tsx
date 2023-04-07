@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import React from 'react';
 
-import Header from '../components/shared/Header/Header';
+import { Hero } from '../components/pages/Home/Hero';
+import { HeroHeader } from '../components/pages/Home/HeroHeader';
+import { Header } from '../components/shared/Header';
 
 export default function Home() {
   return (
@@ -13,8 +15,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex ">
+      <main>
         <Header />
+        <HeroHeader />
+        <Hero />
       </main>
     </>
   );

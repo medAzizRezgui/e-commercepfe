@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
@@ -14,6 +14,7 @@ module.exports = {
     },
     fontFamily: {
       Inter: ['"Inter"', 'cursive'],
+      Roboto: ['"Roboto"', 'cursive'],
     },
     screens: {
       sm: '640px',
@@ -129,6 +130,7 @@ module.exports = {
         700: '#4330BF',
       },
       dark: {
+        300: '#333e48',
         500: '#262626',
         400: '#4C4C4C',
         100: '#D4D4D4',

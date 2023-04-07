@@ -1,0 +1,1 @@
+export { SwiperItem } from './SwiperItem';

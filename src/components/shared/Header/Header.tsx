@@ -1,10 +1,11 @@
 import React from 'react';
 import { BiSearch, BiHeart, BiUser, BiShoppingBag } from 'react-icons/bi';
 
-import { Categories } from '../Categories';
 import Logo from '../Logo';
 
-const Header = () => (
+import { Categories } from './Categories';
+
+export const Header = () => (
   <div className="max-w-[1400px] my-20 justify-between flex items-center w-full rounded-[50px] mx-auto py-8 px-20 bg-dark-500 ">
     <Logo />
 
@@ -39,5 +40,3 @@ const Header = () => (
     </div>
   </div>
 );
-
-export default Header;
