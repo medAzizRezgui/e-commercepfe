@@ -125,7 +125,7 @@ module.exports = {
       blue: {
         100: '#EBF1FF',
         400: '#6090FF',
-        500: '#477EFF',
+        500: '#0062bd',
         600: '#3B4ADF',
         700: '#4330BF',
       },
@@ -137,6 +137,7 @@ module.exports = {
       },
       gray: {
         100: '#F8F9FC',
+        400: '#768b9e',
         500: '#E5E8EF',
       },
       white: '#ffffff',

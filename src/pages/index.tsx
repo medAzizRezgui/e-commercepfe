@@ -4,6 +4,7 @@ import React from 'react';
 import { Hero } from '../components/pages/Home/Hero';
 import { HeroHeader } from '../components/pages/Home/HeroHeader';
 import { Header } from '../components/shared/Header';
+import { ProductCard } from '../components/shared/ProductCard';
 
 export default function Home() {
   return (
@@ -19,6 +20,18 @@ export default function Home() {
         <Header />
         <HeroHeader />
         <Hero />
+        <div className="w-full max-w-[1400px] gap-0 mx-auto grid grid-cols-5 grid-rows-2">
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </div>
       </main>
     </>
   );
