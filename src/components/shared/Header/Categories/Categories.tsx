@@ -2,13 +2,19 @@ import React from 'react';
 import Select from 'react-select';
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'teleTab', label: 'Téléphone & Tablette' },
+  { value: 'cuisElec', label: 'Cuisine & Électroménager' },
+  { value: 'santBeau', label: 'Santé & Beauté' },
+  { value: 'electro', label: 'Électroniques' },
+  { value: 'mode', label: 'Mode' },
+  { value: 'maisBur', label: 'Maison & Bureau' },
+  { value: 'info', label: 'Informatique' },
+  { value: 'jeux', label: 'Jeux videos & Consoles' },
 ];
 
 export const Categories = () => (
   <Select
+    placeholder="Categories..."
     styles={{
       control: (base) => ({
         ...base,
@@ -35,6 +41,7 @@ export const Categories = () => (
         background: '#4C4C4C',
         color: '#D4D4D4',
         outline: 'none',
+        padding: '4px',
       }),
       placeholder: (base) => ({
         ...base,
