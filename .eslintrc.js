@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
+    'no-unused-vars': 'warn',
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -40,7 +41,7 @@ module.exports = {
     'no-shadow': 'off',
     endOfLine: 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',
     'import/order': [
       'warn',
