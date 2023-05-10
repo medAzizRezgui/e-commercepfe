@@ -16,8 +16,10 @@ export const SwiperItem = () => (
       <p className="font-medium font-Roboto uppercase text-text-md">
         sous smartwatches favorable
       </p>
-      <p className="font-[300] font-Roboto uppercase text-text-lg">From</p>
-      <h1 className="font-Roboto font-bold text-display-xl ">$799.99</h1>
+      <p className="font-[300] font-Roboto uppercase text-text-sm">From</p>
+      <h1 className="font-Roboto font-medium pb-24 text-display-lg ">
+        $799.99
+      </h1>
       <button
         type="button"
         onClick={() => {}}

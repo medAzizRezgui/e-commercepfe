@@ -1,0 +1,1 @@
+export { ProductInputs } from './ProductInputs';

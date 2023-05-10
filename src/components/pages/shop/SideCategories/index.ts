@@ -1,0 +1,1 @@
+export { SideCategories } from './SideCategories';

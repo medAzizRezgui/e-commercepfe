@@ -1,0 +1,1 @@
+export { ShopHeader } from './ShopHeader';

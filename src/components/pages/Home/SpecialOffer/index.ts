@@ -1,0 +1,1 @@
+export { SpecialOffer } from './SpecialOffer';

@@ -10,7 +10,9 @@ module.exports = {
   ],
   theme: {
     boxShadow: {
-      item: '  rgba(149, 157, 165, 0.2) 0px 8px 24px',
+      item: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+      productCardShadow: 'rgba(0, 0, 0, 0.10) 0px 5px 15px',
+      productCardShadowTop: 'rgba(0, 0, 0, 0.10)  0px 10px 10px 0px',
     },
     fontFamily: {
       Inter: ['"Inter"', 'cursive'],
@@ -23,7 +25,6 @@ module.exports = {
       xl: '1280px',
       '2xl': '1536px',
     },
-
     fontSize: {
       'display-xs': ['1.5rem', { lineHeight: '2rem' }],
       'display-sm': ['1.875rem', { lineHeight: '2.375rem' }],
@@ -51,7 +52,7 @@ module.exports = {
     },
     fontWeight: {
       regular: '400',
-      medium: '700',
+      medium: '500',
       semibold: '700',
       bold: '900',
     },
@@ -105,7 +106,7 @@ module.exports = {
     colors: {
       green: {
         100: '#E6F9F4',
-        400: '#26C39E',
+        400: '#198754',
         500: '#01B58B',
         600: '#00A19E',
         700: '#00718D',
@@ -138,9 +139,24 @@ module.exports = {
       gray: {
         100: '#F8F9FC',
         400: '#768b9e',
+        300: '#F4F4F4',
         500: '#E5E8EF',
       },
       white: '#ffffff',
+    },
+    keyframes: {
+      overlayShow: {
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+      },
+      contentShow: {
+        from: { opacity: 0, transform: 'translate(-50%, -48%) scale(0.96)' },
+        to: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+      },
+    },
+    animation: {
+      overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+      contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
     },
   },
   plugins: [],
