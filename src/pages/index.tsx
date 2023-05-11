@@ -30,16 +30,9 @@ const Home = ({ data }: { data: Product[] }) => (
       </div>
       <div className="w-full bg-gray-300 py-40">
         <div className="max-w-[1400px] [&>*:nth-child(5n)]:border-r-0  mx-auto grid grid-cols-5 grid-rows-2">
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
-          <ProductCard data={data} />
+          {data.map((prod) => (
+            <ProductCard data={prod} />
+          ))}
         </div>
       </div>
       <BestSellers />

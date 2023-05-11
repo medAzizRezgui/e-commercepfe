@@ -38,13 +38,9 @@ const Shop = ({ data }: { data: Product[] }) => (
         <div className="w-[80%] mx-40">
           <ShopHeader />
           <div className="grid grid-cols-4 gap-[0px]">
-            <ProductCard data={data} />
-            <ProductCard data={data} />
-            <ProductCard data={data} />
-            <ProductCard data={data} />
-            <ProductCard data={data} />
-            <ProductCard data={data} />
-            <ProductCard data={data} />
+            {data.map((prod) => (
+              <ProductCard data={prod} />
+            ))}
           </div>
         </div>
       </div>

@@ -20,36 +20,23 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
       </Tabs.List>
       <Tabs.Content value="tab1">
         <div className="grid grid-cols-4">
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
+          {prods.map((prod) => (
+            <ProductCard data={prod} />
+          ))}
         </div>
       </Tabs.Content>
       <Tabs.Content value="tab2">
         <div className="grid grid-cols-4">
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
+          {prods.map((prod) => (
+            <ProductCard data={prod} />
+          ))}
         </div>
       </Tabs.Content>
       <Tabs.Content value="tab3">
         <div className="grid grid-cols-4">
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-          <ProductCard data={prods} />
-
-          <ProductCard data={prods} />
+          {prods.map((prod) => (
+            <ProductCard data={prod} />
+          ))}
         </div>
       </Tabs.Content>
     </Tabs.Root>

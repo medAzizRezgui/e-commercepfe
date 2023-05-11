@@ -6,33 +6,33 @@ import { BiCartAdd, BiHeart } from 'react-icons/bi';
 import { Product } from '../../../types/Product';
 
 type Props = {
-  data: Product[];
+  data: Product;
 };
 export const ProductCard = ({ data }: Props) => (
   <Link
     href={{
       pathname: '/product',
       // eslint-disable-next-line no-underscore-dangle
-      query: { name: data[1]?.name, id: data[1]?._id },
+      query: { name: data?.name, id: data?._id },
     }}
   >
     <div className="pt-20 pb-40 px-24 group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0 cursor-pointer w-full relative ">
       <p className="text-text-xs text-gray-400 ">
-        {data && data[0].sousCategorie}
+        {data && data.sousCategorie}
       </p>
       <h1 className="font-semibold text-blue-500 text-text-sm ">
-        {data[1]?.name}
+        {data?.name}
       </h1>
 
       <Image
-        src={data[1]?.files[0]}
+        src={data?.files[0]}
         alt="product"
         width={200}
         height={200}
         className="mx-auto"
       />
       <div className="flex items-center  justify-between">
-        <h1 className="font-[500] text-text-lg">${data[1]?.price}</h1>
+        <h1 className="font-[500] text-text-lg">${data?.price}</h1>
         <div className="w-[35px] h-[35px] cursor-pointer rounded-full flex items-center justify-center bg-gray-500 group-hover:bg-yellow-500">
           <BiCartAdd className="fill-white w-[20px] h-[20px]" />
         </div>
