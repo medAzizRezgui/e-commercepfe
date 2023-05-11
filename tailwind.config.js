@@ -145,6 +145,20 @@ module.exports = {
       white: '#ffffff',
     },
     keyframes: {
+      slideLeft: {
+        '0%': {
+          transform: 'translateX(100%)',
+        },
+        '10%': {
+          transform: 'translateX(0)',
+        },
+        '99%': {
+          opacity: 1,
+        },
+        '100%': {
+          opacity: 0,
+        },
+      },
       overlayShow: {
         from: { opacity: 0 },
         to: { opacity: 1 },
@@ -157,6 +171,7 @@ module.exports = {
     animation: {
       overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+      slideLeft: 'slideLeft 5s linear forwards',
     },
   },
   plugins: [],

@@ -1,26 +1,46 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import axios from 'axios';
 import Head from 'next/head';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BiChevronRight, BiEdit, BiTrash } from 'react-icons/bi';
 
 import { Input } from '../../components/pages/account/Input';
-import Edit from '../../components/pages/account/ManageProd/Edit/Edit';
+import { Product } from '../../components/pages/account/ManageProd/Product';
 import { Menu } from '../../components/pages/account/Menu';
 import { ProductInputs } from '../../components/pages/account/ProductInputs';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
-import { Product } from '../../types/Product';
+import { Product as ProdType } from '../../types/Product';
 
-const Auth = () => {
+const Account = ({
+  prods,
+  categories,
+  sousCategories,
+}: {
+  prods: ProdType[];
+  categories: any;
+  sousCategories: any;
+}) => {
   const [categorieName, setCategorieName] = useState('');
   const [sousCategorieName, setSousCategorieName] = useState('');
   const [activeTab, setActiveTab] = useState(0);
-  const [categories, setCategories] = useState(null);
-  const [sousCategories, setSousCategories] = useState(null);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [user, setUser] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    const getUser = () => {
+      const res = window.localStorage.getItem('user');
+      if (res) {
+        setUser(JSON.parse(res));
+      }
+      if (!res) {
+        router.push('/auth');
+      }
+    };
+    getUser();
+  }, []);
 
+  if (!user) return;
   const handleAddCategories = async () => {
     await axios
       .post('http://localhost:5000/categorie/add', {
@@ -32,46 +52,6 @@ const Auth = () => {
           categorie: categorieName,
         })
       );
-  };
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:5000/categorie/getall'
-      ); // replace with your API endpoint
-
-      setCategories(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchSouSCategories = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/sousCat/getall'); // replace with your API endpoint
-
-      setSousCategories(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/product/getall'); // replace with your API endpoint
-
-      setProducts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-    fetchSouSCategories();
-  }, []);
-
-  const deleteProd = async (id: string) => {
-    await axios
-      .delete(`http://localhost:5000/product/delete/${id}`)
-      .then(() => {});
   };
 
   return (
@@ -122,39 +102,8 @@ const Auth = () => {
                   </div>
                 </Tabs.Content>
                 <Tabs.Content value="tab2">
-                  {products?.map((item) => (
-                    <div className="flex gap-[10px] py-8 border-b-[1px] border-gray-500 items-center">
-                      <Image
-                        src={item.files[0]}
-                        alt=""
-                        width={75}
-                        height={75}
-                      />
-                      <div>
-                        <h1 className="text-blue-500 text-text-md font-medium">
-                          {item.name}
-                        </h1>
-                        <p className="text-text-sm text-gray-400">
-                          {item.categorie} - {item.sousCategorie}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-[10px] ml-auto">
-                        <BiTrash
-                          className="w-[24px] h-[24px] fill-red-500"
-                          // eslint-disable-next-line no-underscore-dangle
-                          onClick={() => deleteProd(item._id)}
-                        />
-                        <Edit
-                          price={item.price}
-                          stock={item.countInStock}
-                          name={item.name}
-                          // eslint-disable-next-line no-underscore-dangle
-                          id={item._id}
-                          desc={item.description}
-                        />
-                      </div>
-                    </div>
+                  {prods?.map((item) => (
+                    <Product item={item} />
                   ))}
                 </Tabs.Content>
               </Tabs.Root>
@@ -244,4 +193,31 @@ const Auth = () => {
     </>
   );
 };
-export default Auth;
+Account.getInitialProps = async () => {
+  const ProdsRes = await axios
+    .get('http://localhost:5000/Product/getall')
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const prods = await ProdsRes?.data;
+
+  const CatRes = await axios
+    .get('http://localhost:5000/categorie/getall')
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const categories = await CatRes?.data;
+
+  const SousCatRes = await axios
+    .get('http://localhost:5000/categorie/getall')
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const sousCategories = await SousCatRes?.data;
+
+  return { prods, categories, sousCategories };
+};
+export default Account;
