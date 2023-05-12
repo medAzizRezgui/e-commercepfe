@@ -12,7 +12,15 @@ import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
 
 const Shop = ({ data }: { data: Product[] }) => {
-  const [sort, setSort] = useState('low');
+  const [sort, setSort] = useState('high');
+
+  const [price, setPrice] = useState([
+    data.reduce((min, item) => (item.price < min.price ? item : min)).price,
+    data.reduce((max, item) => (item.price > max.price ? item : max)).price,
+  ]);
+  const filtredItems = data.filter(
+    (item) => item.price >= price[0] && item.price <= price[1]
+  );
   return (
     <>
       <Head>
@@ -35,13 +43,13 @@ const Shop = ({ data }: { data: Product[] }) => {
           {/* Filter */}
           <div className="w-[20%]">
             <SideCategories />
-            <Filter />
+            <Filter data={data} setPrice={setPrice} price={price} />
           </div>
           <div className="w-[80%] mx-40">
             <ShopHeader setSort={setSort} />
 
             <div className="grid grid-cols-4 gap-[0px]">
-              {data
+              {filtredItems
                 .sort((a, b) =>
                   sort === 'low' ? a.price - b.price : b.price - a.price
                 )

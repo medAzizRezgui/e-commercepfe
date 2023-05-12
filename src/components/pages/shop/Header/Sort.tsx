@@ -20,6 +20,7 @@ export const Sort = ({
     // @ts-ignore
     onChange={(e) => setSort(e?.value)}
     placeholder="Sort by ..."
+    defaultValue={options[0]}
     styles={{
       control: (base) => ({
         ...base,
