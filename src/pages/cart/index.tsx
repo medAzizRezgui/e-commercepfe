@@ -1,16 +1,38 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { BiX } from 'react-icons/bi';
 
-import Prod from '@/images/Product.png';
-
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
-import { useCart } from '../../context/Cart/CartContext';
+import { CartItem, useCart } from '../../context/Cart/CartContext';
 
 const Cart = () => {
-  const { cartItems } = useCart();
+  const { cartItems, addItem, removeItem } = useCart();
+
+  const updateCart = (
+    QT: number,
+    itemQt: number,
+    id: string,
+    item: CartItem
+  ) => {
+    if (itemQt > QT) {
+      removeItem(id, 1);
+    }
+    if (itemQt < QT) {
+      addItem(item, 1);
+    }
+  };
+
+  function calculateTotal() {
+    const total = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+
+    return (total + 50).toFixed(2);
+  }
 
   return (
     <>
@@ -28,7 +50,7 @@ const Cart = () => {
         <h1 className="text-display-md text-center py-40">Cart</h1>
         <div className="max-w-[1200px] w-full mx-auto">
           {/* Heading */}
-          {cartItems.length > 0 && (
+          {cartItems?.length > 0 && (
             <div className="flex border-b-[1px] pb-4 border-gray-500 justify-between">
               <p>Product</p>
               <div className="flex justify-between w-[25%]">
@@ -44,28 +66,46 @@ const Cart = () => {
               <h1 className="px-24 text-center py-40 text-display-lg bg-yellow-500">
                 Your cart is currently empty.
               </h1>
-              <button
-                type="button"
-                className="bg-gray-500 px-24 py-8 rounded-full my-20 mx-auto block"
-              >
-                Return To Shop
-              </button>
+              <Link href="/shop">
+                <button
+                  type="button"
+                  className="bg-gray-500 px-24 py-8 rounded-full my-20 mx-auto block"
+                >
+                  Return To Shop
+                </button>
+              </Link>
             </div>
           ) : (
             cartItems.map((item) => (
               <div className="flex items-center border-b-[1px] pb-4 border-gray-500 justify-between">
                 <div className="flex items-center gap-[40px]">
-                  <BiX className="w-[25px] h-[25px]" />
-                  <Image src={Prod} alt="" className="max-w-[150px]" />
+                  <BiX
+                    className="w-[25px] h-[25px] cursor-pointer"
+                    onClick={() => removeItem(item.id, 999)}
+                  />
+                  <Image
+                    src={item.image}
+                    width={150}
+                    height={150}
+                    alt=""
+                    className="max-w-[150px]"
+                  />
                   <h1>{item.name}</h1>
                 </div>
                 <div className="flex items-center justify-between  w-[25%]">
                   <p>${item.price}</p>
                   <input
-                    min={1}
+                    min={0}
                     type="number"
-                    value={1}
-                    onChange={() => {}}
+                    defaultValue={item.quantity}
+                    onChange={(e) =>
+                      updateCart(
+                        parseInt(e.currentTarget.value, 10),
+                        item.quantity,
+                        item.id,
+                        item
+                      )
+                    }
                     className="block border-[1px] border-gray-400 rounded-[12px] py-4 px-8 w-[50px] "
                   />
                   <p>${item.price * item.quantity}</p>
@@ -76,20 +116,36 @@ const Cart = () => {
 
           {/*  Button */}
           {cartItems.length > 0 && (
-            <>
-              <button
-                type="button"
-                className="bg-gray-500 px-24 py-8 rounded-full my-20 ml-auto block"
-              >
-                Update Cart
-              </button>
+            <div className="w-full flex flex-col items-end justify-end">
               <button
                 type="button"
                 className="bg-yellow-500 px-24 py-8 font-semibold rounded-full my-20 ml-auto block"
               >
                 Proceed to Checkout
               </button>
-            </>
+              {/* Cart Total */}
+              <div>
+                <h1 className="text-text-xl my-20 font-medium border-b-[2px] border-yellow-500">
+                  Cart Total
+                </h1>
+                <div className="flex gap-[250px] items-center border-b-[1px] border-gray-500 py-8 justify-between">
+                  <p className="text-text-sm font-semibold">Subtotal</p>
+                  <p className="text-text-sm text-gray-400">
+                    ${calculateTotal()}
+                  </p>
+                </div>
+                <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
+                  <p className="text-text-sm font-semibold">Shipping</p>
+                  <p className="text-text-sm text-gray-400">$50</p>
+                </div>
+                <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
+                  <p className="text-text-sm font-semibold">Total</p>
+                  <p className="text-text-sm font-semibold">
+                    ${calculateTotal()}
+                  </p>
+                </div>
+              </div>
+            </div>
           )}
         </div>
         {/* Route */}

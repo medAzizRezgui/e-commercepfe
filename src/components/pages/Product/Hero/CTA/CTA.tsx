@@ -36,6 +36,7 @@ export const CTA = ({ prod }: Props) => {
       <h1 className="font-[500] text-display-sm">${prod?.price}</h1>
       <input
         min={1}
+        max={prod?.countInStock}
         type="number"
         value={quantity}
         onChange={(e) => setQuantity(parseInt(e.currentTarget.value, 10))}

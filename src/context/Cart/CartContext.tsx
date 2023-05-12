@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 export type CartItem = {
   id: string;
@@ -28,7 +34,31 @@ type CartProviderProps = {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
 
+    const getCartFromLS = async () => {
+      setLoading(true);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const cart = await JSON.parse(window.localStorage.getItem('cart'));
+      setCartItems(cart);
+      if (!cart) {
+        setCartItems([]);
+      }
+      setLoading(false);
+    };
+    getCartFromLS();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <h1>Loading</h1>
+      </div>
+    );
   const addItem = (item: CartItem, quantity: number) => {
     const existingItem = cartItems.find((i) => i.id === item.id);
 
@@ -41,12 +71,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         i.id === item.id ? updatedItem : i
       );
       setCartItems(updatedItems);
+      window.localStorage.setItem('cart', JSON.stringify(updatedItems));
     } else {
       const newItem = {
         ...item,
         quantity,
       };
       setCartItems([...cartItems, newItem]);
+      window.localStorage.setItem(
+        'cart',
+        JSON.stringify([...cartItems, newItem])
+      );
     }
   };
 
@@ -63,9 +98,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           i.id === itemId ? updatedItem : i
         );
         setCartItems(updatedItems);
+        window.localStorage.setItem('cart', JSON.stringify(updatedItems));
       } else {
         const updatedItems = cartItems.filter((i) => i.id !== itemId);
         setCartItems(updatedItems);
+        window.localStorage.setItem('cart', JSON.stringify(updatedItems));
       }
     }
   };
