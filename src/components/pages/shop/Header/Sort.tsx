@@ -2,13 +2,23 @@ import React from 'react';
 import Select from 'react-select';
 
 const options = [
-  { value: 'pricehighlow', label: 'Sort By price : high to low' },
-  { value: 'pricelowhigh', label: 'Sort By price : low to high' },
-  { value: 'latest', label: 'Sort by latest' },
+  { value: 'high', label: 'Sort By price : high to low' },
+  { value: 'low', label: 'Sort By price : low to high' },
 ];
+// low to high
+// data.sort((a, b) => a.price - b.price);
 
-export const Sort = () => (
+// high to low
+// data.sort((a, b) => b.price - a.price);
+export const Sort = ({
+  setSort,
+}: {
+  setSort: React.Dispatch<React.SetStateAction<string>>;
+}) => (
   <Select
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    onChange={(e) => setSort(e?.value)}
     placeholder="Sort by ..."
     styles={{
       control: (base) => ({
