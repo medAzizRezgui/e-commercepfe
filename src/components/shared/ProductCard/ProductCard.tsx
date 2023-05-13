@@ -18,7 +18,7 @@ export const ProductCard = ({ data }: Props) => (
   >
     <div className="pt-20 pb-40 px-24 group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0 cursor-pointer w-full relative ">
       <p className="text-text-xs text-gray-400 ">
-        {data && data.sousCategorie}
+        {data && data.sousCategorie?.name}
       </p>
       <h1 className="font-semibold text-blue-500 text-text-sm ">
         {data?.name}

@@ -9,7 +9,7 @@ type Props = {
 };
 export const Details = ({ prod }: Props) => (
   <div className="flex flex-col gap-[10px] max-w-[450px] ">
-    <p className="text-text-xs text-gray-400">{prod?.sousCategorie}</p>
+    <p className="text-text-xs text-gray-400">{prod?.sousCategorie?.name}</p>
     <h1 className="font-[400] text-display-sm">{prod?.name}</h1>
     {/*  Rating */}
     <div className="flex items-center gap-[8px]">

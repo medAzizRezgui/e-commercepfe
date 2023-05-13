@@ -24,6 +24,8 @@ export const SousCategoriesSelect = ({
   const handleSousCategorieChange = (option: any) => {
     setSousCategorie(option);
   };
+
+  console.log('cat', categorie);
   const fetchSousCategories = async () => {
     try {
       const response = await axios.get('http://localhost:5000/sousCat/getall');
@@ -33,9 +35,10 @@ export const SousCategoriesSelect = ({
 
       setSousCategories(
         res
-          .filter((item: any) => item.categorie === categorie.value)
+          .filter((item: any) => item.categorie.name === categorie.label)
           .map((option: any) => ({
-            value: option.name,
+            // eslint-disable-next-line no-underscore-dangle
+            value: option._id,
             label: option.name,
           }))
       );

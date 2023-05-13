@@ -22,7 +22,7 @@ export const Product = ({ item }: Props) => {
       <div>
         <h1 className="text-blue-500 text-text-md font-medium">{item.name}</h1>
         <p className="text-text-sm text-gray-400">
-          {item.categorie} - {item.sousCategorie}
+          {item?.categorie?.name} - {item?.sousCategorie?.name}
         </p>
       </div>
 
