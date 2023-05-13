@@ -11,12 +11,14 @@ type Props = {
   >;
   categorie: { value: string; label: string };
   categories: { value: string; label: string }[];
+  refetch?: boolean;
 };
 export const CategoriesSelect = ({
   setCategories,
   categorie,
   setCategorie,
   categories,
+  refetch,
 }: Props) => {
   const defaultValue = { value: '', label: 'Empty' };
   const handleCategoriesChange = (option: any) => {
@@ -29,7 +31,7 @@ export const CategoriesSelect = ({
         'http://localhost:5000/categorie/getall'
       ); // replace with your API endpoint
       const transformedOptions = response.data.map((option: any) => ({
-        value: option.name,
+        value: option._id,
         label: option.name,
       }));
       setCategories(transformedOptions);
@@ -39,7 +41,7 @@ export const CategoriesSelect = ({
   };
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [refetch]);
   return (
     <div className="flex flex-col gap-[10px] py-4">
       <p className="font-medium">Categorie</p>

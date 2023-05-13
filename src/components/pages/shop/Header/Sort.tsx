@@ -5,11 +5,7 @@ const options = [
   { value: 'high', label: 'Sort By price : high to low' },
   { value: 'low', label: 'Sort By price : low to high' },
 ];
-// low to high
-// data.sort((a, b) => a.price - b.price);
 
-// high to low
-// data.sort((a, b) => b.price - a.price);
 export const Sort = ({
   setSort,
 }: {

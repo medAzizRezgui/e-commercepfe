@@ -9,6 +9,7 @@ import { Input } from '../../components/pages/account/Input';
 import { Product } from '../../components/pages/account/ManageProd/Product';
 import { Menu } from '../../components/pages/account/Menu';
 import { ProductInputs } from '../../components/pages/account/ProductInputs';
+import { CategoriesSelect } from '../../components/pages/account/ProductInputs/CategoriesSelect';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Product as ProdType } from '../../types/Product';
@@ -27,6 +28,13 @@ const Account = ({
   const [activeTab, setActiveTab] = useState(0);
   const [user, setUser] = useState();
   const router = useRouter();
+  const [refetch, setRefetch] = useState(false);
+  const [selectCategories, setSelectCategories] = useState([
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ]);
+  const [categorie, setCategorie] = useState({ value: '', label: '' });
   useEffect(() => {
     const getUser = () => {
       const res = window.localStorage.getItem('user');
@@ -41,17 +49,37 @@ const Account = ({
   }, []);
 
   if (!user) return;
-  const handleAddCategories = async () => {
+  const handleAddCategorie = async () => {
     await axios
       .post('http://localhost:5000/categorie/add', {
         name: categorieName,
       })
-      .then(() =>
-        axios.post('http://localhost:5000/sousCat/add', {
-          name: sousCategorieName,
-          categorie: categorieName,
-        })
-      );
+      .then(() => setRefetch(!refetch));
+  };
+
+  const handleAddSousCategorie = async () => {
+    await axios.post('http://localhost:5000/sousCat/add', {
+      name: sousCategorieName,
+      categorie: categorie.value,
+    });
+  };
+  const updateCategorie = async (id) => {
+    await axios
+      .patch(`http://localhost:5000/categorie/${id}`, {
+        name: 'New',
+      })
+      .then(() => console.log('done'))
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+  const deleteCategorie = async (id) => {
+    await axios
+      .delete(`http://localhost:5000/categorie/delete/${id}`)
+      .then(() => console.log('done'))
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (
@@ -125,12 +153,28 @@ const Account = ({
                 <Tabs.Content value="tab1">
                   <div className="mt-8">
                     <div className="w-full flex-col w-full">
-                      <Input
-                        label="Categorie"
-                        value={categorieName}
-                        type="text"
-                        setValue={setCategorieName}
-                        placeholder="Categorie Name..."
+                      <div className="">
+                        <Input
+                          label="Categorie"
+                          value={categorieName}
+                          type="text"
+                          setValue={setCategorieName}
+                          placeholder="Categorie Name..."
+                        />
+                        <button
+                          className="bg-green-400 h-max "
+                          type="button"
+                          onClick={() => handleAddCategorie()}
+                        >
+                          Add
+                        </button>
+                      </div>
+                      <CategoriesSelect
+                        categories={selectCategories}
+                        setCategories={setSelectCategories}
+                        setCategorie={setCategorie}
+                        categorie={categorie}
+                        refetch={refetch}
                       />
                       <Input
                         label="Sous Categorie"
@@ -142,7 +186,7 @@ const Account = ({
 
                       <button
                         type="button"
-                        onClick={() => handleAddCategories()}
+                        onClick={() => handleAddSousCategorie()}
                       >
                         Add
                       </button>
@@ -161,8 +205,14 @@ const Account = ({
                         <div className="flex border-b-[1px] border-gray-500 pb-8 items-center w-full justify-between">
                           <h1>{item.name}</h1>
                           <div className="flex items-center justify-end">
-                            <BiEdit className="w-[24px] h-[24px] fill-blue-500" />
-                            <BiTrash className="w-[24px] h-[24px] fill-red-500" />
+                            <BiEdit
+                              className="w-[24px] h-[24px] fill-blue-500"
+                              onClick={() => updateCategorie(item._id)}
+                            />
+                            <BiTrash
+                              className="w-[24px] h-[24px] fill-red-500"
+                              onClick={() => deleteCategorie(item._id)}
+                            />
                           </div>
                         </div>
                       ))}
@@ -175,7 +225,10 @@ const Account = ({
                       {/* @ts-ignore */}
                       {sousCategories.map((item) => (
                         <div className="flex  border-b-[1px] border-gray-500 pb-8 items-center w-full justify-between">
-                          <h1>{item.name}</h1>
+                          <div>
+                            <h1>{item.name}</h1>
+                            <p>{item.categorie.name}</p>
+                          </div>
                           <div className="flex items-center justify-end">
                             <BiEdit className="w-[24px] h-[24px] fill-blue-500" />
                             <BiTrash className="w-[24px] h-[24px] fill-red-500" />
@@ -211,7 +264,7 @@ Account.getInitialProps = async () => {
   const categories = await CatRes?.data;
 
   const SousCatRes = await axios
-    .get('http://localhost:5000/categorie/getall')
+    .get('http://localhost:5000/sousCat/getall')
     .catch((error) => {
       console.error(error);
     });
