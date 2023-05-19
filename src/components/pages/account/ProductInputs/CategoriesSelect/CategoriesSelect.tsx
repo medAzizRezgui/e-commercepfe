@@ -1,36 +1,36 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 type Props = {
-  setCategories: React.Dispatch<
-    React.SetStateAction<{ value: string; label: string }[]>
-  >;
   setCategorie: React.Dispatch<
     React.SetStateAction<{ value: string; label: string }>
   >;
   categorie: { value: string; label: string };
-  categories: { value: string; label: string }[];
   refetch?: boolean;
 };
 export const CategoriesSelect = ({
-  setCategories,
   categorie,
   setCategorie,
-  categories,
   refetch,
 }: Props) => {
   const defaultValue = { value: '', label: 'Empty' };
   const handleCategoriesChange = (option: any) => {
     setCategorie(option);
   };
-
+  const [categories, setCategories] = useState<
+    {
+      value: string;
+      label: string;
+    }[]
+  >([]);
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
         'http://localhost:5000/categorie/getall'
       ); // replace with your API endpoint
       const transformedOptions = response.data.map((option: any) => ({
+        // eslint-disable-next-line no-underscore-dangle
         value: option._id,
         label: option.name,
       }));
@@ -52,4 +52,7 @@ export const CategoriesSelect = ({
       />
     </div>
   );
+};
+CategoriesSelect.defaultProps = {
+  refetch: false,
 };

@@ -24,16 +24,16 @@ export const Details = ({ prod }: Props) => (
     </div>
     {/*  Features */}
     <ul className="list-disc pl-24 text-text-sm text-dark-500">
-      <li className="text-gray-400">4.5 inch HD Touch Screen (1280 x 720)</li>
-      <li className="text-gray-400">4.5 inch HD Touch Screen (1280 x 720)</li>
-      <li className="text-gray-400">4.5 inch HD Touch Screen (1280 x 720)</li>
+      {prod?.features?.split(';').map((item) => (
+        <li className="text-gray-400">{item}</li>
+      ))}
     </ul>
     {/*  desc */}
     <p className="text-gray-400 text-text-sm py-8">{prod?.description}</p>
     {/*  code */}
     <p className="font-[300] text-text-sm">
       <span className="font-medium">SKU: </span>
-      FW511948218
+      {prod.sku}
     </p>
   </div>
 );

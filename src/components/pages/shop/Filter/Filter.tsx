@@ -17,48 +17,6 @@ export const Filter = ({ data, setPrice, price }: Props) => (
       </div>
     </div>
     <div className="pb-8 border-b-2 border-gray-500">
-      <h1 className="font-semibold py-18 text-text-sm">Brands</h1>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Apple <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Apple <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Apple <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-    </div>
-    <div className="pb-8 border-b-2 border-gray-500">
-      <h1 className="font-semibold py-18 text-text-sm">Colors</h1>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Green <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Red <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-      <div className="flex pb-8 items-center gap-[8px]">
-        <input type="checkbox" />
-        <p className="text-text-sm">
-          Yellow <span className="text-text-xs text-gray-400">(4)</span>
-        </p>
-      </div>
-    </div>
-    <div className="pb-8 border-b-2 border-gray-500">
       <h1 className="font-semibold grow py-18 text-text-sm">Price</h1>
       <Slider.Root
         className="SliderRoot"

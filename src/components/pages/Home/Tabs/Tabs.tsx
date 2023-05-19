@@ -19,7 +19,7 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="tab1">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 items-stretch justify-items-stretch ">
           {prods.map((prod) => (
             <ProductCard data={prod} />
           ))}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { random } from 'nanoid';
 import Head from 'next/head';
 import React from 'react';
 
@@ -25,7 +26,9 @@ const Home = ({ data }: { data: Product[] }) => (
       <HeroHeader />
       <Hero />
       <div className="flex mt-40 w-full max-w-[1400px] mx-auto gap-[64px]">
-        <SpecialOffer />
+        <SpecialOffer
+          item={data && data[Math.floor(Math.random() * data.length)]}
+        />
         <TabsComponent prods={data} />
       </div>
       <div className="w-full bg-gray-300 py-40">
@@ -35,7 +38,7 @@ const Home = ({ data }: { data: Product[] }) => (
           ))}
         </div>
       </div>
-      <BestSellers />
+      <BestSellers data={data} />
     </main>
   </>
 );

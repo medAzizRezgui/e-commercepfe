@@ -9,11 +9,7 @@ export const AddCategories = () => {
   const [refetch, setRefetch] = useState(false);
   const [categorieName, setCategorieName] = useState('');
   const [sousCategorieName, setSousCategorieName] = useState('');
-  const [selectCategories, setSelectCategories] = useState([
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-  ]);
+
   const handleAddCategorie = async () => {
     await axios
       .post('http://localhost:5000/categorie/add', {
@@ -48,8 +44,6 @@ export const AddCategories = () => {
           </button>
         </div>
         <CategoriesSelect
-          categories={selectCategories}
-          setCategories={setSelectCategories}
           setCategorie={setCategorie}
           categorie={categorie}
           refetch={refetch}

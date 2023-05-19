@@ -1,5 +1,8 @@
+import { Category } from './Category';
+import { SousCategory } from './SousCategory';
+
 export type Product = {
-  categorie: string;
+  categorie: Category;
   countInStock: never;
   createdAt: string;
   description: string;
@@ -7,8 +10,9 @@ export type Product = {
   name: string;
   price: number;
   rating: number;
-  sousCategorie: string;
+  sousCategorie: SousCategory;
   updatedAt: string;
+  sku: string;
   __v: number;
   _id: string;
 };

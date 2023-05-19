@@ -26,7 +26,7 @@ export const Header = () => {
   }
 
   return (
-    <div className="max-w-[1400px] my-20 justify-between flex items-center w-full rounded-[50px] mx-auto py-8 px-20 bg-dark-500 ">
+    <div className="max-w-[1400px] my-20 relative z-[20] justify-between flex items-center w-full rounded-[50px] mx-auto py-8 px-20 bg-dark-500 ">
       <Link href="/">
         <Logo />
       </Link>

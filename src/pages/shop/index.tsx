@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 
@@ -11,15 +12,27 @@ import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
 
-const Shop = ({ data }: { data: Product[] }) => {
+const Shop = ({ data, transformedOptions }: { data: Product[] }) => {
+  const router = useRouter();
+
+  const pathQuery = router.query;
   const [sort, setSort] = useState('high');
 
   const [price, setPrice] = useState([
     data.reduce((min, item) => (item.price < min.price ? item : min)).price,
     data.reduce((max, item) => (item.price > max.price ? item : max)).price,
   ]);
-  const filtredItems = data.filter(
-    (item) => item.price >= price[0] && item.price <= price[1]
+  const [selectedCategorie, setSelectedCategorie] = useState(
+    pathQuery.category ? pathQuery.category : 'all'
+  );
+  console.log('Q', pathQuery);
+  const filtredItems = data.filter((item) =>
+    item.price >= price[0] &&
+    item.price <= price[1] &&
+    selectedCategorie === 'all'
+      ? true
+      : // eslint-disable-next-line no-underscore-dangle
+        item.categorie._id === selectedCategorie
   );
   return (
     <>
@@ -34,7 +47,7 @@ const Shop = ({ data }: { data: Product[] }) => {
         <Header />
         {/* Categories */}
         <Categories />
-        <div className="max-w-[1400px]  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
+        <div className="max-w-[1400px] mt-112  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
           <h1>Home</h1>
           <BiChevronRight className="w-[20px] h-[20px]" />
           <h1>Shop</h1>
@@ -42,7 +55,10 @@ const Shop = ({ data }: { data: Product[] }) => {
         <div className="w-full flex max-w-[1400px] mx-auto">
           {/* Filter */}
           <div className="w-[20%]">
-            <SideCategories />
+            <SideCategories
+              options={transformedOptions}
+              setSelectedCategorie={setSelectedCategorie}
+            />
             <Filter data={data} setPrice={setPrice} price={price} />
           </div>
           <div className="w-[80%] mx-40">
@@ -73,6 +89,13 @@ Shop.getInitialProps = async () => {
 
   const data = await res?.data;
 
-  return { data };
+  const response = await axios.get('http://localhost:5000/categorie/getall'); // replace with your API endpoint
+  const transformedOptions = response.data.map((option: any) => ({
+    // eslint-disable-next-line no-underscore-dangle
+    value: option._id,
+    label: option.name,
+  }));
+
+  return { data, transformedOptions };
 };
 export default Shop;

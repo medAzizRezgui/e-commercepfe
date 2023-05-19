@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 
 import { Category } from '../../../../types/Category';
 import { SousCategory } from '../../../../types/SousCategory';
+import { DeleteModal } from '../../../shared/DeleteModal';
 
 import { Edit } from './Edit/Edit';
 
@@ -12,6 +13,7 @@ type Props = {
   sousCategories: SousCategory[];
 };
 export const ManageCategories = ({ categories, sousCategories }: Props) => {
+  const [openDelModal, setOpenDelModal] = useState(false);
   const deleteCategorie = async (id: string) => {
     await axios
       .delete(`http://localhost:5000/categorie/delete/${id}`)
@@ -63,9 +65,15 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
               <BiTrash
                 className="w-[24px] h-[24px] fill-red-500"
                 // eslint-disable-next-line no-underscore-dangle
-                onClick={() => deleteSousCategorie(item._id)}
+                onClick={() => setOpenDelModal(true)}
               />
             </div>
+            <DeleteModal
+              open={openDelModal}
+              setOpen={setOpenDelModal}
+              deleteFn={deleteSousCategorie}
+              id={item._id}
+            />
           </div>
         ))}
       </div>

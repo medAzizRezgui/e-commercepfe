@@ -1,21 +1,15 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 type Props = {
-  setSousCategories: React.Dispatch<
-    React.SetStateAction<{ value: string; label: string }[]>
-  >;
   setSousCategorie: React.Dispatch<
     React.SetStateAction<{ value: string; label: string }>
   >;
   categorie: { value: string; label: string };
   sousCategorie: { value: string; label: string };
-  sousCategories: { value: string; label: string }[];
 };
 export const SousCategoriesSelect = ({
-  sousCategories,
-  setSousCategories,
   setSousCategorie,
   sousCategorie,
   categorie,
@@ -25,7 +19,9 @@ export const SousCategoriesSelect = ({
     setSousCategorie(option);
   };
 
-  console.log('cat', categorie);
+  const [sousCategories, setSousCategories] = useState<
+    { value: string; label: string }[]
+  >([]);
   const fetchSousCategories = async () => {
     try {
       const response = await axios.get('http://localhost:5000/sousCat/getall');

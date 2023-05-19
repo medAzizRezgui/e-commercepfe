@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
+import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
 import { CategoriesSelect } from './CategoriesSelect';
@@ -17,13 +18,8 @@ export const ProductInputs = () => {
     // @ts-ignore
     setFiles(selectedFiles);
   };
-
-  const [sousCategories, setSousCategories] = useState([
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-  ]);
-
+  const [features, setFeatures] = useState('');
+  const [SKU, setSKU] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
@@ -33,12 +29,6 @@ export const ProductInputs = () => {
     label: '',
   });
   const [description, setDescription] = useState('');
-
-  const [categories, setCategories] = useState([
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-  ]);
 
   const formData = new FormData();
   formData.append('name', name);
@@ -51,20 +41,35 @@ export const ProductInputs = () => {
   formData.append('categorie', categorie.value);
   formData.append('sousCategorie', sousCategorie.value);
   formData.append('description', description);
-
+  formData.append('sku', SKU);
+  formData.append('features', features);
   files.forEach((value) => {
     formData.append('files', value);
   });
-
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const addProd = async () => {
-    await axios.post('http://localhost:5000/product/add', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    setLoading(true);
+    await axios
+      .post('http://localhost:5000/product/add', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(() => setSuccess(true))
+      .catch(() => setError(true));
+    setLoading(false);
   };
   return (
     <div className="flex justify-between items-center w-full">
+      <Toast
+        success={success}
+        error={error}
+        text="Done"
+        errorMsgs={[{ msg: 'Error, try again' }]}
+      />
+
       <div className="flex  flex-col   w-full ">
         <Input
           placeholder="Name..."
@@ -94,26 +99,34 @@ export const ProductInputs = () => {
           type="text"
           setValue={setDescription}
         />
-        {/* Categories Select */}
-        <CategoriesSelect
-          setCategories={setCategories}
-          setCategorie={setCategorie}
-          categorie={categorie}
-          categories={categories}
+        <Input
+          placeholder="SKU..."
+          label="SKU"
+          value={SKU}
+          type="text"
+          setValue={setSKU}
         />
+        <Input
+          placeholder="text..."
+          label="Points Forts"
+          value={features}
+          type="text"
+          setValue={setFeatures}
+        />
+        {/* Categories Select */}
+        <CategoriesSelect setCategorie={setCategorie} categorie={categorie} />
         <SousCategoriesSelect
           categorie={categorie}
-          setSousCategories={setSousCategories}
           setSousCategorie={setSousCategorie}
           sousCategorie={sousCategorie}
-          sousCategories={sousCategories}
         />
         <button
+          disabled={loading}
           type="button"
           className="bg-gray-500 w-min px-24 py-4 block my-20 rounded-full"
           onClick={() => addProd()}
         >
-          Add
+          {loading ? 'Loading' : 'Add'}
         </button>
       </div>
       <div className=" mx-[20px] flex items-center flex-col justify-center relative w-[50%] border-gray-400 h-[150px] border-2 rounded-[12px] p-14 border-dashed ">

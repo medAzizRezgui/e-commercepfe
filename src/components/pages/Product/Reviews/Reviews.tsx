@@ -5,9 +5,9 @@ import { BiStar } from 'react-icons/bi';
 export const Reviews = () => (
   <div className="w-full max-w-[1400px] my-64  drop-shadow-sm p-64  bg-white mx-auto">
     <div className="flex items-center relative mx-80  pb-8 mb-40 gap-[40px] justify-center">
-      <div className="flex flex-col items-center">
-        <h1 className="text-text-xl font-[300]">Description</h1>
-      </div>
+      {/* <div className="flex flex-col items-center"> */}
+      {/*  <h1 className="text-text-xl font-[300]">Description</h1> */}
+      {/* </div> */}
       <div className="flex flex-col items-center">
         <h1 className="text-text-xl font-[300]">Specifications</h1>
       </div>

@@ -55,7 +55,7 @@ const Account = ({
         <Header />
         {/* Categories */}
         <Categories />
-        <div className="max-w-[1400px]  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
+        <div className="max-w-[1400px] mt-112  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
           {/* Route */}
           <h1>Home</h1>
           <BiChevronRight className="w-[20px] h-[20px]" />

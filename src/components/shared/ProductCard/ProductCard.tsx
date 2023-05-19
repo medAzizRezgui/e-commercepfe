@@ -16,7 +16,7 @@ export const ProductCard = ({ data }: Props) => (
       query: { name: data?.name, id: data?._id },
     }}
   >
-    <div className="pt-20 pb-40 px-24 group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0 cursor-pointer w-full relative ">
+    <div className="pt-20 pb-40 px-24 h-[340px] group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0 cursor-pointer w-full relative ">
       <p className="text-text-xs text-gray-400 ">
         {data && data.sousCategorie?.name}
       </p>
