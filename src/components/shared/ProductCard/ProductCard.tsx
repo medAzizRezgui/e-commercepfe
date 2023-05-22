@@ -60,13 +60,14 @@ export const ProductCard = ({ data }: Props) => {
             {data?.price} DT
           </h1>
           <h1 className="font-[500] text-text-lg text-green-400 ">
-            {data?.price - (data?.price / 100) * data?.discount} DT
+            {(data.price - (data.price / 100) * data.discount).toFixed(2)} DT
           </h1>
         </div>
 
         {!data.discount && (
           <h1 className="font-[500] text-text-lg">{data?.price} DT</h1>
         )}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <div
           onClick={handleAddToCart}
           className="w-[35px] h-[35px] cursor-pointer rounded-full flex items-center justify-center relative z-[99] bg-gray-500 group-hover:bg-yellow-500"
@@ -78,9 +79,9 @@ export const ProductCard = ({ data }: Props) => {
       <div
         className={`${
           data?.discount ? 'absolute' : 'hidden'
-        }   top-0 right-0 bg-green-400 text-white py-4 px-24`}
+        }   top-0 right-0 bg-green-400 text-white py-4 px-8`}
       >
-        Sale
+        Sale {data?.discount}%
       </div>
     </div>
   );
