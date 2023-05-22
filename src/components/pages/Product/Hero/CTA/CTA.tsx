@@ -18,7 +18,9 @@ export const CTA = ({ prod }: Props) => {
         name: prod?.name,
         // eslint-disable-next-line no-underscore-dangle
         id: prod?._id,
-        price: prod?.price,
+        price: prod.discount
+          ? prod.price - (prod.price / 100) * prod.discount
+          : prod?.price,
         quantity: 1,
       },
       quantity
@@ -33,7 +35,19 @@ export const CTA = ({ prod }: Props) => {
         </span>
         {prod?.countInStock} in stock
       </p>
-      <h1 className="font-[500] text-display-sm">${prod?.price}</h1>
+
+      <div className={`${prod.discount ? 'flex' : 'hidden'}    items-baseline`}>
+        <h1 className="font-[500] text-display-sm text-green-400">
+          {prod.price - (prod.price / 100) * prod.discount} DT
+        </h1>
+        <h1 className="font-[400] text-text-xl text-gray-400 line-through">
+          {prod.price} DT
+        </h1>
+      </div>
+
+      {!prod.discount && (
+        <h1 className="font-[500] text-display-sm">{prod.price} DT</h1>
+      )}
       <input
         min={1}
         max={prod?.countInStock}
@@ -52,14 +66,6 @@ export const CTA = ({ prod }: Props) => {
         </span>
         Add to cart
       </button>
-      <div className="w-full bg-white">
-        <div className="mx-auto   w-[100%] flex items-center  justify-between">
-          <div className="flex items-center gap-[4px] w-full cursor-pointer">
-            <BiHeart />
-            <h1>Wishlist</h1>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -14,10 +14,12 @@ export const CategoriesSelect = ({
   setCategorie,
   refetch,
 }: Props) => {
-  const defaultValue = { value: '', label: 'Empty' };
+  const defaultVal = { value: '', label: 'Empty' };
   const handleCategoriesChange = (option: any) => {
     setCategorie(option);
   };
+
+  console.log('HEHE', defaultVal, categorie);
   const [categories, setCategories] = useState<
     {
       value: string;
@@ -46,7 +48,7 @@ export const CategoriesSelect = ({
     <div className="flex flex-col gap-[10px] py-4">
       <p className="font-medium">Categorie</p>
       <Select
-        value={categorie || defaultValue}
+        value={categorie || defaultVal}
         onChange={(e) => handleCategoriesChange(e)}
         options={categories}
       />

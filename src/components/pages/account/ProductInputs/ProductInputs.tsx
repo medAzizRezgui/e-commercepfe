@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import TagsInput from 'react-tagsinput';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
@@ -18,7 +21,7 @@ export const ProductInputs = () => {
     // @ts-ignore
     setFiles(selectedFiles);
   };
-  const [features, setFeatures] = useState('');
+  const [features, setFeatures] = useState([]);
   const [SKU, setSKU] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -29,6 +32,8 @@ export const ProductInputs = () => {
     label: '',
   });
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState([]);
+  const [specs, setSpecs] = useState([]);
 
   const formData = new FormData();
   formData.append('name', name);
@@ -42,13 +47,45 @@ export const ProductInputs = () => {
   formData.append('sousCategorie', sousCategorie.value);
   formData.append('description', description);
   formData.append('sku', SKU);
-  formData.append('features', features);
+  tags.forEach((value) => {
+    formData.append('features', value);
+  });
+
+  formData.append('specifications', JSON.stringify(features));
+
   files.forEach((value) => {
     formData.append('files', value);
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+
+  function parseArray(arr: string[]) {
+    const result = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
+      const [key, value] = item.split(':');
+
+      if (key && value) {
+        const obj = { Spec: key.trim(), Value: value.trim() };
+        result.push(obj);
+      }
+    }
+
+    return result;
+  }
+
+  const handleSpecChange = (val: string[]) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setSpecs(val);
+    const f = parseArray(specs);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setFeatures(f);
+  };
   const addProd = async () => {
     setLoading(true);
     await axios
@@ -58,8 +95,15 @@ export const ProductInputs = () => {
         },
       })
       .then(() => setSuccess(true))
+      .then(() => setRefetch(!refetch))
       .catch(() => setError(true));
     setLoading(false);
+  };
+
+  const inputProps = {
+    placeholder: 'Ajouter...',
+    maxLength: 200,
+    // Add any other props you want to pass down
   };
   return (
     <div className="flex justify-between items-center w-full">
@@ -106,13 +150,23 @@ export const ProductInputs = () => {
           type="text"
           setValue={setSKU}
         />
-        <Input
-          placeholder="text..."
-          label="Points Forts"
-          value={features}
-          type="text"
-          setValue={setFeatures}
-        />
+
+        <div className="flex flex-col gap-[10px] py-4">
+          <p className="font-medium">Points Forts</p>
+          <TagsInput
+            inputProps={inputProps}
+            value={tags}
+            onChange={(e) => setTags(e)}
+          />
+        </div>
+        <div className="flex flex-col gap-[10px] py-4">
+          <p className="font-medium">Specifications</p>
+          <TagsInput
+            inputProps={inputProps}
+            value={specs}
+            onChange={handleSpecChange}
+          />
+        </div>
         {/* Categories Select */}
         <CategoriesSelect setCategorie={setCategorie} categorie={categorie} />
         <SousCategoriesSelect

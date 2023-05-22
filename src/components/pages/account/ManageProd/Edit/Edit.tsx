@@ -1,12 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import axios from 'axios';
-import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
+import TagsInput from 'react-tagsinput';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
 import { Input } from '../../Input';
 import { CategoriesSelect } from '../../ProductInputs/CategoriesSelect';
 import { SousCategoriesSelect } from '../../ProductInputs/SousCategoriesSelect';
+
+import { EditImages } from './EditImages';
 
 type Props = {
   stock: number;
@@ -15,24 +19,63 @@ type Props = {
   price: number;
   desc: string;
   oldFiles: string[];
+  oldCategorie: { value: string; label: string };
+  oldSousCategorie: { value: string; label: string };
+  sku: string;
+  specifications: any;
+  oldDiscount: number;
+  oldFeatures: string[];
 };
-const Edit = ({ stock, name, id, price, desc, oldFiles }: Props) => {
+const Edit = ({
+  stock,
+  name,
+  id,
+  price,
+  desc,
+  oldFiles,
+  oldCategorie,
+  oldSousCategorie,
+  oldFeatures,
+  oldDiscount,
+  sku,
+  specifications,
+}: Props) => {
   const [newStock, setNewStock] = useState(stock);
   const [newName, setNewName] = useState(name);
   const [newPrice, setNewPrice] = useState(price);
   const [newDesc, setNewDesc] = useState(desc);
-  const [categorie, setCategorie] = useState({ value: '', label: '' });
-  const [sousCategorie, setSousCategorie] = useState({
-    value: '',
-    label: '',
-  });
+  const [categorie, setCategorie] = useState(oldCategorie);
+  const [sousCategorie, setSousCategorie] = useState(oldSousCategorie);
+  const [discount, setDiscount] = useState(oldDiscount);
+  const [files, setFiles] = useState([]);
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+  const [SKU, setSKU] = useState(sku);
+  const [oldFiless, setOldFiless] = useState(oldFiles);
+  const [specs, setSpecs] = useState([]);
+  const [features, setFeatures] = useState(oldFeatures);
+
+  useEffect(() => {
+    try {
+      const unparsableString = specifications?.replace(/'/g, '"');
+
+      const jsonArray = JSON.parse(unparsableString);
+      const ar = jsonArray.map(
+        (item: { Spec: string; Value: string }) => `${item.Spec}:${item.Value}`
+      );
+      setSpecs(ar);
+    } catch (error) {
+      console.log('String is not valid JSON:');
+    }
+  }, []);
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
     },
   };
-  const [files, setFiles] = useState([]);
-
+  const inputProps = {
+    placeholder: 'Ajouter...',
+    maxLength: 200,
+  };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -41,108 +84,161 @@ const Edit = ({ stock, name, id, price, desc, oldFiles }: Props) => {
     // @ts-ignore
     setFiles(selectedFiles);
   };
+
+  function parseArray(arr: string[]) {
+    const result = [];
+
+    for (let i = 0; i < arr?.length; i++) {
+      const item = arr[i];
+      const [key, value] = item.split(':');
+
+      if (key && value) {
+        const obj = { Spec: key.trim(), Value: value.trim() };
+        result.push(obj);
+      }
+    }
+
+    return result;
+  }
+
   const formData = new FormData();
   formData.append('name', newName);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  formData.append('price', newPrice);
+  formData.append('price', newPrice.toString());
   formData.append('categorie', categorie.value);
   formData.append('sousCategorie', sousCategorie.value);
   formData.append('description', newDesc);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  formData.append('countInStock', newStock);
-  files.forEach((value) => {
-    formData.append('files', value);
+  formData.append('countInStock', newStock.toString());
+  formData.append('specifications', JSON.stringify(parseArray(specs)));
+  formData.append('discount', discount.toString());
+  formData.append('sku', SKU);
+  features.forEach((value) => {
+    formData.append('features', value);
   });
-  oldFiles.forEach((value) => {
+  const newFiles = oldFiless.concat(files);
+  newFiles.forEach((value) => {
     formData.append('files', value);
   });
 
+  const deleteImg = (imgId: number) => {
+    const n = [...oldFiless.slice(0, imgId), ...oldFiless.slice(imgId + 1)];
+    setOldFiless(n);
+  };
+
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const updatedProd = async () => {
-    axios
+    setLoading(true);
+    await axios
       .patch(`http://localhost:5000/product/update/${id}`, formData, config)
       .then((response) => {
         console.log(response.data);
       })
+      .then(() => setLoading(false))
+      .then(() => setOpenEditModal(false))
+      .then(() => setRefetch(!refetch))
       .catch((error) => {
         console.log(error);
       });
   };
+
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
+    <Dialog.Root open={openEditModal}>
+      <Dialog.Trigger asChild onClick={() => setOpenEditModal(true)}>
         <BiEdit className="w-[24px] h-[24px] fill-blue-500 cursor-pointer" />
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-dark-500 opacity-90 data-[state=open]:animate-overlayShow z-[999] top-[-10px] fixed inset-0" />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] z-[1000] left-[50%] max-h-[85vh] w-[90vw] max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+        <Dialog.Overlay
+          onClick={() => setOpenEditModal(false)}
+          className="bg-dark-500 opacity-90 data-[state=open]:animate-overlayShow z-[999] top-[-10px] fixed inset-0"
+        />
+        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] z-[1000] left-[50%] max-h-[85vh] w-[90vw] max-w-[1200px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
           <Dialog.Title className="text-blue-500 m-0 text-[17px] font-medium">
             Edit Product
           </Dialog.Title>
           <div className="flex  gap-[15px]">
-            <div className="w-[50%]">
-              <Input
-                placeholder="Name..."
-                label="Product Name"
-                value={newName}
-                type="text"
-                setValue={setNewName}
-              />
-              <Input
-                placeholder="Price..."
-                label="Product Price"
-                value={newPrice}
-                type="number"
-                setValue={setNewPrice}
-              />
-              <Input
-                placeholder="Count In Stock..."
-                label="Product Stock"
-                value={newStock}
-                type="number"
-                setValue={setNewStock}
-              />
-              <Input
-                placeholder="Description..."
-                label="Product Description"
-                value={newDesc}
-                type="text"
-                setValue={setNewDesc}
-              />
-              <CategoriesSelect
-                setCategorie={setCategorie}
-                categorie={categorie}
-              />
-              <SousCategoriesSelect
-                setSousCategorie={setSousCategorie}
-                categorie={categorie}
-                sousCategorie={sousCategorie}
-              />
+            <div className="w-[80%] flex  ">
+              <div className="flex flex-col">
+                <Input
+                  placeholder="Name..."
+                  label="Product Name"
+                  value={newName}
+                  type="text"
+                  setValue={setNewName}
+                />
+                <Input
+                  placeholder="Price..."
+                  label="Product Price"
+                  value={newPrice}
+                  type="number"
+                  setValue={setNewPrice}
+                />
+                <Input
+                  placeholder="Count In Stock..."
+                  label="Product Stock"
+                  value={newStock}
+                  type="number"
+                  setValue={setNewStock}
+                />
+                <Input
+                  placeholder="Description..."
+                  label="Product Description"
+                  value={newDesc}
+                  type="text"
+                  setValue={setNewDesc}
+                />
+                <Input
+                  placeholder="20..."
+                  label="Discount (%)"
+                  value={discount}
+                  type="number"
+                  setValue={setDiscount}
+                />
+              </div>
+              <div>
+                <Input
+                  placeholder="..."
+                  label="SKU"
+                  value={SKU}
+                  type="text"
+                  setValue={setSKU}
+                />
+                <div className="flex flex-col gap-[10px] py-4">
+                  <p className="font-medium">Specifications</p>
+                  <TagsInput
+                    className="p-8 border-2 border-gray-500"
+                    inputProps={inputProps}
+                    value={specs}
+                    onChange={(e) => setSpecs(e)}
+                  />
+                </div>
+                <div className="flex flex-col gap-[10px] py-4">
+                  <p className="font-medium">Point Forts</p>
+                  <TagsInput
+                    className="p-8 border-2 border-gray-500"
+                    inputProps={inputProps}
+                    value={features}
+                    onChange={(e) => setFeatures(e)}
+                  />
+                </div>
+                <CategoriesSelect
+                  setCategorie={setCategorie}
+                  categorie={categorie}
+                />
+                <SousCategoriesSelect
+                  setSousCategorie={setSousCategorie}
+                  categorie={categorie}
+                  sousCategorie={sousCategorie}
+                />
+              </div>
             </div>
 
-            <div className="w-[50%]">
-              <div className="grid grid-cols-3 w-full">
-                {oldFiles.map((img) => (
-                  <Image src={img} alt="" width={150} height={150} />
-                ))}
-              </div>
-              <div className=" mx-[20px] flex items-center flex-col justify-center relative  border-gray-400 h-[150px] border-2 rounded-[12px] p-14 border-dashed w-full ">
-                <input
-                  className="absolute cursor-pointer opacity-0  w-full h-full"
-                  type="file"
-                  multiple
-                  onChange={(e) => handleFileChange(e)}
-                />
-                <button
-                  type="button"
-                  className="bg-yellow-500 cursor-pointer text-dark-500 font-medium px-24 py-8 rounded-full"
-                >
-                  Add Images
-                </button>
-                <p>{files.length} images selected</p>
-              </div>
-            </div>
+            {/*  Edit Images */}
+            <EditImages
+              handleFileChange={handleFileChange}
+              oldFiles={oldFiless}
+              deleteImg={deleteImg}
+              files={files}
+            />
           </div>
           <div className="mt-[25px] flex justify-end">
             <Dialog.Close asChild>
@@ -151,11 +247,11 @@ const Edit = ({ stock, name, id, price, desc, oldFiles }: Props) => {
                 onClick={updatedProd}
                 className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
               >
-                Save changes
+                {loading ? 'Loading' : 'Save changes'}
               </button>
             </Dialog.Close>
           </div>
-          <Dialog.Close asChild>
+          <Dialog.Close asChild onClick={() => setOpenEditModal(false)}>
             <button
               type="button"
               className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"

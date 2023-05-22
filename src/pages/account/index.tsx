@@ -1,31 +1,50 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import axios from 'axios';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
+import { useRecoilValue } from 'recoil';
 
+import { refetchProdsState } from '../../atoms/refetchProdsAtom';
 import { AddCategories } from '../../components/pages/account/AddCategories';
 import { ManageCategories } from '../../components/pages/account/ManageCategories';
 import { Product } from '../../components/pages/account/ManageProd/Product';
 import { Menu } from '../../components/pages/account/Menu';
 import { ProductInputs } from '../../components/pages/account/ProductInputs';
+import { UserMenu } from '../../components/pages/account/UserMenu';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
+import { User } from '../../types/User';
 
 const Account = ({
   prods,
   categories,
   sousCategories,
+  orders,
 }: {
   prods: ProdType[];
   categories: any;
   sousCategories: any;
+  orders: Order[];
 }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
   const router = useRouter();
+
+  const [products, setProducts] = useState(prods);
+  const refetch = useRecoilValue(refetchProdsState);
+  useEffect(() => {
+    const getProds = async () => {
+      await axios
+        .get('http://localhost:5000/Product/getall')
+        .then((r) => setProducts(r.data));
+    };
+    getProds();
+  }, [refetch]);
 
   useEffect(() => {
     const getUser = () => {
@@ -61,69 +80,170 @@ const Account = ({
           <BiChevronRight className="w-[20px] h-[20px]" />
           <h1>My account</h1>
         </div>
-        <div className="full my-20 flex flex-col gap-[10px] max-w-[1400px] mx-auto">
-          {/*  Add Prod Form */}
-          <h1 className="text-center text-display-md font-medium">
-            My Account
-          </h1>
-          <div className="flex w-full gap-[40px]">
-            {/* Menu */}
-            <Menu setActiveTab={setActiveTab} activeTab={activeTab} />
-            {activeTab === 0 && (
-              //   Product Inputs
 
-              <Tabs.Root className="TabsRoot" defaultValue="tab1">
-                <Tabs.List
-                  className="TabsList"
-                  aria-label="Manage your account"
-                >
-                  <Tabs.Trigger className="TabsTrigger" value="tab1">
-                    Add
-                  </Tabs.Trigger>
-                  <Tabs.Trigger className="TabsTrigger" value="tab2">
-                    Manage
-                  </Tabs.Trigger>
-                </Tabs.List>
-                <Tabs.Content value="tab1">
-                  <div className="mt-8">
-                    <ProductInputs />
+        {user.isAdmin && (
+          <div className="full my-20 flex flex-col gap-[10px] max-w-[1400px] mx-auto">
+            {/*  Add Prod Form */}
+            <h1 className="text-center text-display-md font-medium">
+              My Account
+            </h1>
+            <div className="flex w-full gap-[40px]">
+              {/* Menu */}
+              <Menu setActiveTab={setActiveTab} activeTab={activeTab} />
+              {activeTab === 0 && (
+                //   Product Inputs
+
+                <Tabs.Root className="TabsRoot" defaultValue="tab1">
+                  <Tabs.List
+                    className="TabsList"
+                    aria-label="Manage your account"
+                  >
+                    <Tabs.Trigger className="TabsTrigger" value="tab1">
+                      Add
+                    </Tabs.Trigger>
+                    <Tabs.Trigger className="TabsTrigger" value="tab2">
+                      Manage
+                    </Tabs.Trigger>
+                  </Tabs.List>
+                  <Tabs.Content value="tab1">
+                    <div className="mt-8">
+                      <ProductInputs />
+                    </div>
+                  </Tabs.Content>
+                  <Tabs.Content value="tab2">
+                    {products?.map((item) => (
+                      <Product item={item} />
+                    ))}
+                  </Tabs.Content>
+                </Tabs.Root>
+              )}
+
+              {activeTab === 1 && (
+                <Tabs.Root className="TabsRoot" defaultValue="tab1">
+                  <Tabs.List
+                    className="TabsList"
+                    aria-label="Manage your account"
+                  >
+                    <Tabs.Trigger className="TabsTrigger" value="tab1">
+                      Add
+                    </Tabs.Trigger>
+                    <Tabs.Trigger className="TabsTrigger" value="tab2">
+                      Manage
+                    </Tabs.Trigger>
+                  </Tabs.List>
+                  <Tabs.Content value="tab1">
+                    <AddCategories />
+                  </Tabs.Content>
+                  <Tabs.Content value="tab2">
+                    {/* Manage Categories */}
+                    <ManageCategories
+                      categories={categories}
+                      sousCategories={sousCategories}
+                    />
+                  </Tabs.Content>
+                </Tabs.Root>
+              )}
+              {activeTab === 2 && (
+                <div className="w-full">
+                  <h1>Orders</h1>
+
+                  <div className="flex items-center border-b-2 border-gray-500 pb-8 justify-between">
+                    <h1 className="w-[150px]">Client</h1>
+                    <h1 className="w-[400px]">Products</h1>
+                    <h1 className="w-[100px]">Payment</h1>
+                    <h1 className="w-[150px]">Delivery</h1>
+                    <h1 className="w-[100px]">Coupon</h1>
+                    <h1 className="w-[100px] text-right">Price</h1>
                   </div>
-                </Tabs.Content>
-                <Tabs.Content value="tab2">
-                  {prods?.map((item) => (
-                    <Product item={item} />
+                  {orders?.map((order) => (
+                    <div className="flex justify-between w-full border-b-2 border-gray-500 pb-8 items-center">
+                      <h1 className="w-[150px]">{order.fullname}</h1>
+                      <div>
+                        {order.Products.map((prod) => (
+                          <div className="flex items-center w-[400px] justify-start">
+                            <Image
+                              loading="eager"
+                              src={prod?.image}
+                              width={50}
+                              height={50}
+                              alt=""
+                            />
+                            <h1>{prod.name}</h1>
+                          </div>
+                        ))}
+                      </div>
+                      <h1 className="w-[100px] bg-red-500 text-white text-center rounded-full py-4">
+                        {order.isPaid ? 'Paid' : 'Not Paid'}
+                      </h1>
+                      <h1 className="w-[150px] bg-red-500 text-white text-center rounded-full py-4">
+                        {order.isDelivered ? 'Delivered' : 'Not Delivered'}
+                      </h1>
+                      <h1 className="w-[100px]">{order.coupon}</h1>
+                      <h1 className="font-semibold w-[100px] text-right ">
+                        {order.totalPrice} DT
+                      </h1>
+                    </div>
                   ))}
-                </Tabs.Content>
-              </Tabs.Root>
-            )}
-
-            {activeTab === 1 && (
-              <Tabs.Root className="TabsRoot" defaultValue="tab1">
-                <Tabs.List
-                  className="TabsList"
-                  aria-label="Manage your account"
-                >
-                  <Tabs.Trigger className="TabsTrigger" value="tab1">
-                    Add
-                  </Tabs.Trigger>
-                  <Tabs.Trigger className="TabsTrigger" value="tab2">
-                    Manage
-                  </Tabs.Trigger>
-                </Tabs.List>
-                <Tabs.Content value="tab1">
-                  <AddCategories />
-                </Tabs.Content>
-                <Tabs.Content value="tab2">
-                  {/* Manage Categories */}
-                  <ManageCategories
-                    categories={categories}
-                    sousCategories={sousCategories}
-                  />
-                </Tabs.Content>
-              </Tabs.Root>
-            )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {!user.isAdmin && (
+          <div className="full my-20 flex flex-col gap-[10px] max-w-[1400px] mx-auto">
+            {/*  Add Prod Form */}
+            <h1 className="text-center text-display-md font-medium">
+              My Account
+            </h1>
+            <div className="flex w-full gap-[40px]">
+              {/* Menu */}
+              <UserMenu setActiveTab={setActiveTab} activeTab={activeTab} />
+
+              {activeTab === 0 && (
+                <div className="w-full">
+                  <div className="flex items-center border-b-2 border-gray-500 pb-8 justify-between">
+                    <h1 className="w-[400px]">Products</h1>
+                    <h1 className="w-[100px]">Payment</h1>
+                    <h1 className="w-[150px]">Delivery</h1>
+                    <h1 className="w-[100px]">Coupon</h1>
+                    <h1 className="w-[100px] text-right">Price</h1>
+                  </div>
+                  {orders
+                    ?.filter((order) => order.email === user.email)
+                    .map((order) => (
+                      <div className="flex justify-between w-full border-b-2 border-gray-500 pb-8 items-center">
+                        <div>
+                          {order.Products.map((prod) => (
+                            <div className="flex items-center w-[400px] justify-start">
+                              <Image
+                                loading="eager"
+                                src={prod?.image}
+                                width={50}
+                                height={50}
+                                alt=""
+                              />
+                              <h1>{prod.name}</h1>
+                            </div>
+                          ))}
+                        </div>
+                        <h1 className="w-[100px] bg-red-500 text-white text-center rounded-full py-4">
+                          {order.isPaid ? 'Paid' : 'Not Paid'}
+                        </h1>
+                        <h1 className="w-[150px] bg-red-500 text-white text-center rounded-full py-4">
+                          {order.isDelivered ? 'Delivered' : 'Not Delivered'}
+                        </h1>
+                        <h1 className="w-[100px]">{order.coupon}</h1>
+                        <h1 className="font-semibold w-[100px] text-right ">
+                          {order.totalPrice} DT
+                        </h1>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
@@ -153,6 +273,14 @@ Account.getInitialProps = async () => {
 
   const sousCategories = await SousCatRes?.data;
 
-  return { prods, categories, sousCategories };
+  const ordersRes = await axios
+    .get('http://localhost:5000/order/getall')
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const orders = await ordersRes?.data;
+
+  return { prods, categories, sousCategories, orders };
 };
 export default Account;

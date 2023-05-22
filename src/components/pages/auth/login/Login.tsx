@@ -72,7 +72,6 @@ export const Login = () => {
       >
         Login
       </button>
-      <p className="text-text-sm">Lost your password?</p>
     </div>
   );
 };

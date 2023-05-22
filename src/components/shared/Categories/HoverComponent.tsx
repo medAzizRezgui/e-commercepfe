@@ -12,6 +12,7 @@ function HoverComponent({ trigger, content }: Props) {
   return (
     <div>
       <div
+        className="cursor-pointer"
         onMouseLeave={() => setIsHovered(false)}
         onMouseEnter={() => setIsHovered(true)}
       >
@@ -29,7 +30,7 @@ function HoverComponent({ trigger, content }: Props) {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="absolute z-[999] top-10 left-0 border-t-4 border-yellow-500 right-0 w-[1400px] h-[500px] mx-auto p-8 bg-white drop-shadow-lg rounded-[4px]"
+          className="absolute z-[999] top-10 left-0 border-t-4 border-yellow-500 right-0 w-[1400px]  mx-auto p-24 bg-white drop-shadow-lg rounded-[4px]"
         >
           {content}
         </div>

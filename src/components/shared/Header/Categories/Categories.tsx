@@ -2,7 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
-export const Categories = () => {
+type Props = {
+  setSearchCategory: React.Dispatch<React.SetStateAction<string>>;
+};
+export const Categories = ({ setSearchCategory }: Props) => {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
@@ -26,6 +29,7 @@ export const Categories = () => {
   }, []);
   return (
     <Select
+      onChange={(e) => setSearchCategory(e?.value)}
       placeholder="Categories..."
       styles={{
         control: (base) => ({

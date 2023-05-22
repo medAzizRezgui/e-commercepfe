@@ -93,7 +93,7 @@ const Cart = () => {
                   <h1>{item.name}</h1>
                 </div>
                 <div className="flex items-center justify-between  w-[25%]">
-                  <p>${item.price}</p>
+                  <p>{item.price} DT</p>
                   <input
                     min={0}
                     type="number"
@@ -108,7 +108,7 @@ const Cart = () => {
                     }
                     className="block border-[1px] border-gray-400 rounded-[12px] py-4 px-8 w-[50px] "
                   />
-                  <p>${item.price * item.quantity}</p>
+                  <p>{item.price * item.quantity} DT</p>
                 </div>
               </div>
             ))
@@ -117,12 +117,27 @@ const Cart = () => {
           {/*  Button */}
           {cartItems.length > 0 && (
             <div className="w-full flex flex-col items-end justify-end">
-              <button
-                type="button"
-                className="bg-yellow-500 px-24 py-8 font-semibold rounded-full my-20 ml-auto block"
-              >
-                Proceed to Checkout
-              </button>
+              <div className="flex justify-between items-center w-full">
+                <div className="relative flex h-[50px] ">
+                  <input
+                    type="text"
+                    maxLength={10}
+                    placeholder="coupon"
+                    className="px-24 h-[50px] py-8 rounded-full border-2"
+                  />
+                  <button className="absolute w-[40%] h-[50px] bg-dark-500 left-[200px] top-0 text-white px-24  rounded-r-full">
+                    Apply Coupon
+                  </button>
+                </div>
+                <Link href="/checkout">
+                  <button
+                    type="button"
+                    className="bg-yellow-500 px-24 py-8 font-semibold rounded-full my-20 ml-auto block"
+                  >
+                    Proceed to Checkout
+                  </button>
+                </Link>
+              </div>
               {/* Cart Total */}
               <div>
                 <h1 className="text-text-xl my-20 font-medium border-b-[2px] border-yellow-500">
@@ -131,17 +146,17 @@ const Cart = () => {
                 <div className="flex gap-[250px] items-center border-b-[1px] border-gray-500 py-8 justify-between">
                   <p className="text-text-sm font-semibold">Subtotal</p>
                   <p className="text-text-sm text-gray-400">
-                    ${calculateTotal()}
+                    {calculateTotal()} DT
                   </p>
                 </div>
                 <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Shipping</p>
-                  <p className="text-text-sm text-gray-400">$50</p>
+                  <p className="text-text-sm text-gray-400">50 DT</p>
                 </div>
                 <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Total</p>
                   <p className="text-text-sm font-semibold">
-                    ${calculateTotal()}
+                    {calculateTotal()} DT
                   </p>
                 </div>
               </div>

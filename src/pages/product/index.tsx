@@ -29,10 +29,10 @@ const Product = ({ data }: { data: ProdType }) => (
       <Route />
       {/*  Hero */}
       <Hero prod={data} />
-      <div className="w-full py-40 bg-gray-500">
+      <div className="w-full py-40 bg-gray-300">
         {/* <Description /> */}
-        <Stats />
-        <Reviews />
+        <Stats prod={data} />
+        <Reviews prod={data} />
       </div>
     </main>
   </>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiHeart, BiSearch, BiShoppingBag, BiUser } from 'react-icons/bi';
 
@@ -11,6 +12,7 @@ import { Categories } from './Categories';
 export const Header = () => {
   const [openCart, setOpenCart] = useState(false);
   const { cartItems } = useCart();
+  const router = useRouter();
 
   function calculateTotal() {
     const total = cartItems.reduce(
@@ -25,6 +27,18 @@ export const Header = () => {
     return cartItems.reduce((acc, item) => acc + item.quantity, 0);
   }
 
+  const [searchWord, setSearchWord] = useState('');
+  const [searchCategory, setSearchCategory] = useState('');
+
+  const handleSearch = () => {
+    router.push({
+      pathname: '/shop',
+      query: {
+        word: searchWord,
+        category: searchCategory,
+      },
+    });
+  };
   return (
     <div className="max-w-[1400px] my-20 relative z-[20] justify-between flex items-center w-full rounded-[50px] mx-auto py-8 px-20 bg-dark-500 ">
       <Link href="/">
@@ -34,14 +48,19 @@ export const Header = () => {
       {/* Input */}
       <div className="flex items-center w-[50%] justify-between rounded-[50px] bg-dark-400">
         <input
+          value={searchWord}
+          onChange={(event) => setSearchWord(event.currentTarget.value)}
           type="text"
           placeholder="Search for Products"
           className=" px-32 py-4 bg-dark-400 text-text-md placeholder-dark-100 rounded-l-[50px] outline-0 text-white"
         />
         <div className="flex gap-[16px] relative z-[999] items-center">
-          <Categories />
+          <Categories setSearchCategory={setSearchCategory} />
 
-          <div className="rounded-r-[50px] py-8 flex cursor-pointer items-center justify-center  h-full bg-yellow-500 w-[56px]">
+          <div
+            onClick={handleSearch}
+            className="rounded-r-[50px] py-8 flex cursor-pointer items-center justify-center  h-full bg-yellow-500 w-[56px]"
+          >
             <BiSearch className="text-white w-[28px] h-[28px]" />
           </div>
         </div>
@@ -51,7 +70,6 @@ export const Header = () => {
         <Link href="/shop">
           <h1 className="font-medium text-white">Shop</h1>
         </Link>
-        <BiHeart className="text-white w-[28px] h-[28px]" />
         <Link href="/account">
           <BiUser className="text-white w-[28px] h-[28px]" />
         </Link>

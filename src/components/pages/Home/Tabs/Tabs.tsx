@@ -27,16 +27,28 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
       </Tabs.Content>
       <Tabs.Content value="tab2">
         <div className="grid grid-cols-4">
-          {prods.map((prod) => (
-            <ProductCard data={prod} />
-          ))}
+          {prods
+            .filter((item) => item.discount > 0)
+            .map((prod) => (
+              <ProductCard data={prod} />
+            ))}
         </div>
       </Tabs.Content>
       <Tabs.Content value="tab3">
         <div className="grid grid-cols-4">
-          {prods.map((prod) => (
-            <ProductCard data={prod} />
-          ))}
+          {prods
+            .filter(
+              (item) =>
+                item.rating.reduce(
+                  (accumulator, currentValue) => accumulator + currentValue,
+                  0
+                ) /
+                  item.rating.length >
+                4
+            )
+            .map((prod) => (
+              <ProductCard data={prod} />
+            ))}
         </div>
       </Tabs.Content>
     </Tabs.Root>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { Toast } from '../../../shared/toast';
@@ -10,6 +11,7 @@ export const Register = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsgs, setErrorMsgs] = useState([]);
+  const router = useRouter();
   const register = async () => {
     await axios
       .post('http://localhost:5000/auth/register', {
@@ -18,6 +20,7 @@ export const Register = () => {
         password: newPassword,
       })
       .then(() => setSuccess(true))
+      .then(() => router.push('/account'))
       .catch((err) => {
         setError(true);
         setErrorMsgs(err.response.data.errors);

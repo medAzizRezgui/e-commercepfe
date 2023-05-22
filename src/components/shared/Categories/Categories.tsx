@@ -58,10 +58,18 @@ export const Categories = () => {
                 </h1>
               ))}
               trigger={
-                <li className="border-r-[1px] px-8 flex items-center">
-                  <p>{item.label}</p>
-                  <BiChevronDown className="w-[24px] h-[24px]" />
-                </li>
+                <Link
+                  href={{
+                    pathname: '/shop',
+                    // eslint-disable-next-line no-underscore-dangle
+                    query: { category: item.value },
+                  }}
+                >
+                  <li className="border-r-[1px] px-8 flex items-center">
+                    <p>{item.label}</p>
+                    <BiChevronDown className="w-[24px] h-[24px]" />
+                  </li>
+                </Link>
               }
             />
           ))}

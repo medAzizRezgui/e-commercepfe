@@ -12,7 +12,13 @@ import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
 
-const Shop = ({ data, transformedOptions }: { data: Product[] }) => {
+const Shop = ({
+  data,
+  transformedOptions,
+}: {
+  data: Product[];
+  transformedOptions: { value: string; label: string }[];
+}) => {
   const router = useRouter();
 
   const pathQuery = router.query;
@@ -25,8 +31,7 @@ const Shop = ({ data, transformedOptions }: { data: Product[] }) => {
   const [selectedCategorie, setSelectedCategorie] = useState(
     pathQuery.category ? pathQuery.category : 'all'
   );
-  console.log('Q', pathQuery);
-  const filtredItems = data.filter((item) =>
+  let filtredItems = data.filter((item) =>
     item.price >= price[0] &&
     item.price <= price[1] &&
     selectedCategorie === 'all'
@@ -34,6 +39,15 @@ const Shop = ({ data, transformedOptions }: { data: Product[] }) => {
       : // eslint-disable-next-line no-underscore-dangle
         item.categorie._id === selectedCategorie
   );
+
+  if (pathQuery.word) {
+    filtredItems = filtredItems.filter((item) =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      item.name.toLowerCase().includes(pathQuery?.word?.toLowerCase())
+    );
+    console.log('AWKA', filtredItems);
+  }
   return (
     <>
       <Head>
@@ -63,7 +77,9 @@ const Shop = ({ data, transformedOptions }: { data: Product[] }) => {
           </div>
           <div className="w-[80%] mx-40">
             <ShopHeader setSort={setSort} />
-
+            {pathQuery.word && (
+              <h1 className="pb-14">Results for {pathQuery.word} :</h1>
+            )}
             <div className="grid grid-cols-4 gap-[0px]">
               {filtredItems
                 .sort((a, b) =>

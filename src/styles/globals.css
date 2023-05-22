@@ -3,6 +3,7 @@
 @import "customPagination.css";
 @import "radixRange.css";
 @import "radixTabs.css";
+@import "customTagInput.css";
 
 @tailwind base;
 @tailwind components;
@@ -11,4 +12,19 @@ html {
     font-family: 'Inter', serif;
     background: #FFF;
     color: #333e48;
+    overflow-y: scroll;
+}
+
+html::-webkit-scrollbar-track {
+    background-color: transparent;
+
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+html::-webkit-scrollbar-button {
+    display: none;
 }

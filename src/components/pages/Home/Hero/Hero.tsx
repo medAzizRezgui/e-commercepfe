@@ -39,9 +39,6 @@ export const Hero = () => {
       </div>
       <div className="max-w-[1400px] w-full flex h-full mx-auto">
         <div className="w-[20%] px-24 py-12 h-min rounded-b-[8px] bg-white">
-          <h1 className="font-medium py-8 border-b-[1px] border-gray-500 border-gray-100border-gray-100text-text-sm">
-            Valeur de Jour
-          </h1>
           {options.map((item) => (
             <Link
               href={{

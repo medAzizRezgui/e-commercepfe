@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Head from 'next/head';
-import React, { useState } from 'react';
-import { BiChevronRight } from 'react-icons/bi';
+import React from 'react';
 
 import { Login } from '../../components/pages/auth/login';
 import { Register } from '../../components/pages/auth/register';
@@ -21,11 +20,7 @@ const Auth = () => (
       <Header />
       {/* Categories */}
       <Categories />
-      <div className="max-w-[1400px]  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
-        <h1>Home</h1>
-        <BiChevronRight className="w-[20px] h-[20px]" />
-        <h1>My account</h1>
-      </div>
+      <div className="max-w-[1400px] mt-128  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16" />
       <div className="full my-40 flex gap-[20px] max-w-[1400px] mx-auto">
         {/* Login */}
         <Login />

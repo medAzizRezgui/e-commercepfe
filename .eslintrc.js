@@ -22,6 +22,9 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
+    'no-underscore-dangle': 'off',
+    'no-console': 'off',
+    'no-plusplus': 'off',
     'no-unused-vars': 'warn',
     'import/no-extraneous-dependencies': [
       'error',

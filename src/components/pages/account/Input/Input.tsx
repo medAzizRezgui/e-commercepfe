@@ -8,7 +8,7 @@ type Props = {
   placeholder: string;
 };
 export const Input = ({ label, value, type, setValue, placeholder }: Props) => (
-  <div className="flex flex-col gap-[10px] py-4">
+  <div className="flex flex-col w-full gap-[10px] py-4">
     <p className="font-medium">{label}</p>
     <input
       type={type}

@@ -25,10 +25,14 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-select": "^5.7.2",
+    "react-stars": "^2.2.5",
+    "react-tagsinput": "^3.20.1",
+    "recoil": "^0.7.7",
     "swiper": "^9.2.0",
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@types/react-tagsinput": "^3.20.0",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.53.0",
     "autoprefixer": "^10.4.14",

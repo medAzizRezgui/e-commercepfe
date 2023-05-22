@@ -3,6 +3,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { BiStar } from 'react-icons/bi';
 
 import { Product } from '../../../../../types/Product';
+import { StarRating } from '../../../../shared/StarRating';
 
 type Props = {
   prod: Product;
@@ -13,21 +14,26 @@ export const Details = ({ prod }: Props) => (
     <h1 className="font-[400] text-display-sm">{prod?.name}</h1>
     {/*  Rating */}
     <div className="flex items-center gap-[8px]">
-      <div className="flex items-center gap-[4px]">
-        <AiFillStar className="fill-yellow-400" />
-        <AiFillStar className="fill-yellow-400" />
-        <AiFillStar className="fill-yellow-400" />
-        <AiFillStar className="fill-yellow-400" />
-        <BiStar className="fill-yellow-400" />
-      </div>
-      <p className="text-text-xs text-gray-400">(3 customers reviews)</p>
+      <StarRating
+        rating={
+          prod?.rating.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          ) / prod?.rating?.length
+        }
+      />
+      <p className="text-text-xs text-gray-400">
+        ({prod?.rating?.length} customers reviews)
+      </p>
     </div>
     {/*  Features */}
-    <ul className="list-disc pl-24 text-text-sm text-dark-500">
-      {prod?.features?.split(';').map((item) => (
-        <li className="text-gray-400">{item}</li>
-      ))}
-    </ul>
+    {prod?.features.length > 0 && (
+      <ul className="list-disc pl-24 text-text-sm text-dark-500">
+        {prod?.features?.map((item) => (
+          <li className="text-gray-400">{item}</li>
+        ))}
+      </ul>
+    )}
     {/*  desc */}
     <p className="text-gray-400 text-text-sm py-8">{prod?.description}</p>
     {/*  code */}
