@@ -1,0 +1,1 @@
+export { BestDeals } from './BestDeals';

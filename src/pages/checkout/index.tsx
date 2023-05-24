@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { router } from 'next/client';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import { Input } from '../../components/pages/account/Input';
@@ -20,6 +20,7 @@ const Checkout = () => {
   const [street, setStreet] = useState('');
 
   const { cartItems } = useCart();
+  const router = useRouter();
 
   function calculateTotal() {
     const total = cartItems.reduce(
@@ -48,7 +49,7 @@ const Checkout = () => {
         image: item.image,
       })),
       totalPrice: calculateTotal(),
-      coupon: 123453,
+      coupon: router.query.coupon,
     });
   };
   const [user, setUser] = useState();

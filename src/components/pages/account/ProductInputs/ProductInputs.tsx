@@ -35,32 +35,6 @@ export const ProductInputs = () => {
   const [tags, setTags] = useState([]);
   const [specs, setSpecs] = useState([]);
 
-  const formData = new FormData();
-  formData.append('name', name);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  formData.append('price', price);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  formData.append('countInStock', stock);
-  formData.append('categorie', categorie.value);
-  formData.append('sousCategorie', sousCategorie.value);
-  formData.append('description', description);
-  formData.append('sku', SKU);
-  tags.forEach((value) => {
-    formData.append('features', value);
-  });
-
-  formData.append('specifications', JSON.stringify(features));
-
-  files.forEach((value) => {
-    formData.append('files', value);
-  });
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
-
   function parseArray(arr: string[]) {
     const result = [];
 
@@ -77,15 +51,32 @@ export const ProductInputs = () => {
     return result;
   }
 
-  const handleSpecChange = (val: string[]) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setSpecs(val);
-    const f = parseArray(specs);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setFeatures(f);
-  };
+  const formData = new FormData();
+  formData.append('name', name);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  formData.append('price', price);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  formData.append('countInStock', stock);
+  formData.append('categorie', categorie.value);
+  formData.append('sousCategorie', sousCategorie.value);
+  formData.append('description', description);
+  formData.append('sku', SKU);
+  tags.forEach((value) => {
+    formData.append('features', value);
+  });
+
+  formData.append('specifications', JSON.stringify(parseArray(specs)));
+
+  files.forEach((value) => {
+    formData.append('files', value);
+  });
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+
   const addProd = async () => {
     setLoading(true);
     await axios
@@ -154,6 +145,7 @@ export const ProductInputs = () => {
         <div className="flex flex-col gap-[10px] py-4">
           <p className="font-medium">Points Forts</p>
           <TagsInput
+            className="p-8 border-2 border-gray-500"
             inputProps={inputProps}
             value={tags}
             onChange={(e) => setTags(e)}
@@ -162,9 +154,10 @@ export const ProductInputs = () => {
         <div className="flex flex-col gap-[10px] py-4">
           <p className="font-medium">Specifications</p>
           <TagsInput
+            className="p-8 border-2 border-gray-500"
             inputProps={inputProps}
             value={specs}
-            onChange={handleSpecChange}
+            onChange={(e) => setSpecs(e)}
           />
         </div>
         {/* Categories Select */}

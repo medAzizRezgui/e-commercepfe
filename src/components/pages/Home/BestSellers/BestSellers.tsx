@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import 'swiper/css';
 
 import { A11y, Pagination } from 'swiper';
@@ -13,9 +14,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
 
   let slots = 1;
 
-  if (data?.length <= 8) {
+  if (data?.length < 8) {
     slots = 1;
-  } else if (data.length > 8 && data.length <= 16) {
+  } else if (data.length >= 8 && data.length <= 16) {
     slots = 2;
   } else {
     slots = 3;
@@ -23,25 +24,36 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
   return (
     <div className="w-full bg-white">
       <div className="w-full py-40 max-w-[1400px] mx-auto">
-        <div className="w-full  ">
+        <div className="w-full">
           <h1 className="border-b-2 text-text-xl pb-8 mb-8 border-yellow-500 w-min font-medium min-w-[120px]">
             Best Sellers
           </h1>
         </div>
         <Swiper
           modules={[Pagination, A11y]}
-          spaceBetween={50}
-          slidesPerView={slots}
+          spaceBetween={0}
+          slidesPerView={1}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onSwiper={(swiper) => setSwiperInstance(swiper)}
           onSlideChange={(e) => setActiveIndex(e.activeIndex)}
         >
-          <SwiperSlide>
-            <div className="grid grid-cols-4 ">
-              {data.map((prod) => (
-                <ProductCardH prod={prod} />
-              ))}
+          <SwiperSlide className="w-full">
+            <div className="grid w-full grid-cols-4 ">
+              {data.map((prod, i) => {
+                if (i < 8) {
+                  return <ProductCardH prod={prod} />;
+                }
+              })}
+            </div>
+          </SwiperSlide>
+          <SwiperSlide className="w-full">
+            <div className="grid w-full grid-cols-4 ">
+              {data.map((prod, i) => {
+                if (i >= 8 && i < 16) {
+                  return <ProductCardH prod={prod} />;
+                }
+              })}
             </div>
           </SwiperSlide>
         </Swiper>

@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { random } from 'nanoid';
 import Head from 'next/head';
 import React from 'react';
 
+import { BestDeals } from '../components/pages/Home/BestDeals';
 import { BestSellers } from '../components/pages/Home/BestSellers';
 import { Hero } from '../components/pages/Home/Hero';
 import { HeroHeader } from '../components/pages/Home/HeroHeader';
 import { SpecialOffer } from '../components/pages/Home/SpecialOffer';
 import { TabsComponent } from '../components/pages/Home/Tabs';
+import { Footer } from '../components/shared/Footer';
 import { Header } from '../components/shared/Header';
-import { ProductCard } from '../components/shared/ProductCard';
 import { Product } from '../types/Product';
 
 const Home = ({ data }: { data: Product[] }) => (
@@ -31,14 +31,9 @@ const Home = ({ data }: { data: Product[] }) => (
         />
         <TabsComponent prods={data} />
       </div>
-      <div className="w-full bg-gray-300 py-40">
-        <div className="max-w-[1400px] [&>*:nth-child(5n)]:border-r-0  mx-auto grid grid-cols-5 grid-rows-2">
-          {data.map((prod) => (
-            <ProductCard data={prod} />
-          ))}
-        </div>
-      </div>
+      <BestDeals data={data} />
       <BestSellers data={data} />
+      <Footer />
     </main>
   </>
 );

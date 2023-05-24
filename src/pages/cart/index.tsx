@@ -1,7 +1,8 @@
+import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { BiX } from 'react-icons/bi';
 
 import { Categories } from '../../components/shared/Categories';
@@ -11,6 +12,14 @@ import { CartItem, useCart } from '../../context/Cart/CartContext';
 const Cart = () => {
   const { cartItems, addItem, removeItem } = useCart();
 
+  const [coupon, setCoupon] = useState('');
+
+  const handleCoupon = async () => {
+    await axios
+      .get(`http://localhost:5000/coupon/${coupon}`)
+      .then(() => console.log('SUCCESS'))
+      .catch(() => console.log('ERROR'));
+  };
   const updateCart = (
     QT: number,
     itemQt: number,
@@ -120,16 +129,26 @@ const Cart = () => {
               <div className="flex justify-between items-center w-full">
                 <div className="relative flex h-[50px] ">
                   <input
+                    value={coupon}
+                    onChange={(e) => setCoupon(e.currentTarget.value)}
                     type="text"
                     maxLength={10}
                     placeholder="coupon"
                     className="px-24 h-[50px] py-8 rounded-full border-2"
                   />
-                  <button className="absolute w-[40%] h-[50px] bg-dark-500 left-[200px] top-0 text-white px-24  rounded-r-full">
+                  <button
+                    onClick={handleCoupon}
+                    className="absolute w-[40%] h-[50px] bg-dark-500 left-[200px] top-0 text-white px-24  rounded-r-full"
+                  >
                     Apply Coupon
                   </button>
                 </div>
-                <Link href="/checkout">
+                <Link
+                  href={{
+                    pathname: '/checkout',
+                    query: { coupon },
+                  }}
+                >
                   <button
                     type="button"
                     className="bg-yellow-500 px-24 py-8 font-semibold rounded-full my-20 ml-auto block"
