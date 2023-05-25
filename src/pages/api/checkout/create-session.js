@@ -1,0 +1,32 @@
+import stripeConfig from '../../../../config';
+import Stripe from 'stripe';
+
+const stripe = new Stripe(stripeConfig.secretKey);
+
+export default async (req, res) => {
+  const { cartItems, id } = req.body;
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: cartItems.map((item) => ({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: item.name,
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.quantity,
+      })),
+      mode: 'payment',
+      success_url: `http://localhost:3001/success?orderId=${id}`,
+      cancel_url: 'http://localhost:3001/',
+    });
+
+    res.status(200).json({ id: session.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred during payment.' });
+  }
+};

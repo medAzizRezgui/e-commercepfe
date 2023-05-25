@@ -1,20 +1,24 @@
+import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
+import stripeConfig from '../../../config';
 import { Input } from '../../components/pages/account/Input';
 import { Route } from '../../components/pages/Product/Route';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
 
+const stripePromise = loadStripe(stripeConfig.publicKey);
+
 const Checkout = () => {
+  const [user, setUser] = useState();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [region, setRegion] = useState('');
   const [town, setTown] = useState('');
-  const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState();
   const [zipCode, setZipCode] = useState();
   const [street, setStreet] = useState('');
@@ -31,28 +35,46 @@ const Checkout = () => {
     return total.toFixed(2);
   }
 
-  const handleAddOrder = async () => {
-    await axios.post('http://localhost:5000/order/addOrder', {
-      fullname: `${firstName} ${lastName}`,
-      email,
-      shippingAddress: {
-        region,
-        city: town,
-        postalCode: zipCode,
-        street,
-      },
-      phoneNumber,
-      Products: cartItems.map((item) => ({
-        name: item.name,
-        qty: item.quantity,
-        item_price: item.price,
-        image: item.image,
-      })),
-      totalPrice: calculateTotal(),
-      coupon: router.query.coupon,
-    });
+  const handleCheckout = async (id: string) => {
+    const stripe = await stripePromise;
+
+    try {
+      const response = await axios.post('/api/checkout/create-session', {
+        cartItems,
+        id,
+      });
+
+      const session = response.data;
+
+      await stripe.redirectToCheckout({ sessionId: session.id });
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const [user, setUser] = useState();
+
+  const handleAddOrder = async () => {
+    await axios
+      .post('http://localhost:5000/order/addOrder', {
+        fullname: `${firstName} ${lastName}`,
+        email: user?.email,
+        shippingAddress: {
+          region,
+          city: town,
+          postalCode: zipCode,
+          street,
+        },
+        phoneNumber,
+        Products: cartItems.map((item) => ({
+          name: item.name,
+          qty: item.quantity,
+          item_price: item.price,
+          image: item.image,
+        })),
+        totalPrice: calculateTotal(),
+        coupon: router.query.coupon,
+      })
+      .then((r) => handleCheckout(r.data._id));
+  };
   useEffect(() => {
     const getUser = () => {
       const res = window.localStorage.getItem('user');
@@ -169,9 +191,9 @@ const Checkout = () => {
             />
             <Input
               label="Email*"
-              value={email}
+              value={user?.email}
               type="email"
-              setValue={setEmail}
+              setValue={() => {}}
               placeholder="Email..."
             />
           </div>

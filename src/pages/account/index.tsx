@@ -172,7 +172,11 @@ const Account = ({
                           </div>
                         ))}
                       </div>
-                      <h1 className="w-[100px] bg-red-500 text-white text-center rounded-full py-4">
+                      <h1
+                        className={` ${
+                          order.isPaid ? 'bg-green-500' : ' bg-red-500'
+                        }  w-[100px] text-white text-center rounded-full py-4`}
+                      >
                         {order.isPaid ? 'Paid' : 'Not Paid'}
                       </h1>
                       <h1 className="w-[150px] bg-red-500 text-white text-center rounded-full py-4">
@@ -227,7 +231,11 @@ const Account = ({
                             </div>
                           ))}
                         </div>
-                        <h1 className="w-[100px] bg-red-500 text-white text-center rounded-full py-4">
+                        <h1
+                          className={` ${
+                            order.isPaid ? 'bg-green-500' : ' bg-red-500'
+                          }  w-[100px] text-white text-center rounded-full py-4`}
+                        >
                           {order.isPaid ? 'Paid' : 'Not Paid'}
                         </h1>
                         <h1 className="w-[150px] bg-red-500 text-white text-center rounded-full py-4">
