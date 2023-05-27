@@ -216,7 +216,7 @@ const Checkout = () => {
                     {item.name}{' '}
                     <span className="font-semibold">x {item.quantity}</span>
                   </p>
-                  <p>{item.price * item.quantity} DT</p>
+                  <p>{(item.price * item.quantity).toFixed(2)} DT</p>
                 </div>
               ))}
             </div>

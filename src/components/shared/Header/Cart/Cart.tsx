@@ -28,7 +28,7 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
                   {item.name}
                 </h1>
                 <p className="text-text-sm">
-                  {item.quantity} × ${item.price}
+                  {(item.quantity * item.price).toFixed(2)} DT
                 </p>
               </div>
               <BiX

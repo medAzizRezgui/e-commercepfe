@@ -19,8 +19,8 @@ export const CTA = ({ prod }: Props) => {
         // eslint-disable-next-line no-underscore-dangle
         id: prod?._id,
         price: prod.discount
-          ? prod.price - (prod.price / 100) * prod.discount
-          : prod?.price,
+          ? (prod.price - (prod.price / 100) * prod.discount).toFixed(2)
+          : (prod?.price).toFixed(2),
         quantity: 1,
       },
       quantity
@@ -38,7 +38,7 @@ export const CTA = ({ prod }: Props) => {
 
       <div className={`${prod.discount ? 'flex' : 'hidden'}    items-baseline`}>
         <h1 className="font-[500] text-display-sm text-green-400">
-          {prod.price - (prod.price / 100) * prod.discount} DT
+          {(prod.price - (prod.price / 100) * prod.discount).toFixed(2)} DT
         </h1>
         <h1 className="font-[400] text-text-xl text-gray-400 line-through">
           {prod.price} DT

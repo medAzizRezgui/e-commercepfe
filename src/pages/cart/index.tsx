@@ -117,7 +117,7 @@ const Cart = () => {
                     }
                     className="block border-[1px] border-gray-400 rounded-[12px] py-4 px-8 w-[50px] "
                   />
-                  <p>{item.price * item.quantity} DT</p>
+                  <p>{(item.price * item.quantity).toFixed(2)} DT</p>
                 </div>
               </div>
             ))
