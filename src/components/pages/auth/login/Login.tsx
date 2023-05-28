@@ -116,7 +116,7 @@ export const Login: React.FC = () => {
       <button
         type="button"
         onClick={login}
-        className="my-20 block rounded-full bg-gray-500 px-24 py-8 font-semibold"
+        className="my-20 block cursor-pointer rounded-full bg-gray-500 px-24 py-8 font-semibold"
       >
         Login
       </button>
