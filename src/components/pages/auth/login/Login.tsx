@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiX } from 'react-icons/bi';
 
-import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
+import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 
 interface ErrorResponse {
@@ -70,7 +70,7 @@ export const Login: React.FC = () => {
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      if (err.response && err.response.status === 400) {
+      if (err.response && err.response.status === 404) {
         setError(true);
         setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);
       } else {
