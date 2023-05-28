@@ -25,6 +25,7 @@ type Props = {
   specifications: any;
   oldDiscount: number;
   oldFeatures: string[];
+  rating: any;
 };
 const Edit = ({
   stock,
@@ -39,6 +40,7 @@ const Edit = ({
   oldDiscount,
   sku,
   specifications,
+  rating,
 }: Props) => {
   const [newStock, setNewStock] = useState(stock);
   const [newName, setNewName] = useState(name);
@@ -111,6 +113,7 @@ const Edit = ({
   formData.append('specifications', JSON.stringify(parseArray(specs)));
   formData.append('discount', discount.toString());
   formData.append('sku', SKU);
+  formData.append('rating', rating);
   features.forEach((value) => {
     formData.append('features', value);
   });
