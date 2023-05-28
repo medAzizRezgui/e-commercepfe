@@ -1,7 +1,7 @@
-import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Category } from '../../../../types/Category';
 import { Product } from '../../../../types/Product';
 import { ProductCard } from '../../../shared/ProductCard';
@@ -16,8 +16,8 @@ export const BestDeals = ({ data }: Props) => {
 
   useEffect(() => {
     const getCategories = async () => {
-      await axios
-        .get('http://localhost:5000/categorie/getall')
+      await axiosProduction
+        .get('/categorie/getall')
         .then((r) => setCategories(r.data));
     };
     getCategories();

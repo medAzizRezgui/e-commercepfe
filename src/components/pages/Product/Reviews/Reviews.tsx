@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { BiStar } from 'react-icons/bi';
 import ReactStars from 'react-stars';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Product } from '../../../../types/Product';
 import { Toast } from '../../../shared/toast';
 
@@ -24,8 +24,8 @@ export const Reviews = ({ prod }: Props) => {
       setError(true);
       return;
     }
-    await axios
-      .patch(`http://localhost:5000/product/update/${prod._id}`, {
+    await axiosProduction
+      .patch(`/product/update/${prod._id}`, {
         rating: {
           rate: starts,
           name,

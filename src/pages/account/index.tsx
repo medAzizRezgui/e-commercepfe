@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -16,6 +15,7 @@ import { Header } from '../../components/shared/Header';
 import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
 import { User } from '../../types/User';
+import axiosProduction from '../api/axios';
 
 const Account = ({
   prods,
@@ -36,8 +36,8 @@ const Account = ({
 
   useEffect(() => {
     const getProds = async () => {
-      await axios
-        .get('http://localhost:5000/Product/getall')
+      await axiosProduction
+        .get('/Product/getall')
         .then((r) => setProducts(r.data));
     };
     getProds();
@@ -119,10 +119,10 @@ const Account = ({
 Account.getInitialProps = async () => {
   try {
     const [ProdsRes, CatRes, SousCatRes, OrdersRes] = await Promise.all([
-      axios.get('https://lazy-gray-termite-cape.cyclic.app/Product/getall'),
-      axios.get('https://lazy-gray-termite-cape.cyclic.app/categorie/getall'),
-      axios.get('https://lazy-gray-termite-cape.cyclic.app/sousCat/getall'),
-      axios.get('https://lazy-gray-termite-cape.cyclic.app/order/getall'),
+      axiosProduction.get('/Product/getall'),
+      axiosProduction.get('/categorie/getall'),
+      axiosProduction.get('/sousCat/getall'),
+      axiosProduction.get('/order/getall'),
     ]);
 
     const prods = ProdsRes.data;
