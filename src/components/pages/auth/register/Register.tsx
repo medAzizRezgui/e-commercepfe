@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 
 export const Register = () => {
@@ -13,8 +13,8 @@ export const Register = () => {
   const [errorMsgs, setErrorMsgs] = useState([]);
   const router = useRouter();
   const register = async () => {
-    await axios
-      .post('http://localhost:5000/auth/register', {
+    await axiosProduction
+      .post('/auth/register', {
         email: newEmail,
         fullName,
         password: newPassword,
@@ -28,7 +28,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="w-full relative mx-20">
+    <div className="relative mx-20 w-full">
       {/* Toast */}
       <Toast
         success={success}
@@ -37,41 +37,41 @@ export const Register = () => {
         text="Account Created !"
       />
       <h1 className="pb-14 text-display-xs">Register</h1>
-      <span className="bg-gray-500 h-[2px] w-full relative block">
-        <span className="bg-yellow-500 w-[20%] h-[2px] absolute left-0 " />
+      <span className="relative block h-[2px] w-full bg-gray-500">
+        <span className="absolute left-0 h-[2px] w-[20%] bg-yellow-500 " />
       </span>
-      <p className="text-text-sm text-gray-400 py-32">
+      <p className="py-32 text-text-sm text-gray-400">
         Create new account today to reap the benefits of a personalized shopping
         experience.
       </p>
       <div className="pb-14">
-        <p className="font-semibold text-dark-500 py-8">Full Name *</p>
+        <p className="py-8 font-semibold text-dark-500">Full Name *</p>
         <input
           value={fullName}
           onChange={(e) => setFullName(e.currentTarget.value)}
           type="text"
-          className="w-full rounded-full border-[1px] px-24 py-8 outline-0  border-gray-500"
+          className="w-full rounded-full border-[1px] border-gray-500 px-24 py-8  outline-0"
         />
       </div>
       <div className="pb-14">
-        <p className="font-semibold text-dark-500 py-8">Email address *</p>
+        <p className="py-8 font-semibold text-dark-500">Email address *</p>
         <input
           value={newEmail}
           onChange={(e) => setNewEmail(e.currentTarget.value)}
           type="email"
-          className="w-full rounded-full border-[1px] px-24 py-8 outline-0  border-gray-500"
+          className="w-full rounded-full border-[1px] border-gray-500 px-24 py-8  outline-0"
         />
       </div>
       <div>
-        <p className="font-semibold text-dark-500 py-8">Password *</p>
+        <p className="py-8 font-semibold text-dark-500">Password *</p>
         <input
           value={newPassword}
           onChange={(e) => setNewPassword(e.currentTarget.value)}
           type="password"
-          className="w-full rounded-full border-[1px] px-24 py-8 outline-0  border-gray-500"
+          className="w-full rounded-full border-[1px] border-gray-500 px-24 py-8  outline-0"
         />
       </div>
-      <p className="text-text-sm pt-14">
+      <p className="pt-14 text-text-sm">
         Your personal data will be used to support your experience throughout
         this website, to manage access to your account, and for other purposes
         described in our privacy policy.
@@ -79,7 +79,7 @@ export const Register = () => {
       <button
         type="button"
         onClick={() => register()}
-        className="px-24 py-8 rounded-full bg-gray-500 block font-semibold my-20"
+        className="my-20 block rounded-full bg-gray-500 px-24 py-8 font-semibold"
       >
         Register
       </button>

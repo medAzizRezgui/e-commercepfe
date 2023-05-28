@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -11,6 +10,7 @@ import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
+import axiosProduction from '../api/axios';
 
 const Shop = ({
   data,
@@ -97,15 +97,13 @@ const Shop = ({
   );
 };
 Shop.getInitialProps = async () => {
-  const res = await axios
-    .get('http://localhost:5000/Product/getall')
-    .catch((error) => {
-      console.error(error);
-    });
+  const res = await axiosProduction.get('/Product/getall').catch((error) => {
+    console.error(error);
+  });
 
   const data = await res?.data;
 
-  const response = await axios.get('http://localhost:5000/categorie/getall'); // replace with your API endpoint
+  const response = await axiosProduction.get('/categorie/getall'); // replace with your API endpoint
   const transformedOptions = response.data.map((option: any) => ({
     // eslint-disable-next-line no-underscore-dangle
     value: option._id,

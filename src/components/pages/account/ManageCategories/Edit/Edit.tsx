@@ -1,8 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
 
+import axiosProduction from '../../../../../pages/api/axios';
 import { Category } from '../../../../../types/Category';
 import { Input } from '../../Input';
 
@@ -13,9 +13,9 @@ type Props = {
 export const Edit = ({ item, type }: Props) => {
   const [newCategorieName, setNewCategorieName] = useState(item.name);
   const updateCategorie = async () => {
-    await axios
+    await axiosProduction
       // eslint-disable-next-line no-underscore-dangle
-      .patch(`http://localhost:5000/${type}/${item._id}`, {
+      .patch(`/${type}/${item._id}`, {
         name: newCategorieName,
       })
       .then(() => console.log('done'))

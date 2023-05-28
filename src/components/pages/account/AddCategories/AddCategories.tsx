@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Input } from '../Input';
 import { CategoriesSelect } from '../ProductInputs/CategoriesSelect';
 
@@ -11,15 +11,15 @@ export const AddCategories = () => {
   const [sousCategorieName, setSousCategorieName] = useState('');
 
   const handleAddCategorie = async () => {
-    await axios
-      .post('http://localhost:5000/categorie/add', {
+    await axiosProduction
+      .post('/categorie/add', {
         name: categorieName,
       })
       .then(() => setRefetch(!refetch));
   };
 
   const handleAddSousCategorie = async () => {
-    await axios.post('http://localhost:5000/sousCat/add', {
+    await axiosProduction.post('/sousCat/add', {
       name: sousCategorieName,
       categorie: categorie.value,
     });

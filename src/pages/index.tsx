@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import React from 'react';
 
@@ -11,6 +10,8 @@ import { TabsComponent } from '../components/pages/Home/Tabs';
 import { Footer } from '../components/shared/Footer';
 import { Header } from '../components/shared/Header';
 import { Product } from '../types/Product';
+
+import axiosProduction from './api/axios';
 
 const Home = ({ data }: { data: Product[] }) => (
   <>
@@ -38,14 +39,13 @@ const Home = ({ data }: { data: Product[] }) => (
   </>
 );
 Home.getInitialProps = async () => {
-  const res = await axios
-    .get('http://localhost:5000/Product/getall')
-    .catch((error) => {
-      console.error(error);
-    });
-
-  const data = await res?.data;
-
-  return { data };
+  try {
+    const res = await axiosProduction.get('/Product/getall');
+    const { data } = res;
+    return { data };
+  } catch (error) {
+    console.error(error);
+    return { data: null };
+  }
 };
 export default Home;

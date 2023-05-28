@@ -1,15 +1,16 @@
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+
+import axiosProduction from '../api/axios';
 
 const Success = () => {
   const router = useRouter();
 
   const payOrder = async () => {
     if (router.query.orderId) {
-      await axios
-        .patch(`http://localhost:5000/order/pay/${router.query.orderId}`)
+      await axiosProduction
+        .patch(`/order/pay/${router.query.orderId}`)
         .then(() => router.push('/'));
     }
   };
@@ -27,7 +28,7 @@ const Success = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="w-full h-[100vh] flex items-center justify-center">
+      <main className="flex h-[100vh] w-full items-center justify-center">
         Thanks for your Payment !!
       </main>
     </>

@@ -1,6 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+
+import axiosProduction from '../../../../../pages/api/axios';
 
 type Props = {
   setSousCategorie: React.Dispatch<
@@ -24,7 +25,7 @@ export const SousCategoriesSelect = ({
   >([]);
   const fetchSousCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/sousCat/getall');
+      const response = await axiosProduction.get('/sousCat/getall');
 
       const res = response.data;
       console.log(res);

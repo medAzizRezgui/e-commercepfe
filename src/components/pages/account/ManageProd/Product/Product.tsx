@@ -1,10 +1,10 @@
-import axios from 'axios';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
+import axiosProduction from '../../../../../pages/api/axios';
 import { Product as ProdType } from '../../../../../types/Product';
 import { DeleteModal } from '../../../../shared/DeleteModal';
 import Edit from '../Edit/Edit';
@@ -18,8 +18,8 @@ export const Product = ({ item }: Props) => {
 
   const deleteProd = async (id: string) => {
     setDeleteModal(false);
-    await axios
-      .delete(`http://localhost:5000/product/delete/${id}`)
+    await axiosProduction
+      .delete(`/product/delete/${id}`)
       .then(() => {
         setRefetch(!refetch);
       })

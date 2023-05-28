@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import TagsInput from 'react-tagsinput';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
+import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
@@ -78,8 +78,8 @@ export const ProductInputs = () => {
 
   const addProd = async () => {
     setLoading(true);
-    await axios
-      .post('http://localhost:5000/product/add', formData, {
+    await axiosProduction
+      .post('/product/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

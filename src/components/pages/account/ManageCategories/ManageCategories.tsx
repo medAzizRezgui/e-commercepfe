@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Category } from '../../../../types/Category';
 import { SousCategory } from '../../../../types/SousCategory';
 import { DeleteModal } from '../../../shared/DeleteModal';
@@ -15,16 +15,16 @@ type Props = {
 export const ManageCategories = ({ categories, sousCategories }: Props) => {
   const [openDelModal, setOpenDelModal] = useState(false);
   const deleteCategorie = async (id: string) => {
-    await axios
-      .delete(`http://localhost:5000/categorie/delete/${id}`)
+    await axiosProduction
+      .delete(`/categorie/delete/${id}`)
       .then(() => console.log('done'))
       .catch((e) => {
         console.error(e);
       });
   };
   const deleteSousCategorie = async (id: string) => {
-    await axios
-      .delete(`http://localhost:5000/sousCat/delete/${id}`)
+    await axiosProduction
+      .delete(`/sousCat/delete/${id}`)
       .then(() => console.log('done'))
       .catch((e) => {
         console.error(e);

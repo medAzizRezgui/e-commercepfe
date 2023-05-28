@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,6 +7,7 @@ import { BiX } from 'react-icons/bi';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { CartItem, useCart } from '../../context/Cart/CartContext';
+import axiosProduction from '../api/axios';
 
 const Cart = () => {
   const { cartItems, addItem, removeItem } = useCart();
@@ -15,8 +15,8 @@ const Cart = () => {
   const [coupon, setCoupon] = useState('');
 
   const handleCoupon = async () => {
-    await axios
-      .get(`http://localhost:5000/coupon/${coupon}`)
+    await axiosProduction
+      .get(`/coupon/${coupon}`)
       .then(() => console.log('SUCCESS'))
       .catch(() => console.log('ERROR'));
   };

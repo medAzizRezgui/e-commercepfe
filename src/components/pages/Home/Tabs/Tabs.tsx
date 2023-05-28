@@ -42,13 +42,15 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
           {prods
             .filter(
               (item) =>
+                item.rating &&
+                item.rating.length > 0 &&
                 item.rating.reduce(
                   (accumulator, currentValue) =>
                     accumulator + currentValue.rate,
                   0
                 ) /
-                  item.rating.length >
-                4
+                  item.rating.length >=
+                  4
             )
             .map((prod) => (
               <ProductCard data={prod} />

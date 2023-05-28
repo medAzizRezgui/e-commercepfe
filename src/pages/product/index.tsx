@@ -1,8 +1,6 @@
-import axios from 'axios';
 import Head from 'next/head';
 import React from 'react';
 
-import { Description } from '../../components/pages/Product/Description';
 import { Hero } from '../../components/pages/Product/Hero';
 import { Reviews } from '../../components/pages/Product/Reviews';
 import { Route } from '../../components/pages/Product/Route';
@@ -10,6 +8,7 @@ import { Stats } from '../../components/pages/Product/Stats';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Product as ProdType } from '../../types/Product';
+import axiosProduction from '../api/axios';
 
 const Product = ({ data }: { data: ProdType }) => (
   <>
@@ -41,8 +40,8 @@ const Product = ({ data }: { data: ProdType }) => (
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 Product.getInitialProps = async ({ query }) => {
-  const res = await axios
-    .get(`http://localhost:5000/Product/${query.id}`)
+  const res = await axiosProduction
+    .get(`/Product/${query.id}`)
     .catch((error) => {
       console.error(error);
     });

@@ -1,11 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
 import TagsInput from 'react-tagsinput';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
+import axiosProduction from '../../../../../pages/api/axios';
 import { Input } from '../../Input';
 import { CategoriesSelect } from '../../ProductInputs/CategoriesSelect';
 import { SousCategoriesSelect } from '../../ProductInputs/SousCategoriesSelect';
@@ -128,8 +128,8 @@ const Edit = ({
   const [loading, setLoading] = useState(false);
   const updatedProd = async () => {
     setLoading(true);
-    await axios
-      .patch(`http://localhost:5000/product/update/${id}`, formData, config)
+    await axiosProduction
+      .patch(`/product/update/${id}`, formData, config)
       .then((response) => {
         console.log(response.data);
       })

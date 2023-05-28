@@ -11,6 +11,7 @@ import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
 import { User } from '../../types/User';
+import axiosProduction from '../api/axios';
 
 const stripePromise = loadStripe(stripeConfig.publicKey);
 
@@ -54,8 +55,8 @@ const Checkout = () => {
   };
 
   const handleAddOrder = async () => {
-    await axios
-      .post('http://localhost:5000/order/addOrder', {
+    await axiosProduction
+      .post('/order/addOrder', {
         fullname: `${firstName} ${lastName}`,
         email: user?.email,
         shippingAddress: {

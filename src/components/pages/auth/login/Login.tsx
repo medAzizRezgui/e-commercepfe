@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 
 interface ErrorResponse {
@@ -30,7 +30,7 @@ export const Login: React.FC = () => {
     setErrorMsgs([]);
 
     try {
-      const response = await axios.post('http://localhost:5000/auth', {
+      const response = await axiosProduction.post('/auth', {
         email,
         password,
       });

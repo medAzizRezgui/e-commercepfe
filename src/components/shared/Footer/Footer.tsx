@@ -1,9 +1,9 @@
-import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { BiEnvelopeOpen, BiHeadphone } from 'react-icons/bi';
 import { BsFacebook } from 'react-icons/bs';
 
+import axiosProduction from '../../../pages/api/axios';
 import { Category } from '../../../types/Category';
 
 export const Footer = () => {
@@ -11,8 +11,8 @@ export const Footer = () => {
 
   useEffect(() => {
     const getCategories = async () => {
-      await axios
-        .get('http://localhost:5000/categorie/getall')
+      await axiosProduction
+        .get('/categorie/getall')
         .then((r) => setCategories(r.data));
     };
     getCategories();

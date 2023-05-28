@@ -1,8 +1,8 @@
-import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 
+import axiosProduction from '../../../pages/api/axios';
 import { SousCategory } from '../../../types/SousCategory';
 
 import HoverComponent from './HoverComponent';
@@ -14,9 +14,7 @@ export const Categories = () => {
   const [sousCat, setSousCat] = useState<SousCategory[]>([]);
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:5000/categorie/getall'
-      ); // replace with your API endpoint
+      const response = await axiosProduction.get('/categorie/getall'); // replace with your API endpoint
       const transformedOptions = response.data.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,
@@ -30,8 +28,8 @@ export const Categories = () => {
 
   const fetchSousCat = async () => {
     try {
-      await axios
-        .get('http://localhost:5000/sousCat/getall')
+      await axiosProduction
+        .get('/sousCat/getall')
         .then((r) => setSousCat(r.data)); // replace with your API endpoint
     } catch (error) {
       console.log(error);

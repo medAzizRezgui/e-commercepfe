@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { BiHeart, BiSearch, BiShoppingBag, BiUser } from 'react-icons/bi';
+import { BiSearch, BiShoppingBag, BiUser } from 'react-icons/bi';
 
 import { useCart } from '../../../context/Cart/CartContext';
 import Logo from '../Logo';
