@@ -14,7 +14,7 @@ export const Toast = ({ success, text, error, errorMsgs }: Props) => (
       </div>
     )}
     {error && (
-      <div className="fixed right-10 top-10 z-[999] animate-slideLeft rounded-[4px] bg-red-400 px-14 py-8 text-white">
+      <div className="fixed right-10 top-10 z-[9999] animate-slideLeft rounded-[4px] bg-red-400 px-14 py-8 text-white">
         {errorMsgs.map(
           (err: {
             msg:
