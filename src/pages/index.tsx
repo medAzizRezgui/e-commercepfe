@@ -25,7 +25,7 @@ const Home = ({ data }: { data: Product[] }) => (
       <Header />
       <HeroHeader />
       <Hero />
-      <div className="flex mt-40 w-full max-w-[1400px] mx-auto gap-[64px]">
+      <div className="mx-auto mt-40 flex w-full max-w-[1400px] gap-[64px]">
         <SpecialOffer
           item={data && data[Math.floor(Math.random() * data.length)]}
         />

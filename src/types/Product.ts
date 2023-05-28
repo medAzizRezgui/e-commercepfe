@@ -9,7 +9,11 @@ export type Product = {
   files: string[];
   name: string;
   price: number;
-  rating: number[];
+  rating: {
+    rate: number;
+    name: string;
+    email: string;
+  }[];
   sousCategorie: SousCategory;
   updatedAt: string;
   features: string[];

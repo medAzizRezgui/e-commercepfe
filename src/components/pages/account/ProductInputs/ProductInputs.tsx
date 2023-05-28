@@ -21,7 +21,6 @@ export const ProductInputs = () => {
     // @ts-ignore
     setFiles(selectedFiles);
   };
-  const [features, setFeatures] = useState([]);
   const [SKU, setSKU] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -97,7 +96,7 @@ export const ProductInputs = () => {
     // Add any other props you want to pass down
   };
   return (
-    <div className="flex justify-between items-center w-full">
+    <div className="flex w-full items-center justify-between">
       <Toast
         success={success}
         error={error}
@@ -105,7 +104,7 @@ export const ProductInputs = () => {
         errorMsgs={[{ msg: 'Error, try again' }]}
       />
 
-      <div className="flex  flex-col   w-full ">
+      <div className="flex  w-full   flex-col ">
         <Input
           placeholder="Name..."
           label="Product Name"
@@ -145,7 +144,7 @@ export const ProductInputs = () => {
         <div className="flex flex-col gap-[10px] py-4">
           <p className="font-medium">Points Forts</p>
           <TagsInput
-            className="p-8 border-2 border-gray-500"
+            className="border-2 border-gray-500 p-8"
             inputProps={inputProps}
             value={tags}
             onChange={(e) => setTags(e)}
@@ -154,7 +153,7 @@ export const ProductInputs = () => {
         <div className="flex flex-col gap-[10px] py-4">
           <p className="font-medium">Specifications</p>
           <TagsInput
-            className="p-8 border-2 border-gray-500"
+            className="border-2 border-gray-500 p-8"
             inputProps={inputProps}
             value={specs}
             onChange={(e) => setSpecs(e)}
@@ -170,22 +169,22 @@ export const ProductInputs = () => {
         <button
           disabled={loading}
           type="button"
-          className="bg-gray-500 w-min px-24 py-4 block my-20 rounded-full"
+          className="my-20 block w-min rounded-full bg-gray-500 px-24 py-4"
           onClick={() => addProd()}
         >
           {loading ? 'Loading' : 'Add'}
         </button>
       </div>
-      <div className=" mx-[20px] flex items-center flex-col justify-center relative w-[50%] border-gray-400 h-[150px] border-2 rounded-[12px] p-14 border-dashed ">
+      <div className=" relative mx-[20px] flex h-[150px] w-[50%] flex-col items-center justify-center rounded-[12px] border-2 border-dashed border-gray-400 p-14 ">
         <input
-          className="absolute cursor-pointer opacity-0  w-full h-full"
+          className="absolute h-full w-full  cursor-pointer opacity-0"
           type="file"
           multiple
           onChange={(e) => handleFileChange(e)}
         />
         <button
           type="button"
-          className="bg-yellow-500 cursor-pointer text-dark-500 font-medium px-24 py-8 rounded-full"
+          className="cursor-pointer rounded-full bg-yellow-500 px-24 py-8 font-medium text-dark-500"
         >
           Add Images
         </button>

@@ -25,7 +25,7 @@ export const BestDeals = ({ data }: Props) => {
 
   return (
     <div className="w-full bg-gray-300 py-40">
-      <div className="w-full relative flex justify-between max-w-[1400px] mx-auto pb-8 border-b-[1px] border-gray-500 mb-24">
+      <div className="relative mx-auto mb-24 flex w-full max-w-[1400px] justify-between border-b-[1px] border-gray-500 pb-8">
         <h1 className="font-semibold">Best Deals</h1>
         {categories.map((item) => (
           <Link
@@ -38,11 +38,12 @@ export const BestDeals = ({ data }: Props) => {
           </Link>
         ))}
 
-        <span className=" absolute bottom-0 w-[100px] h-[2px] bg-yellow-500" />
+        <span className=" absolute bottom-0 h-[2px] w-[100px] bg-yellow-500" />
       </div>
 
-      <div className="w-full max-w-[1400px] flex mx-auto ">
-        <div className="w-[30%]  grid grid-cols-2">
+      <div className="mx-auto flex w-full max-w-[1400px] ">
+        <div className="grid  w-[30%] grid-cols-2">
+          {/* eslint-disable-next-line array-callback-return,consistent-return */}
           {data.map((prod, i) => {
             if (i < 4) {
               return <ProductCard data={prod} />;
@@ -50,7 +51,8 @@ export const BestDeals = ({ data }: Props) => {
           })}
         </div>
         <HeroItem item={data[2]} />
-        <div className="w-[30%]  grid grid-cols-2">
+        <div className="grid  w-[30%] grid-cols-2">
+          {/* eslint-disable-next-line array-callback-return,consistent-return */}
           {data.map((prod, i) => {
             if (i > 4 && i < 9) {
               return <ProductCard data={prod} />;

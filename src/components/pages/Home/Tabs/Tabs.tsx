@@ -5,7 +5,7 @@ import { Product } from '../../../../types/Product';
 import { ProductCard } from '../../../shared/ProductCard';
 
 export const TabsComponent = ({ prods }: { prods: Product[] }) => (
-  <div className="w-full max-w-[1400px] mx-auto">
+  <div className="mx-auto w-full max-w-[1400px]">
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
@@ -20,6 +20,7 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
       </Tabs.List>
       <Tabs.Content value="tab1">
         <div className="grid grid-cols-4 items-stretch justify-items-stretch ">
+          {/* eslint-disable-next-line array-callback-return,consistent-return */}
           {prods.map((prod, i) => {
             if (i < 8) {
               return <ProductCard data={prod} />;
@@ -42,7 +43,8 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
             .filter(
               (item) =>
                 item.rating.reduce(
-                  (accumulator, currentValue) => accumulator + currentValue,
+                  (accumulator, currentValue) =>
+                    accumulator + currentValue.rate,
                   0
                 ) /
                   item.rating.length >

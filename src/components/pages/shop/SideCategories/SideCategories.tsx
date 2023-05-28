@@ -1,24 +1,29 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 
-export const SideCategories = ({ options, setSelectedCategorie }) => (
-  <div className="py-18 w-full border-2 max-h-min border-gray-500 rounded-[12px]">
-    <h1 className="text-text-sm px-24 border-b-2 pb-18 border-gray-500">
+type Props = {
+  options: { value: string; label: string }[];
+  setSelectedCategorie: React.Dispatch<React.SetStateAction<string | string[]>>;
+};
+export const SideCategories = ({ options, setSelectedCategorie }: Props) => (
+  <div className="max-h-min w-full rounded-[12px] border-2 border-gray-500 py-18">
+    <h1 className="border-b-2 border-gray-500 px-24 pb-18 text-text-sm">
       Browse Categories
     </h1>
-    <div className="px-12 w-full">
+    <div className="w-full px-12">
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div
         onClick={() => setSelectedCategorie('all')}
-        className="flex cursor-pointer w-full border-b-[1px] py-8 border-gray-500 items-center gap-[8px]"
+        className="flex w-full cursor-pointer items-center gap-[8px] border-b-[1px] border-gray-500 py-8"
       >
         <BiChevronRight />
         <p className="text-text-sm">All</p>
       </div>
       {options.map((item) => (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
         <div
           onClick={() => setSelectedCategorie(item.value)}
-          className="flex w-full border-b-[1px] cursor-pointer py-8 border-gray-500 items-center gap-[8px]"
+          className="flex w-full cursor-pointer items-center gap-[8px] border-b-[1px] border-gray-500 py-8"
         >
           <BiChevronRight />
           <p className="text-text-sm">{item.label}</p>

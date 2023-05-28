@@ -9,9 +9,11 @@ type Props = {
   prod: Product;
 };
 export const Images = ({ prod }: Props) => {
-  const [swiperInstance, setSwiperInstance] = useState(null);
+  const [swiperInstance, setSwiperInstance] = useState();
   const [activeIndex, setActiveIndex] = useState(0);
-  const handleClick = (i) => {
+  const handleClick = (i: number) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     swiperInstance.slideTo(i);
     setActiveIndex(i);
   };
@@ -31,7 +33,7 @@ export const Images = ({ prod }: Props) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex items-center w-[80%] mx-auto justify-start ">
+      <div className="mx-auto flex w-[80%] items-center justify-start ">
         {prod?.files?.map((img, i) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
           <div
@@ -39,7 +41,7 @@ export const Images = ({ prod }: Props) => {
               activeIndex === i
                 ? 'border-t-8 border-yellow-500'
                 : 'border-t-8 border-white'
-            }  w-[75px]  h-[75px] flex items-center justify-center`}
+            }  flex  h-[75px] w-[75px] items-center justify-center`}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             onClick={() => handleClick(i)}

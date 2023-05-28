@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { BiCartAdd, BiHeart } from 'react-icons/bi';
+import { BiCartAdd } from 'react-icons/bi';
 
 import { useCart } from '../../../../../context/Cart/CartContext';
 import { Product } from '../../../../../types/Product';
+import { Toast } from '../../../../shared/toast';
 
 type Props = {
   prod: Product;
@@ -10,7 +11,7 @@ type Props = {
 export const CTA = ({ prod }: Props) => {
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [popUp, setPopUp] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleAddToCart = () => {
     addItem(
       {
@@ -19,34 +20,40 @@ export const CTA = ({ prod }: Props) => {
         // eslint-disable-next-line no-underscore-dangle
         id: prod?._id,
         price: prod.discount
-          ? (prod.price - (prod.price / 100) * prod.discount).toFixed(2)
-          : (prod?.price).toFixed(2),
+          ? prod.price - (prod.price / 100) * prod.discount
+          : prod?.price,
         quantity: 1,
       },
       quantity
     );
-    setPopUp(true);
+    setSuccess(true);
   };
   return (
-    <div className="border-[2px] h-full flex flex-col  gap-[20px]  border-dark-100 rounded-[12px] p-32">
-      <p className="border-b-[1px] border-dark-100 text-green-400 font-[600] ">
-        <span className="text-text-sm text-gray-400 font-regular">
+    <div className="flex h-full flex-col gap-[20px]  rounded-[12px]  border-[2px] border-dark-100 p-32">
+      <Toast
+        success={success}
+        error={false}
+        text="Item Added to cart"
+        errorMsgs={[]}
+      />
+      <p className="border-b-[1px] border-dark-100 font-[600] text-green-400 ">
+        <span className="text-text-sm font-regular text-gray-400">
           Availability:{' '}
         </span>
         {prod?.countInStock} in stock
       </p>
 
       <div className={`${prod.discount ? 'flex' : 'hidden'}    items-baseline`}>
-        <h1 className="font-[500] text-display-sm text-green-400">
+        <h1 className="text-display-sm font-[500] text-green-400">
           {(prod.price - (prod.price / 100) * prod.discount).toFixed(2)} DT
         </h1>
-        <h1 className="font-[400] text-text-xl text-gray-400 line-through">
+        <h1 className="text-text-xl font-[400] text-gray-400 line-through">
           {prod.price} DT
         </h1>
       </div>
 
       {!prod.discount && (
-        <h1 className="font-[500] text-display-sm">{prod.price} DT</h1>
+        <h1 className="text-display-sm font-[500]">{prod.price} DT</h1>
       )}
       <input
         min={1}
@@ -54,15 +61,15 @@ export const CTA = ({ prod }: Props) => {
         type="number"
         value={quantity}
         onChange={(e) => setQuantity(parseInt(e.currentTarget.value, 10))}
-        className="block border-[1px] border-gray-400 rounded-full py-4 px-16 max-w-[60%]"
+        className="block max-w-[60%] rounded-full border-[1px] border-gray-400 px-16 py-4"
       />
       {/* eslint-disable-next-line react/button-has-type */}
       <button
         onClick={() => handleAddToCart()}
-        className="bg-yellow-500 flex items-center gap-[12px] text-white px-58 py-18 rounded-full"
+        className="flex items-center gap-[12px] rounded-full bg-yellow-500 px-58 py-18 text-white"
       >
         <span>
-          <BiCartAdd className="w-[24px] h-[24px]" />
+          <BiCartAdd className="h-[24px] w-[24px]" />
         </span>
         Add to cart
       </button>

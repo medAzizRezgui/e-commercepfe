@@ -26,45 +26,45 @@ export const Menu = ({ activeTab, setActiveTab }: Props) => {
           onClick={() => setActiveTab(0)}
           className={` ${
             activeTab === 0
-              ? 'border-b-[1px] text-yellow-500 font-medium border-yellow-500'
+              ? 'border-b-[1px] border-yellow-500 font-medium text-yellow-500'
               : 'border-b-[1px] border-gray-500 font-regular text-dark-500'
-          } flex cursor-pointer  items-center justify-between  py-8  px-12`}
+          } flex cursor-pointer  items-center justify-between  px-12  py-8`}
         >
           <h1>Products</h1>
-          <BiPackage className="w-[24px] h-[24px]" />
+          <BiPackage className="h-[24px] w-[24px]" />
         </li>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
         <li
           onClick={() => setActiveTab(1)}
           className={`${
             activeTab === 1
-              ? 'border-b-[1px] text-yellow-500 font-medium border-yellow-500'
-              : 'border-b-[1px]  font-regular text-dark-500 border-gray-500'
-          }   flex cursor-pointer items-center justify-between  py-8  px-12`}
+              ? 'border-b-[1px] border-yellow-500 font-medium text-yellow-500'
+              : 'border-b-[1px]  border-gray-500 font-regular text-dark-500'
+          }   flex cursor-pointer items-center justify-between  px-12  py-8`}
         >
           <h1>Categories</h1>
-          <BiBookContent className="w-[24px] h-[24px]" />
+          <BiBookContent className="h-[24px] w-[24px]" />
         </li>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
         <li
           onClick={() => setActiveTab(2)}
           className={`${
             activeTab === 2
-              ? 'border-b-[1px] text-yellow-500 font-medium border-yellow-500'
-              : 'border-b-[1px]  font-regular text-dark-500 border-gray-500'
-          }   flex cursor-pointer items-center justify-between  py-8  px-12`}
+              ? 'border-b-[1px] border-yellow-500 font-medium text-yellow-500'
+              : 'border-b-[1px]  border-gray-500 font-regular text-dark-500'
+          }   flex cursor-pointer items-center justify-between  px-12  py-8`}
         >
           <h1>Orders</h1>
-          <BiListCheck className="w-[24px] h-[24px]" />
+          <BiListCheck className="h-[24px] w-[24px]" />
         </li>
       </ul>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div
         onClick={handleLogout}
-        className="flex cursor-pointer items-center justify-between py-8  px-12"
+        className="flex cursor-pointer items-center justify-between px-12  py-8"
       >
         <h1>Logout</h1>
-        <BiLogOut className="w-[24px] fill-red-500 h-[24px]" />
+        <BiLogOut className="h-[24px] w-[24px] fill-red-500" />
       </div>
     </div>
   );

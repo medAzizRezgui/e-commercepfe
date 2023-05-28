@@ -23,9 +23,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
   }
   return (
     <div className="w-full bg-white">
-      <div className="w-full py-40 max-w-[1400px] mx-auto">
+      <div className="mx-auto w-full max-w-[1400px] py-40">
         <div className="w-full">
-          <h1 className="border-b-2 text-text-xl pb-8 mb-8 border-yellow-500 w-min font-medium min-w-[120px]">
+          <h1 className="mb-8 w-min min-w-[120px] border-b-2 border-yellow-500 pb-8 text-text-xl font-medium">
             Best Sellers
           </h1>
         </div>
@@ -40,6 +40,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
         >
           <SwiperSlide className="w-full">
             <div className="grid w-full grid-cols-4 ">
+              {/* eslint-disable-next-line array-callback-return,consistent-return */}
               {data.map((prod, i) => {
                 if (i < 8) {
                   return <ProductCardH prod={prod} />;
@@ -49,6 +50,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
           </SwiperSlide>
           <SwiperSlide className="w-full">
             <div className="grid w-full grid-cols-4 ">
+              {/* eslint-disable-next-line array-callback-return,consistent-return */}
               {data.map((prod, i) => {
                 if (i >= 8 && i < 16) {
                   return <ProductCardH prod={prod} />;
@@ -57,7 +59,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
             </div>
           </SwiperSlide>
         </Swiper>
-        <div className="w-full mx-auto mt-20 flex justify-center gap-[10px]">
+        <div className="mx-auto mt-20 flex w-full justify-center gap-[10px]">
           {slots >= 1 && (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
@@ -66,9 +68,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
               onClick={() => swiperInstance.slideTo(0)}
               className={`${
                 activeIndex === 0
-                  ? 'bg-yellow-500 h-[10px] w-[50px]'
-                  : 'bg-gray-400 h-[10px] w-[10px]'
-              }  rounded-full  cursor-pointer transition-all ease-in duration-400`}
+                  ? 'h-[10px] w-[50px] bg-yellow-500'
+                  : 'h-[10px] w-[10px] bg-gray-400'
+              }  cursor-pointer  rounded-full transition-all duration-300 ease-in`}
             />
           )}
           {slots >= 2 && (
@@ -79,9 +81,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
               onClick={() => swiperInstance.slideTo(1)}
               className={`${
                 activeIndex === 1
-                  ? 'bg-yellow-500 h-[10px] w-[50px]'
-                  : 'bg-gray-400 h-[10px] w-[10px]'
-              }  rounded-full  cursor-pointer transition-all ease-in duration-400`}
+                  ? 'h-[10px] w-[50px] bg-yellow-500'
+                  : 'h-[10px] w-[10px] bg-gray-400'
+              }  cursor-pointer  rounded-full transition-all duration-300 ease-in`}
             />
           )}
           {slots >= 3 && (
@@ -92,9 +94,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
               onClick={() => swiperInstance.slideTo(2)}
               className={`${
                 activeIndex === 2
-                  ? 'bg-yellow-500 h-[10px] w-[50px]'
-                  : 'bg-gray-400 h-[10px] w-[10px]'
-              }  rounded-full  cursor-pointer transition-all ease-in duration-400`}
+                  ? 'h-[10px] w-[50px] bg-yellow-500'
+                  : 'h-[10px] w-[10px] bg-gray-400'
+              }  cursor-pointer  rounded-full transition-all duration-300 ease-in`}
             />
           )}
         </div>

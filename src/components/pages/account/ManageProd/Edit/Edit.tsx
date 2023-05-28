@@ -144,19 +144,19 @@ const Edit = ({
   return (
     <Dialog.Root open={openEditModal}>
       <Dialog.Trigger asChild onClick={() => setOpenEditModal(true)}>
-        <BiEdit className="w-[24px] h-[24px] fill-blue-500 cursor-pointer" />
+        <BiEdit className="h-[24px] w-[24px] cursor-pointer fill-blue-500" />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay
           onClick={() => setOpenEditModal(false)}
-          className="bg-dark-500 opacity-90 data-[state=open]:animate-overlayShow z-[999] top-[-10px] fixed inset-0"
+          className="fixed inset-0 top-[-10px] z-[999] bg-dark-500 opacity-90 data-[state=open]:animate-overlayShow"
         />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] z-[1000] left-[50%] max-h-[85vh] w-[90vw] max-w-[1200px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-          <Dialog.Title className="text-blue-500 m-0 text-[17px] font-medium">
+        <Dialog.Content className="fixed left-[50%] top-[50%] z-[1000] max-h-[85vh] w-[90vw] max-w-[1200px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
+          <Dialog.Title className="m-0 text-[17px] font-medium text-blue-500">
             Edit Product
           </Dialog.Title>
           <div className="flex  gap-[15px]">
-            <div className="w-[80%] flex  ">
+            <div className="flex w-[80%]  ">
               <div className="flex flex-col">
                 <Input
                   placeholder="Name..."
@@ -205,7 +205,7 @@ const Edit = ({
                 <div className="flex flex-col gap-[10px] py-4">
                   <p className="font-medium">Specifications</p>
                   <TagsInput
-                    className="p-8 border-2 border-gray-500"
+                    className="border-2 border-gray-500 p-8"
                     inputProps={inputProps}
                     value={specs}
                     onChange={(e) => setSpecs(e)}
@@ -214,7 +214,7 @@ const Edit = ({
                 <div className="flex flex-col gap-[10px] py-4">
                   <p className="font-medium">Point Forts</p>
                   <TagsInput
-                    className="p-8 border-2 border-gray-500"
+                    className="border-2 border-gray-500 p-8"
                     inputProps={inputProps}
                     value={features}
                     onChange={(e) => setFeatures(e)}
@@ -245,7 +245,7 @@ const Edit = ({
               <button
                 type="button"
                 onClick={updatedProd}
-                className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
+                className=" inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
               >
                 {loading ? 'Loading' : 'Save changes'}
               </button>
@@ -254,7 +254,7 @@ const Edit = ({
           <Dialog.Close asChild onClick={() => setOpenEditModal(false)}>
             <button
               type="button"
-              className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+              className="absolute right-[10px] top-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
               aria-label="Close"
             >
               <BiX />

@@ -36,7 +36,9 @@
     "./tailwind.config.js",
     "./.eslintrc.js",
     "**/*.tsx",
-    "./index.d.ts"
+    "./index.d.ts",
+    "./config.js",
+    "src/pages/api/checkout/create-session.js"
   ],
   "exclude": [
     "node_modules",

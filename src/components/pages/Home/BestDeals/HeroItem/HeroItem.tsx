@@ -28,7 +28,7 @@ export const HeroItem = ({ item }: Props) => {
   };
 
   return (
-    <div className="w-[40%] p-24 relative bg-white border-r-[1px] flex flex-col justify-between border-gray-500">
+    <div className="relative flex w-[40%] flex-col justify-between border-r-[1px] border-gray-500 bg-white p-24">
       <Link
         className="cursor-pointer"
         href={{
@@ -41,7 +41,7 @@ export const HeroItem = ({ item }: Props) => {
           <p className="text-text-xs text-gray-400 ">
             {item.sousCategorie.name}
           </p>
-          <h1 className="font-semibold text-blue-500 text-text-lg ">
+          <h1 className="text-text-lg font-semibold text-blue-500 ">
             {item.name}
           </h1>
         </div>
@@ -52,7 +52,7 @@ export const HeroItem = ({ item }: Props) => {
             alt=""
             width={100}
             height={100}
-            className="w-[70%] mx-auto my-40 "
+            className="mx-auto my-40 w-[70%] "
           />
 
           <div className="flex gap-[10px]">
@@ -68,11 +68,12 @@ export const HeroItem = ({ item }: Props) => {
           </div>
         </div>
       </Link>
-      <div className="w-full  flex items-center justify-between">
+      <div className="flex  w-full items-center justify-between">
         <h1 className="text-text-xl font-semibold">90 DT</h1>
         <button
+          type="button"
           onClick={handleAddToCart}
-          className="bg-yellow-500 text-white font-medium px-24 py-8 rounded-full"
+          className="rounded-full bg-yellow-500 px-24 py-8 font-medium text-white"
         >
           Add To Cart
         </button>

@@ -2,7 +2,9 @@ import axios from 'axios';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
 import { Product as ProdType } from '../../../../../types/Product';
 import { DeleteModal } from '../../../../shared/DeleteModal';
 import Edit from '../Edit/Edit';
@@ -12,26 +14,34 @@ type Props = {
 };
 export const Product = ({ item }: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+
   const deleteProd = async (id: string) => {
     setDeleteModal(false);
     await axios
       .delete(`http://localhost:5000/product/delete/${id}`)
-      .then(() => {});
+      .then(() => {
+        setRefetch(!refetch);
+      })
+      .catch((error) => {
+        // Code to handle errors, if any occur during the DELETE request
+        console.log(error);
+      });
   };
 
   return (
-    <div className="flex gap-[10px] py-8 border-b-[1px] border-gray-500 items-center">
+    <div className="flex items-center gap-[10px] border-b-[1px] border-gray-500 py-8">
       <Image src={item.files[0]} alt="" width={75} height={75} />
       <div>
-        <h1 className="text-blue-500 text-text-md font-medium">{item.name}</h1>
+        <h1 className="text-text-md font-medium text-blue-500">{item.name}</h1>
         <p className="text-text-sm text-gray-400">
           {item?.categorie?.name} - {item?.sousCategorie?.name}
         </p>
       </div>
 
-      <div className="flex items-center gap-[10px] ml-auto">
+      <div className="ml-auto flex items-center gap-[10px]">
         <BiTrash
-          className="w-[24px] h-[24px] fill-red-500"
+          className="h-[24px] w-[24px] cursor-pointer fill-red-500"
           onClick={() => setDeleteModal(true)}
         />
 

@@ -14,19 +14,20 @@ export const DeleteModal = ({ deleteFn, setOpen, open, id }: Props) => {
   return (
     <div
       className={`${
-        open ? 'absolute' : 'hidden'
-      }  top-0 left-0 z-[9000]  flex items-center justify-center w-full h-[100vh]`}
+        open ? 'fixed' : 'hidden'
+      }  left-0 top-0 z-[9000]  flex h-[100vh] w-full items-center justify-center`}
     >
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div
         onClick={() => setOpen(false)}
-        className="w-full absolute cursor-pointer top-0  left-0 h-[100vh] bg-gray-400 opacity-25"
+        className="absolute left-0 top-0 h-[100vh]  w-full cursor-pointer bg-gray-400 opacity-25"
       />
       {/* Overlay */}
-      <div className=" absolute flex gap-[10px] bg-white p-24 rounded-[4px] ">
+      <div className=" absolute flex gap-[10px] rounded-[4px] bg-white p-24 ">
         {/* eslint-disable-next-line no-underscore-dangle */}
         <button
           type="button"
-          className="cursor-pointer text-white px-12 py-8 rounded-[4px] bg-red-500"
+          className="cursor-pointer rounded-[4px] bg-red-500 px-12 py-8 text-white"
           onClick={handleDelete}
         >
           Delete
@@ -34,7 +35,7 @@ export const DeleteModal = ({ deleteFn, setOpen, open, id }: Props) => {
 
         <button
           type="button"
-          className="cursor-pointer text-white px-12 py-8 rounded-[4px] bg-gray-500"
+          className="cursor-pointer rounded-[4px] bg-gray-500 px-12 py-8 text-white"
           onClick={() => setOpen(false)}
         >
           Cancel

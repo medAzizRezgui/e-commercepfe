@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { BiCartAdd } from 'react-icons/bi';
 
 import { useCart } from '../../../context/Cart/CartContext';
 import { Product } from '../../../types/Product';
+import { Toast } from '../toast';
 
 type Props = {
   data: Product;
 };
 export const ProductCard = ({ data }: Props) => {
   const { addItem } = useCart();
-
+  const [success, setSuccess] = useState(false);
   const handleAddToCart = () => {
     addItem(
       {
@@ -26,9 +27,16 @@ export const ProductCard = ({ data }: Props) => {
       },
       1
     );
+    setSuccess(true);
   };
   return (
     <div className="pt-20 pb-40 px-24 h-[340px] group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0  w-full relative ">
+      <Toast
+        success={success}
+        error={false}
+        text="Item Added to cart"
+        errorMsgs={[]}
+      />
       <Link
         className="cursor-pointer"
         href={{

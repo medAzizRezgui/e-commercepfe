@@ -5,6 +5,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'next',
@@ -20,7 +21,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'tailwindcss'],
   rules: {
     'no-underscore-dangle': 'off',
     'no-console': 'off',
@@ -37,7 +38,6 @@ module.exports = {
     // allow jsx syntax in js files (for next.js project)
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'import/extensions': 'off',
-    // 'import/no-unresolved': 'off',
     'prettier/prettier': 'error',
     'import/prefer-default-export': 'off',
     'no-return-await': 'off',
@@ -77,5 +77,7 @@ module.exports = {
         allowExpressionValues: true,
       },
     ],
+    'tailwindcss/classnames-order': 'warn',
+    'tailwindcss/no-custom-classname': 'error',
   },
 };

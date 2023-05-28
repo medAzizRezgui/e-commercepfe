@@ -56,13 +56,13 @@ const Cart = () => {
         <Header />
         {/* Categories */}
         <Categories />
-        <h1 className="text-display-md text-center py-40">Cart</h1>
-        <div className="max-w-[1200px] w-full mx-auto">
+        <h1 className="py-40 text-center text-display-md">Cart</h1>
+        <div className="mx-auto w-full max-w-[1200px]">
           {/* Heading */}
           {cartItems?.length > 0 && (
-            <div className="flex border-b-[1px] pb-4 border-gray-500 justify-between">
+            <div className="flex justify-between border-b-[1px] border-gray-500 pb-4">
               <p>Product</p>
-              <div className="flex justify-between w-[25%]">
+              <div className="flex w-[25%] justify-between">
                 <p>Price</p>
                 <p>Quantity</p>
                 <p>Subtotal</p>
@@ -72,13 +72,13 @@ const Cart = () => {
           {/*  Item */}
           {cartItems.length <= 0 ? (
             <div>
-              <h1 className="px-24 text-center py-40 text-display-lg bg-yellow-500">
+              <h1 className="bg-yellow-500 px-24 py-40 text-center text-display-lg">
                 Your cart is currently empty.
               </h1>
               <Link href="/shop">
                 <button
                   type="button"
-                  className="bg-gray-500 px-24 py-8 rounded-full my-20 mx-auto block"
+                  className="mx-auto my-20 block rounded-full bg-gray-500 px-24 py-8"
                 >
                   Return To Shop
                 </button>
@@ -86,10 +86,10 @@ const Cart = () => {
             </div>
           ) : (
             cartItems.map((item) => (
-              <div className="flex items-center border-b-[1px] pb-4 border-gray-500 justify-between">
+              <div className="flex items-center justify-between border-b-[1px] border-gray-500 pb-4">
                 <div className="flex items-center gap-[40px]">
                   <BiX
-                    className="w-[25px] h-[25px] cursor-pointer"
+                    className="h-[25px] w-[25px] cursor-pointer"
                     onClick={() => removeItem(item.id, 999)}
                   />
                   <Image
@@ -101,8 +101,8 @@ const Cart = () => {
                   />
                   <h1>{item.name}</h1>
                 </div>
-                <div className="flex items-center justify-between  w-[25%]">
-                  <p>{item.price} DT</p>
+                <div className="flex w-[25%] items-center  justify-between">
+                  <p>{item.price.toFixed(2)} DT</p>
                   <input
                     min={0}
                     type="number"
@@ -115,7 +115,7 @@ const Cart = () => {
                         item
                       )
                     }
-                    className="block border-[1px] border-gray-400 rounded-[12px] py-4 px-8 w-[50px] "
+                    className="block w-[50px] rounded-[12px] border-[1px] border-gray-400 px-8 py-4 "
                   />
                   <p>{(item.price * item.quantity).toFixed(2)} DT</p>
                 </div>
@@ -125,8 +125,8 @@ const Cart = () => {
 
           {/*  Button */}
           {cartItems.length > 0 && (
-            <div className="w-full flex flex-col items-end justify-end">
-              <div className="flex justify-between items-center w-full">
+            <div className="flex w-full flex-col items-end justify-end">
+              <div className="flex w-full items-center justify-between">
                 <div className="relative flex h-[50px] ">
                   <input
                     value={coupon}
@@ -134,11 +134,12 @@ const Cart = () => {
                     type="text"
                     maxLength={10}
                     placeholder="coupon"
-                    className="px-24 h-[50px] py-8 rounded-full border-2"
+                    className="h-[50px] rounded-full border-2 px-24 py-8"
                   />
                   <button
+                    type="button"
                     onClick={handleCoupon}
-                    className="absolute w-[40%] h-[50px] bg-dark-500 left-[200px] top-0 text-white px-24  rounded-r-full"
+                    className="absolute left-[200px] top-0 h-[50px] w-[40%] rounded-r-full bg-dark-500 px-24  text-white"
                   >
                     Apply Coupon
                   </button>
@@ -151,7 +152,7 @@ const Cart = () => {
                 >
                   <button
                     type="button"
-                    className="bg-yellow-500 px-24 py-8 font-semibold rounded-full my-20 ml-auto block"
+                    className="my-20 ml-auto block rounded-full bg-yellow-500 px-24 py-8 font-semibold"
                   >
                     Proceed to Checkout
                   </button>
@@ -159,20 +160,20 @@ const Cart = () => {
               </div>
               {/* Cart Total */}
               <div>
-                <h1 className="text-text-xl my-20 font-medium border-b-[2px] border-yellow-500">
+                <h1 className="my-20 border-b-[2px] border-yellow-500 text-text-xl font-medium">
                   Cart Total
                 </h1>
-                <div className="flex gap-[250px] items-center border-b-[1px] border-gray-500 py-8 justify-between">
+                <div className="flex items-center justify-between gap-[250px] border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Subtotal</p>
                   <p className="text-text-sm text-gray-400">
                     {calculateTotal()} DT
                   </p>
                 </div>
-                <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
+                <div className="flex items-center justify-between gap-[250px] border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Shipping</p>
                   <p className="text-text-sm text-gray-400">50 DT</p>
                 </div>
-                <div className="flex gap-[250px] items-center justify-between border-b-[1px] border-gray-500 py-8">
+                <div className="flex items-center justify-between gap-[250px] border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Total</p>
                   <p className="text-text-sm font-semibold">
                     {calculateTotal()} DT

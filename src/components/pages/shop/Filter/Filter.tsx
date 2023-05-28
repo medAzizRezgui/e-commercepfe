@@ -50,11 +50,5 @@ export const Filter = ({ data, setPrice, price }: Props) => (
         Price : ${price[0]} - ${price[1]}
       </p>
     </div>
-    <button
-      type="button"
-      className="block my-20 px-24 py-4 bg-gray-500 font-medium text-text-md rounded-[8px]"
-    >
-      Filter
-    </button>
   </>
 );

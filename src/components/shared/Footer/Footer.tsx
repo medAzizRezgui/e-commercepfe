@@ -19,11 +19,11 @@ export const Footer = () => {
   }, []);
 
   return (
-    <div className="w-full bg-gray-100 pb-32  relative">
+    <div className="relative w-full bg-gray-100  pb-32">
       <div className="w-full  bg-yellow-500">
-        <div className="w-full py-12 mb-24 mx-auto max-w-[1400px] flex items-center justify-between">
+        <div className="mx-auto mb-24 flex w-full max-w-[1400px] items-center justify-between py-12">
           <div className="flex items-center gap-[10px]">
-            <BiEnvelopeOpen className="w-[30px] h-[30px]" />
+            <BiEnvelopeOpen className="h-[30px] w-[30px]" />
             <h1 className="text-text-xl">Sign up to Newsletter</h1>
             <p>
               ...and receive{' '}
@@ -37,20 +37,23 @@ export const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email address"
-              className="px-24 py-8 rounded-full w-full"
+              className="w-full rounded-full px-24 py-8"
             />
-            <button className=" absolute right-[0px]  bg-dark-500 text-white rounded-r-full py-8 px-24">
+            <button
+              type="button"
+              className=" absolute right-[0px]  rounded-r-full bg-dark-500 px-24 py-8 text-white"
+            >
               Subscribe
             </button>
           </div>
         </div>
       </div>
-      <div className="w-full flex max-w-[1400px] justify-between mx-auto">
+      <div className="mx-auto flex w-full max-w-[1400px] justify-between">
         {/* Socials */}
         <div>
-          <h1 className="uppercase text-display-md font-bold">Logo.</h1>
+          <h1 className="text-display-md font-bold uppercase">Logo.</h1>
           <div className="flex items-center gap-[40px]">
-            <BiHeadphone className="w-[80px] h-[80px] fill-yellow-500" />
+            <BiHeadphone className="h-[80px] w-[80px] fill-yellow-500" />
             <div>
               <p className="text-text-sm text-gray-400">
                 Got Questions ? Call us 24/7!
@@ -65,16 +68,16 @@ export const Footer = () => {
               17 Princess Road, London, Greater London NW1 8JR, UK
             </p>
 
-            <div className="py-12 flex items-center gap-[10px]">
-              <BsFacebook className="w-[24px] h-[24px]" />
-              <BsFacebook className="w-[24px] h-[24px]" />
-              <BsFacebook className="w-[24px] h-[24px]" />
+            <div className="flex items-center gap-[10px] py-12">
+              <BsFacebook className="h-[24px] w-[24px]" />
+              <BsFacebook className="h-[24px] w-[24px]" />
+              <BsFacebook className="h-[24px] w-[24px]" />
             </div>
           </div>
         </div>
         {/*  Fast Access */}
         <div>
-          <h1 className="text-text-lg pb-14 font-semibold">Find It Fast</h1>
+          <h1 className="pb-14 text-text-lg font-semibold">Find It Fast</h1>
           <ul className="flex flex-col gap-[8px]">
             {categories.map((item) => (
               <Link
@@ -90,13 +93,13 @@ export const Footer = () => {
         </div>
         {/*  Customer Care */}
         <div>
-          <h1 className="text-text-lg pb-14 font-semibold">Customer Care</h1>
+          <h1 className="pb-14 text-text-lg font-semibold">Customer Care</h1>
           <ul className="flex flex-col gap-[8px]">
             <Link href="/account">
               <li className="text-text-sm">My Account</li>
             </Link>
             <Link href="/account">
-              <li className="text-text-sm">FAQ's</li>
+              <li className="text-text-sm">FAQ&apos;s</li>
             </Link>
             <Link href="/account">
               <li className="text-text-sm">Customer Service</li>
@@ -104,8 +107,8 @@ export const Footer = () => {
           </ul>
         </div>
       </div>
-      <div className="w-full bg-gray-500 py-8 absolute my-20">
-        <div className="w-full max-w-[1400px] justify-between flex items-center mx-auto">
+      <div className="absolute my-20 w-full bg-gray-500 py-8">
+        <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
           <h1 className="text-text-sm">Created By ROOT99</h1>
           <h1 className="text-text-sm">© Electro - All Rights Reserved</h1>
         </div>

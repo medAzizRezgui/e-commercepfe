@@ -1,5 +1,6 @@
-import stripeConfig from '../../../../config';
 import Stripe from 'stripe';
+
+import stripeConfig from '../../../../config';
 
 const stripe = new Stripe(stripeConfig.secretKey);
 
@@ -15,13 +16,13 @@ export default async (req, res) => {
           product_data: {
             name: item.name,
           },
-          unit_amount: item.price * 100,
+          unit_amount: parseInt(item.price.toFixed(2), 10) * 100,
         },
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `http://localhost:3001/success?orderId=${id}`,
-      cancel_url: 'http://localhost:3001/',
+      success_url: `http://localhost:3000/success?orderId=${id}`,
+      cancel_url: 'http://localhost:3000/',
     });
 
     res.status(200).json({ id: session.id });

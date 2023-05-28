@@ -61,12 +61,12 @@ const Shop = ({
         <Header />
         {/* Categories */}
         <Categories />
-        <div className="max-w-[1400px] mt-112  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16">
+        <div className="mx-auto mt-112  flex max-w-[1400px] items-center gap-[10px] px-16 py-16 text-text-sm">
           <h1>Home</h1>
-          <BiChevronRight className="w-[20px] h-[20px]" />
+          <BiChevronRight className="h-[20px] w-[20px]" />
           <h1>Shop</h1>
         </div>
-        <div className="w-full flex max-w-[1400px] mx-auto">
+        <div className="mx-auto flex w-full max-w-[1400px]">
           {/* Filter */}
           <div className="w-[20%]">
             <SideCategories
@@ -75,7 +75,7 @@ const Shop = ({
             />
             <Filter data={data} setPrice={setPrice} price={price} />
           </div>
-          <div className="w-[80%] mx-40">
+          <div className="mx-40 w-[80%]">
             <ShopHeader setSort={setSort} />
             {pathQuery.word && (
               <h1 className="pb-14">Results for {pathQuery.word} :</h1>

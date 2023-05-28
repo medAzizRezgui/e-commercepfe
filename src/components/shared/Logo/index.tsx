@@ -11,7 +11,6 @@ const Index = () => (
     enableBackground="new 0 0 175.748 42.52"
   >
     <ellipse
-      className="ellipse-bg"
       fillRule="evenodd"
       clipRule="evenodd"
       fill="#FDD700"

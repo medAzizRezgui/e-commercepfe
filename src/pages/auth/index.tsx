@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import React from 'react';
 
@@ -20,13 +19,13 @@ const Auth = () => (
       <Header />
       {/* Categories */}
       <Categories />
-      <div className="max-w-[1400px] mt-128  text-text-sm gap-[10px] px-16 flex items-center mx-auto py-16" />
-      <div className="full my-40 flex gap-[20px] max-w-[1400px] mx-auto">
+      <div className="mx-auto mt-128  flex max-w-[1400px] items-center gap-[10px] px-16 py-16 text-text-sm" />
+      <div className="mx-auto my-40 flex w-full max-w-[1400px] gap-[20px]">
         {/* Login */}
         <Login />
 
-        <div className="h-[500px] w-[2px] bg-gray-500 flex items-center justify-center">
-          <div className="flex items-center justify-center rounded-full border-2 border-gray-500 p-8 bg-white">
+        <div className="flex h-[500px] w-[2px] items-center justify-center bg-gray-500">
+          <div className="flex items-center justify-center rounded-full border-2 border-gray-500 bg-white p-8">
             <p className="text-text-sm">Ou</p>
           </div>
         </div>

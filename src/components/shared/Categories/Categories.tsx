@@ -3,13 +3,15 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 
+import { SousCategory } from '../../../types/SousCategory';
+
 import HoverComponent from './HoverComponent';
 
 export const Categories = () => {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
-  const [sousCat, setSousCat] = useState([]);
+  const [sousCat, setSousCat] = useState<SousCategory[]>([]);
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
@@ -28,7 +30,7 @@ export const Categories = () => {
 
   const fetchSousCat = async () => {
     try {
-      const response = await axios
+      await axios
         .get('http://localhost:5000/sousCat/getall')
         .then((r) => setSousCat(r.data)); // replace with your API endpoint
     } catch (error) {
@@ -41,20 +43,20 @@ export const Categories = () => {
   }, []);
 
   return (
-    <div className="w-full absolute top-0 pt-128 pb-8 border-b-2 border-gray-500  bg-gradient-to-t from-yellow-500 to-yellow-100">
-      <div className="max-w-[1400px] mx-auto py-12">
-        <ul className="flex relative items-center gap-[8px] font-semibold  text-text-xs">
+    <div className="absolute top-0 w-full border-b-2 border-gray-500 bg-gradient-to-t from-yellow-500  to-yellow-100 pb-8 pt-128">
+      <div className="mx-auto max-w-[1400px] py-12">
+        <ul className="relative flex items-center gap-[8px] text-text-xs  font-semibold">
           <Link href="/">
-            <li className="border-r-[1px] px-8 flex items-center">
+            <li className="flex items-center border-r-[1px] px-8">
               <p>Home</p>
             </li>
           </Link>
 
           {options?.map((item) => (
             <HoverComponent
-              content={sousCat.map((sousCat) => (
+              content={sousCat.map((souscat) => (
                 <h1>
-                  {sousCat.categorie._id === item.value ? sousCat.name : ''}
+                  {souscat.categorie._id === item.value ? souscat.name : ''}
                 </h1>
               ))}
               trigger={
@@ -65,9 +67,9 @@ export const Categories = () => {
                     query: { category: item.value },
                   }}
                 >
-                  <li className="border-r-[1px] px-8 flex items-center">
+                  <li className="flex items-center border-r-[1px] px-8">
                     <p>{item.label}</p>
-                    <BiChevronDown className="w-[24px] h-[24px]" />
+                    <BiChevronDown className="h-[24px] w-[24px]" />
                   </li>
                 </Link>
               }

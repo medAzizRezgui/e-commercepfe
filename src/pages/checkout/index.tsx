@@ -10,17 +10,18 @@ import { Route } from '../../components/pages/Product/Route';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
+import { User } from '../../types/User';
 
 const stripePromise = loadStripe(stripeConfig.publicKey);
 
 const Checkout = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [region, setRegion] = useState('');
   const [town, setTown] = useState('');
   const [phoneNumber, setPhoneNumber] = useState();
-  const [zipCode, setZipCode] = useState();
+  const [zipCode, setZipCode] = useState<number>();
   const [street, setStreet] = useState('');
 
   const { cartItems } = useCart();
@@ -46,7 +47,7 @@ const Checkout = () => {
 
       const session = response.data;
 
-      await stripe.redirectToCheckout({ sessionId: session.id });
+      await stripe?.redirectToCheckout({ sessionId: session.id });
     } catch (error) {
       console.log(error);
     }
@@ -104,16 +105,16 @@ const Checkout = () => {
         <Categories />
         <div className="mt-112  w-full" />
         <Route />
-        <h1 className="text-display-md text-center py-40">Checkout</h1>
+        <h1 className="py-40 text-center text-display-md">Checkout</h1>
 
-        <div className="w-full max-w-[1400px] mx-auto flex items-start justify-between ">
+        <div className="mx-auto flex w-full max-w-[1400px] items-start justify-between ">
           {/* INPUTS */}
           <div className="w-[60%] p-24 ">
-            <h1 className="w-full pb-8 text-display-sm border-b-2 border-gray-500">
+            <h1 className="w-full border-b-2 border-gray-500 pb-8 text-display-sm">
               Billing Details
             </h1>
 
-            <div className="flex items-center my-20 justify-between gap-[20px]">
+            <div className="my-20 flex items-center justify-between gap-[20px]">
               <Input
                 label="First Name*"
                 value={firstName}
@@ -133,7 +134,7 @@ const Checkout = () => {
             <p className="py-8">Region</p>
             <select
               onChange={(e) => setRegion(e.currentTarget.value)}
-              className="border-[1px] border-gray-400 mb-8 w-full rounded-full px-24 py-8 "
+              className="mb-8 w-full rounded-full border-[1px] border-gray-400 px-24 py-8 "
             >
               <option disabled>Sélectionner</option>
               <option value="Ariana">Ariana</option>
@@ -199,19 +200,19 @@ const Checkout = () => {
           </div>
 
           {/* Details */}
-          <div className="w-[40%] p-24 rounded-[4px]  bg-gray-300">
-            <h1 className="w-full pb-8 text-display-sm border-b-2 border-gray-500">
+          <div className="w-[40%] rounded-[4px] bg-gray-300  p-24">
+            <h1 className="w-full border-b-2 border-gray-500 pb-8 text-display-sm">
               Your order
             </h1>
 
-            <div className="flex font-semibold border-b-2 border-gray-500 pt-24 pb-8 items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between border-b-2 border-gray-500 pb-8 pt-24 font-semibold">
               <p>Product</p>
               <p>Subtotal</p>
             </div>
 
-            <div className="flex flex-col  border-b-2 border-gray-500 pt-24 pb-8 items-center justify-between w-full">
+            <div className="flex w-full  flex-col items-center justify-between border-b-2 border-gray-500 pb-8 pt-24">
               {cartItems?.map((item) => (
-                <div className="flex justify-between w-full">
+                <div className="flex w-full justify-between">
                   <p>
                     {item.name}{' '}
                     <span className="font-semibold">x {item.quantity}</span>
@@ -221,19 +222,20 @@ const Checkout = () => {
               ))}
             </div>
 
-            <div className="flex  border-b-2 border-gray-500 pt-24 pb-8 items-center justify-between w-full">
+            <div className="flex  w-full items-center justify-between border-b-2 border-gray-500 pb-8 pt-24">
               <p className="font-semibold">Subtotal</p>
               <p>{calculateTotal()} DT</p>
             </div>
 
-            <div className="flex font-semibold  border-b-2 border-gray-400 pt-24 pb-8 items-center justify-between w-full">
+            <div className="flex w-full  items-center justify-between border-b-2 border-gray-400 pb-8 pt-24 font-semibold">
               <p>Total</p>
               <p>{calculateTotal()} DT</p>
             </div>
 
             <button
+              type="button"
               onClick={handleAddOrder}
-              className="bg-yellow-500 text-dark-500 w-full text-center rounded-full py-8 font-semibold text-display-xs my-20"
+              className="my-20 w-full rounded-full bg-yellow-500 py-8 text-center text-display-xs font-semibold text-dark-500"
             >
               Place Order
             </button>

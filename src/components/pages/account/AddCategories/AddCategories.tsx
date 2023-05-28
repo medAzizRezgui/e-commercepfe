@@ -36,7 +36,7 @@ export const AddCategories = () => {
             placeholder="Categorie Name..."
           />
           <button
-            className="bg-gray-500 px-24 py-8 rounded-[20px] block mt-12 h-max"
+            className="mt-12 block h-max rounded-[20px] bg-gray-500 px-24 py-8"
             type="button"
             onClick={() => handleAddCategorie()}
           >
@@ -57,7 +57,7 @@ export const AddCategories = () => {
         />
 
         <button
-          className="bg-gray-500 px-24 py-8 rounded-[20px] block mt-12 h-max"
+          className="mt-12 block h-max rounded-[20px] bg-gray-500 px-24 py-8"
           type="button"
           onClick={() => handleAddSousCategorie()}
         >

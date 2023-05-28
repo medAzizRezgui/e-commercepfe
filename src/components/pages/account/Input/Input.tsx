@@ -2,13 +2,13 @@ import React, { HTMLInputTypeAttribute } from 'react';
 
 type Props = {
   label: string;
-  value: string | number;
+  value: string | number | readonly string[] | undefined;
   type: HTMLInputTypeAttribute | undefined;
   setValue: (arg: any) => void;
   placeholder: string;
 };
 export const Input = ({ label, value, type, setValue, placeholder }: Props) => (
-  <div className="flex flex-col w-full gap-[10px] py-4">
+  <div className="flex w-full flex-col gap-[10px] py-4">
     <p className="font-medium">{label}</p>
     <input
       type={type}
