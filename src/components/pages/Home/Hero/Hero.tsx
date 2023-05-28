@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 import 'swiper/css';
@@ -7,15 +8,13 @@ import HeroBg from '@/images/HeroBg.jpg';
 import axiosProduction from '../../../../pages/api/axios';
 import { HeroSwiper } from '../HeroSwiper';
 
-import Link from 'next/link';
-
 export const Hero = () => {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
   const fetchCategories = async () => {
     try {
-      const response = await axiosProduction.get('/categorie/getall'); // replace with your API endpoint
+      const response = await axiosProduction.get('/categorie/getall'); //
       const transformedOptions = response.data.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,
