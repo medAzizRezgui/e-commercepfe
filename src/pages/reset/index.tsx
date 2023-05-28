@@ -53,7 +53,7 @@ const Reset = () => {
       }
     }
     try {
-      const response = await axiosProduction.patch('/changePassword', {
+      const response = await axiosProduction.patch('/auth/changePassword', {
         newPassword: password,
         email: decodedEmail,
       });
