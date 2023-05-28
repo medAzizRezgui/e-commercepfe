@@ -60,6 +60,7 @@ const Reset = () => {
       if (response.status === 200) {
         setSuccess(true);
         setError(false);
+        await router.push('/auth');
       } else {
         setSuccess(false);
         setError(true);
