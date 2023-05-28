@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useCart } from '../../../../../context/Cart/CartContext';
 import { Product } from '../../../../../types/Product';
+import { Toast } from '../../../../shared/toast';
 
 type Props = {
   item: Product;
 };
 export const HeroItem = ({ item }: Props) => {
   const { addItem } = useCart();
+  const [success, setSuccess] = useState(false);
 
   const handleAddToCart = () => {
+    setSuccess(true);
     addItem(
       {
         image: item?.files[0],
@@ -26,7 +29,6 @@ export const HeroItem = ({ item }: Props) => {
       1
     );
   };
-
   return (
     <div className="relative flex w-[40%] flex-col justify-between border-r-[1px] border-gray-500 bg-white p-24">
       <Link
@@ -37,6 +39,12 @@ export const HeroItem = ({ item }: Props) => {
           query: { name: item.name, id: item._id },
         }}
       >
+        <Toast
+          success={success}
+          error={false}
+          text="Item added to cart"
+          errorMsgs={[{ msg: '' }]}
+        />
         <div>
           <p className="text-text-xs text-gray-400 ">
             {item.sousCategorie.name}

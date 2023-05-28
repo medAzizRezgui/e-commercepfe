@@ -12,6 +12,7 @@ export const Sort = ({
   setSort: React.Dispatch<React.SetStateAction<string>>;
 }) => (
   <Select
+    isSearchable={false}
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     onChange={(e) => setSort(e?.value)}

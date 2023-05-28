@@ -11,13 +11,13 @@ type Props = {
 export const Filter = ({ data, setPrice, price }: Props) => (
   <>
     <div className="py-32">
-      <h1 className="text-text-lg pb-8">Filters</h1>
-      <div className="w-full bg-gray-500 relative h-[2px] rounded-full">
-        <div className="w-[70px] absolute bg-yellow-500 h-[2px] rounded-full" />
+      <h1 className="pb-8 text-text-lg">Filters</h1>
+      <div className="relative h-[2px] w-full rounded-full bg-gray-500">
+        <div className="absolute h-[2px] w-[70px] rounded-full bg-yellow-500" />
       </div>
     </div>
-    <div className="pb-8 border-b-2 border-gray-500">
-      <h1 className="font-semibold grow py-18 text-text-sm">Price</h1>
+    <div className="border-b-2 border-gray-500 pb-8">
+      <h1 className="grow py-18 text-text-sm font-semibold">Price</h1>
       <Slider.Root
         className="SliderRoot"
         defaultValue={[
@@ -46,7 +46,7 @@ export const Filter = ({ data, setPrice, price }: Props) => (
         <Slider.Thumb className="SliderThumb min" />
         <Slider.Thumb className="SliderThumb max" />
       </Slider.Root>
-      <p className="font-medium text-text-sm py-8 text-gray-400">
+      <p className="py-8 text-text-sm font-medium text-gray-400">
         Price : ${price[0]} - ${price[1]}
       </p>
     </div>
