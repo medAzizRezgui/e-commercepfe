@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { BiStar } from 'react-icons/bi';
 import ReactStars from 'react-stars';
 
 import axiosProduction from '../../../../pages/api/axios';
 import { Product } from '../../../../types/Product';
+import { User } from '../../../../types/User';
 import { Toast } from '../../../shared/toast';
 
 type Props = {
@@ -12,12 +14,30 @@ type Props = {
 };
 export const Reviews = ({ prod }: Props) => {
   const [starts, setStarts] = useState(0);
-
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [user, setUser] = useState<User>();
+
+  // Get user from ls , if not redirect to auth page
+  useEffect(() => {
+    const getUser = () => {
+      const res = window.localStorage.getItem('user');
+      if (res) {
+        setUser(JSON.parse(res));
+      }
+      if (!res) {
+        //
+      }
+    };
+    getUser();
+  }, []);
   const handleSentReview = async () => {
+    if (!user) {
+      router.push('/auth');
+    }
     setError(false);
     setSuccess(false);
     if (!name || !email || starts === 0) {

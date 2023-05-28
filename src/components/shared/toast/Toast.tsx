@@ -9,7 +9,7 @@ type Props = {
 export const Toast = ({ success, text, error, errorMsgs }: Props) => (
   <>
     {success && (
-      <div className="fixed right-10 top-10 z-[1500] animate-slideLeft rounded-[4px] bg-green-400 px-14 py-8 text-white">
+      <div className="fixed right-10 top-5 z-[1500] animate-slideLeft rounded-[4px] bg-green-400 px-14 py-8 text-white">
         <h1>{text}</h1>
       </div>
     )}
