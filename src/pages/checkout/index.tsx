@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 import stripeConfig from '../../../config';
 import { Input } from '../../components/pages/account/Input';
-import { Route } from '../../components/pages/Product/Route';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
@@ -105,7 +104,7 @@ const Checkout = () => {
         {/* Categories */}
         <Categories />
         <div className="mt-112  w-full" />
-        <Route />
+
         <h1 className="py-40 text-center text-display-md">Checkout</h1>
 
         <div className="mx-auto flex w-full max-w-[1400px] items-start justify-between ">

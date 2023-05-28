@@ -3,7 +3,6 @@ import React from 'react';
 
 import { Hero } from '../../components/pages/Product/Hero';
 import { Reviews } from '../../components/pages/Product/Reviews';
-import { Route } from '../../components/pages/Product/Route';
 import { Stats } from '../../components/pages/Product/Stats';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
@@ -25,7 +24,7 @@ const Product = ({ data }: { data: ProdType }) => (
       <Categories />
       {/* Route */}
       <div className="mt-112  w-full" />
-      <Route />
+
       {/*  Hero */}
       <Hero prod={data} />
       <div className="w-full bg-gray-300 py-40">
