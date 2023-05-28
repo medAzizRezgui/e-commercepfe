@@ -12,7 +12,7 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
     <div
       className={`${
         openCart ? 'absolute' : 'hidden'
-      } z-[100] w-[300px] bg-white border-t-[3px] border-yellow-500 top-[50px] right-0 drop-shadow-md py-12 px-24 rounded-t-[4px] rounded-b-[12px]`}
+      } right-0 top-[50px] z-[100] w-[300px] rounded-b-[12px] rounded-t-[4px] border-t-[3px] border-yellow-500 bg-white px-24 py-12 drop-shadow-md`}
     >
       {cartItems.length <= 0 ? (
         <h1 className="py-18">No products in the cart.</h1>
@@ -33,7 +33,7 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
               </div>
               <BiX
                 onClick={() => removeItem(item.id, item.quantity)}
-                className="w-[40px] h-[40px] fill-red-500 cursor-pointer"
+                className="h-[40px] w-[40px] cursor-pointer fill-red-500"
               />
             </div>
           </div>
@@ -41,18 +41,18 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
       )}
       <div />
       {cartItems.length > 0 && (
-        <div className="flex items-center pt-24 gap-[20px]  justify-between">
+        <div className="flex items-center justify-between gap-[20px]  pt-24">
           <button
             type="button"
             onClick={() => router.push('/cart')}
-            className="bg-gray-300 text-text-sm w-full  rounded-full px-16 py-12"
+            className="w-full rounded-full bg-gray-300  px-16 py-12 text-text-sm"
           >
             View Cart
           </button>
-
           <button
+            onClick={() => router.push('/checkout')}
             type="button"
-            className="bg-yellow-500 text-text-sm w-full rounded-full px-16 py-12"
+            className="w-full rounded-full bg-yellow-500 px-16 py-12 text-text-sm"
           >
             Checkout
           </button>

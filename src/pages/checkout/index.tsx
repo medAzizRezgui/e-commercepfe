@@ -136,7 +136,9 @@ const Checkout = () => {
               onChange={(e) => setRegion(e.currentTarget.value)}
               className="mb-8 w-full rounded-full border-[1px] border-gray-400 px-24 py-8 "
             >
-              <option disabled>Sélectionner</option>
+              <option value="select" selected>
+                Sélectioner
+              </option>
               <option value="Ariana">Ariana</option>
               <option value="Béja">Béja</option>
               <option value="Ben Arous">Ben Arous</option>
