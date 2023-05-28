@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import 'swiper/css';
 import HeroBg from '@/images/HeroBg.jpg';
 
+import axiosProduction from '../../../../pages/api/axios';
 import { HeroSwiper } from '../HeroSwiper';
 
-import axios from 'axios';
 import Link from 'next/link';
 
 export const Hero = () => {
@@ -15,9 +15,7 @@ export const Hero = () => {
   );
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:5000/categorie/getall'
-      ); // replace with your API endpoint
+      const response = await axiosProduction.get('/categorie/getall'); // replace with your API endpoint
       const transformedOptions = response.data.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,
@@ -34,11 +32,11 @@ export const Hero = () => {
 
   return (
     <div className="h-[444px] w-full  bg-cover bg-center">
-      <div className="absolute h-[444px] z-[-1] top-0 right-0">
+      <div className="absolute right-0 top-0 z-[-1] h-[444px]">
         <Image src={HeroBg} alt="" className="h-[570px] object-cover " />
       </div>
-      <div className="max-w-[1400px] w-full flex h-full mx-auto">
-        <div className="w-[20%] px-24 py-12 h-min rounded-b-[8px] bg-white">
+      <div className="mx-auto flex h-full w-full max-w-[1400px]">
+        <div className="h-min w-[20%] rounded-b-[8px] bg-white px-24 py-12">
           {options.map((item) => (
             <Link
               href={{
@@ -47,7 +45,7 @@ export const Hero = () => {
                 query: { category: item.value },
               }}
             >
-              <p className="text-text-sm py-8 border-b-[1px] border-gray-500">
+              <p className="border-b-[1px] border-gray-500 py-8 text-text-sm">
                 {item.label}
               </p>
             </Link>
