@@ -5,7 +5,7 @@ const axiosProduction = axios.create({
 });
 
 axiosProduction.defaults.headers.common['Access-Control-Allow-Origin'] =
-  'https://e-commercepfe-j4y2cxs2a-medazizrezgui.vercel.app';
+  'https://www.rezgui-aziz.me/';
 axiosProduction.defaults.headers.common['Access-Control-Allow-Methods'] =
   'GET, POST, DELETE, UPDATE, PUT, PATCH';
 axiosProduction.defaults.headers.common['Access-Control-Allow-Credentials'] =
