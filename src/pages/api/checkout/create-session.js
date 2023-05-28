@@ -21,8 +21,8 @@ export default async (req, res) => {
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `http://localhost:3000/success?orderId=${id}`,
-      cancel_url: 'http://localhost:3000/',
+      success_url: `https://www.rezgui-aziz.me/success?orderId=${id}`,
+      cancel_url: 'https://www.rezgui-aziz.me/',
     });
 
     res.status(200).json({ id: session.id });
