@@ -25,10 +25,26 @@ export const UserProfile = () => {
         setFullName(JSON.parse(res).fullName);
         setEmail(JSON.parse(res).email);
         setPhoneNumber(JSON.parse(res).phoneNumber);
-        setCity(JSON.parse(res).shippingAddress.city);
-        setStreet(JSON.parse(res).shippingAddress.street);
-        setPostalCode(JSON.parse(res).shippingAddress.postalCode);
-        setRegion(JSON.parse(res).shippingAddress.region);
+        setCity(
+          JSON.parse(res).shippingAddress.city
+            ? JSON.parse(res).shippingAddress.city
+            : ''
+        );
+        setStreet(
+          JSON.parse(res).shippingAddress.street
+            ? JSON.parse(res).shippingAddress.street
+            : ''
+        );
+        setPostalCode(
+          JSON.parse(res).shippingAddress.postalCode
+            ? JSON.parse(res).shippingAddress.postalCode
+            : ''
+        );
+        setRegion(
+          JSON.parse(res).shippingAddress.region
+            ? JSON.parse(res).shippingAddress.region
+            : ''
+        );
       }
       if (!res) {
         router.push('/auth');
