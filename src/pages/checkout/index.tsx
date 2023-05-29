@@ -1,18 +1,14 @@
-import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import stripeConfig from '../../../config';
 import { Input } from '../../components/pages/account/Input';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
 import { User } from '../../types/User';
 import axiosProduction from '../api/axios';
-
-const stripePromise = loadStripe(stripeConfig.publicKey);
 
 const Checkout = () => {
   const [user, setUser] = useState<User>();
@@ -36,21 +32,35 @@ const Checkout = () => {
     return total.toFixed(2);
   }
 
-  const handleCheckout = async (id: string) => {
-    const stripe = await stripePromise;
+  const handlePay = (orderId: string) => {
+    const url = 'https://www.rezgui-aziz.me/api/generatePayment';
 
-    try {
-      const response = await axios.post('/api/checkout/create-session', {
-        cartItems,
-        id,
+    const requestData = {
+      app_token: '955ddff9-f0e3-4e8e-8b74-ab30e3b53edf',
+      app_secret: 'da3f95a4-2fd5-4c8c-8c49-7cac799e2433',
+      amount: calculateTotal(),
+      accept_card: true,
+      session_timeout_secs: 1200,
+      success_link: `https://www.rezgui-aziz.me/success?orderId=${orderId}`,
+      fail_link: 'https://www.rezgui-aziz.me/shop',
+      developer_tracking_id: 'bgyt529J0Uk',
+    };
+
+    axios
+      .post(url, requestData, {
+        withCredentials: false,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        // Handle the response here
+        router.push(response.data.result.link);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error(error);
       });
-
-      const session = response.data;
-
-      await stripe?.redirectToCheckout({ sessionId: session.id });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleAddOrder = async () => {
@@ -74,7 +84,7 @@ const Checkout = () => {
         totalPrice: calculateTotal(),
         coupon: router.query.coupon,
       })
-      .then((r) => handleCheckout(r.data._id));
+      .then((r) => handlePay(r.data._id));
   };
   useEffect(() => {
     const getUser = () => {
