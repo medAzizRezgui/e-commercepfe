@@ -17,7 +17,6 @@ module.exports = async () => {
 
   axios
     .post(url, requestData, {
-      withCredentials: false,
       headers: {
         'Content-Type': 'application/json',
       },
