@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { BestDeals } from '../components/pages/Home/BestDeals';
@@ -15,6 +16,7 @@ import { Product } from '../types/Product';
 import axiosProduction from './api/axios';
 
 const Home = ({ data }: { data: Product[] }) => {
+  const router = useRouter();
   const handlePay = () => {
     const url = 'https://www.rezgui-aziz.me/api/generatePayment';
 
@@ -24,8 +26,8 @@ const Home = ({ data }: { data: Product[] }) => {
       amount: '30500',
       accept_card: true,
       session_timeout_secs: 1200,
-      success_link: 'https://example.website.com/success',
-      fail_link: 'https://example.website.com/fail',
+      success_link: `https://www.rezgui-aziz.me/success?orderId=64738e4f4cd8c010ce38f167`,
+      fail_link: 'https://www.rezgui-aziz.me',
       developer_tracking_id: 'bgyt529J0Uk',
     };
 
@@ -38,7 +40,7 @@ const Home = ({ data }: { data: Product[] }) => {
       })
       .then((response) => {
         // Handle the response here
-        console.log(response.data);
+        router.push(response.data.result.link);
       })
       .catch((error) => {
         // Handle errors here
