@@ -26,11 +26,11 @@ const Home = ({ data }: { data: Product[] }) => {
       amount: '30500',
       accept_card: true,
       session_timeout_secs: 1200,
-      success_link: `https://www.rezgui-aziz.me/success?orderId=64738e4f4cd8c010ce38f167`,
+      success_link: `https://www.google.com`,
       fail_link: 'https://www.rezgui-aziz.me/shop',
       developer_tracking_id: 'bgyt529J0Uk',
     };
-
+    // https://www.rezgui-aziz.me/success?orderId=64738e4f4cd8c010ce38f167
     axios
       .post(url, requestData, {
         withCredentials: false,
