@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { BiLogOut, BiPackage } from 'react-icons/bi';
+import { BiLogOut, BiPackage, BiUser } from 'react-icons/bi';
 
 type Props = {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
@@ -27,6 +27,18 @@ export const UserMenu = ({ activeTab, setActiveTab }: Props) => {
         >
           <h1>Orders</h1>
           <BiPackage className="h-[24px] w-[24px]" />
+        </li>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
+        <li
+          onClick={() => setActiveTab(1)}
+          className={` ${
+            activeTab === 1
+              ? 'border-b-[1px] border-yellow-500 font-medium text-yellow-500'
+              : 'border-b-[1px] border-gray-500 font-regular text-dark-500'
+          } flex cursor-pointer  items-center justify-between  px-12  py-8`}
+        >
+          <h1>Profile</h1>
+          <BiUser className="h-[24px] w-[24px]" />
         </li>
       </ul>
 

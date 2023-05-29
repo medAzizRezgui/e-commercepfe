@@ -6,10 +6,12 @@ import { useRecoilValue } from 'recoil';
 import { refetchProdsState } from '../../atoms/refetchProdsAtom';
 import { AdminOrders } from '../../components/pages/account/AdminOrders';
 import { CategoriesTabs } from '../../components/pages/account/CategoriesTabs';
+import { Input } from '../../components/pages/account/Input';
 import { Menu } from '../../components/pages/account/Menu';
 import { ProductsTabs } from '../../components/pages/account/ProductsTabs';
 import { UserMenu } from '../../components/pages/account/UserMenu';
 import { UserOrders } from '../../components/pages/account/UserOrders';
+import { UserProfile } from '../../components/pages/account/UserProfile';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Order } from '../../types/Order';
@@ -109,6 +111,7 @@ const Account = ({
               {activeTab === 0 && (
                 <UserOrders orders={orders} userEmail={user.email} />
               )}
+              {activeTab === 1 && <UserProfile />}
             </div>
           </div>
         )}

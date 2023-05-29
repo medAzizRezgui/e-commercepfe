@@ -128,11 +128,6 @@ Shop.getInitialProps = async () => {
   }));
 
   const sousCatRes = await axiosProduction.get('/sousCat/getall'); // replace with your API endpoint
-  // const sousCategories = sousCatRes.data.map((option: any) => ({
-  //   // eslint-disable-next-line no-underscore-dangle
-  //   value: option._id,
-  //   label: option.name,
-  // }));
   const sousCategories = await sousCatRes?.data;
   return { data, transformedOptions, sousCategories };
 };
