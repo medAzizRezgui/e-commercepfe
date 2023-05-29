@@ -16,7 +16,7 @@ import axiosProduction from './api/axios';
 
 const Home = ({ data }: { data: Product[] }) => {
   const handlePay = () => {
-    const url = 'https://developers.flouci.com/api/generate_payment';
+    const url = 'https://www.rezgui-aziz.me/api/generatePayment';
 
     const requestData = {
       app_token: '955ddff9-f0e3-4e8e-8b74-ab30e3b53edf',
