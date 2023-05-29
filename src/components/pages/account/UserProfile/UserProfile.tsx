@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import axiosProduction from '../../../../pages/api/axios';
 import { User } from '../../../../types/User';
+import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
 export const UserProfile = () => {
@@ -15,8 +16,10 @@ export const UserProfile = () => {
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   // TODO : Save only the user id in the localstorage and a do a request with it
-  // Get user from ls , if not redirect to auth page
   useEffect(() => {
     const getUser = () => {
       const res = window.localStorage.getItem('user');
@@ -26,22 +29,22 @@ export const UserProfile = () => {
         setEmail(JSON.parse(res).email);
         setPhoneNumber(JSON.parse(res).phoneNumber);
         setCity(
-          JSON.parse(res).shippingAddress.city
+          JSON.parse(res)?.shippingAddress?.city
             ? JSON.parse(res).shippingAddress.city
             : ''
         );
         setStreet(
-          JSON.parse(res).shippingAddress.street
+          JSON.parse(res)?.shippingAddress?.street
             ? JSON.parse(res).shippingAddress.street
             : ''
         );
         setPostalCode(
-          JSON.parse(res).shippingAddress.postalCode
+          JSON.parse(res)?.shippingAddress?.postalCode
             ? JSON.parse(res).shippingAddress.postalCode
             : ''
         );
         setRegion(
-          JSON.parse(res).shippingAddress.region
+          JSON.parse(res)?.shippingAddress?.region
             ? JSON.parse(res).shippingAddress.region
             : ''
         );
@@ -60,6 +63,8 @@ export const UserProfile = () => {
       </div>
     );
   const handleUpdateUser = async () => {
+    setSuccess(false);
+    setError(false);
     try {
       await axiosProduction
         .patch(`/auth/updateUser/${user?._id}`, {
@@ -73,15 +78,25 @@ export const UserProfile = () => {
             street,
           },
         })
-        .then((r) =>
-          window.localStorage.setItem('user', JSON.stringify(r.data))
-        );
+        .then((r) => {
+          setSuccess(true);
+          setError(false);
+          window.localStorage.setItem('user', JSON.stringify(r.data));
+        });
     } catch (e) {
       console.error(e);
+      setSuccess(false);
+      setError(true);
     }
   };
   return (
     <div className="w-full">
+      <Toast
+        success={success}
+        error={error}
+        text="Updated successfully"
+        errorMsgs={[{ msg: 'Something went wrong' }]}
+      />
       <div>
         <Input
           label="Full Name"

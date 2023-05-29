@@ -68,6 +68,9 @@ export const Login: React.FC = () => {
 
       handleSuccess(response);
     } catch (err) {
+      setError(true);
+      setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);
+
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       if (err.response && err.response.status === 404) {
@@ -75,6 +78,8 @@ export const Login: React.FC = () => {
         setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);
       } else {
         console.log(err);
+        setError(true);
+        setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);
       }
     }
   };

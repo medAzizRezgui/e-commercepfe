@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import axiosProduction from '../../../../pages/api/axios';
+import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 import { CategoriesSelect } from '../ProductInputs/CategoriesSelect';
 
@@ -9,23 +10,44 @@ export const AddCategories = () => {
   const [refetch, setRefetch] = useState(false);
   const [categorieName, setCategorieName] = useState('');
   const [sousCategorieName, setSousCategorieName] = useState('');
-
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const handleAddCategorie = async () => {
+    setError(false);
+    setSuccess(false);
     await axiosProduction
       .post('/categorie/add', {
         name: categorieName,
       })
-      .then(() => setRefetch(!refetch));
+      .then(() => {
+        setSuccess(true);
+        setRefetch(!refetch);
+      })
+      .catch(() => setError(true));
   };
 
   const handleAddSousCategorie = async () => {
-    await axiosProduction.post('/sousCat/add', {
-      name: sousCategorieName,
-      categorie: categorie.value,
-    });
+    setError(false);
+    setSuccess(false);
+    await axiosProduction
+      .post('/sousCat/add', {
+        name: sousCategorieName,
+        categorie: categorie.value,
+      })
+      .then(() => {
+        setSuccess(true);
+        setRefetch(!refetch);
+      })
+      .catch(() => setError(true));
   };
   return (
     <div className="mt-8">
+      <Toast
+        success={success}
+        error={error}
+        text="Added Successfully"
+        errorMsgs={[{ msg: 'Something went wrong' }]}
+      />
       <div className="w-full flex-col">
         <div className="border-b-2 border-gray-500 pb-8">
           <Input
