@@ -26,12 +26,12 @@ const Home = ({ data }: { data: Product[] }) => {
       session_timeout_secs: 1200,
       success_link: 'https://example.website.com/success',
       fail_link: 'https://example.website.com/fail',
-      developer_tracking_id: '<your_internal_tracking_id>',
+      developer_tracking_id: 'bgyt529J0Uk',
     };
 
     axios
       .post(url, requestData, {
-        withCredentials: true,
+        withCredentials: false,
         headers: {
           'Content-Type': 'application/json',
         },
