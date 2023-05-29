@@ -38,7 +38,8 @@
     "**/*.tsx",
     "./index.d.ts",
     "./config.js",
-    "src/pages/api/checkout/create-session.js"
+    "src/pages/api/checkout/create-session.js",
+    "src/pages/api/generatePayment.ts"
   ],
   "exclude": [
     "node_modules",
