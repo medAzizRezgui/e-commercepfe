@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import { axiosDev } from '../../../../pages/api/axios';
+import axiosProduction from '../../../../pages/api/axios';
 import { User } from '../../../../types/User';
 import { Input } from '../Input';
 
@@ -45,7 +45,7 @@ export const UserProfile = () => {
     );
   const handleUpdateUser = async () => {
     try {
-      await axiosDev
+      await axiosProduction
         .patch(`/auth/updateUser/${user?._id}`, {
           email,
           phoneNumber,
