@@ -53,9 +53,22 @@ export const Categories = () => {
           {options?.map((item) => (
             <HoverComponent
               content={sousCat.map((souscat) => (
-                <h1>
-                  {souscat.categorie._id === item.value ? souscat.name : ''}
-                </h1>
+                <div>
+                  <Link
+                    href={{
+                      pathname: '/shop',
+                      // eslint-disable-next-line no-underscore-dangle
+                      query: {
+                        sousCategory: souscat._id,
+                        category: item.value,
+                      },
+                    }}
+                  >
+                    {souscat.categorie._id === item.value && (
+                      <h1 className="py-8 text-text-sm"> • {souscat.name}</h1>
+                    )}
+                  </Link>
+                </div>
               ))}
               trigger={
                 <Link

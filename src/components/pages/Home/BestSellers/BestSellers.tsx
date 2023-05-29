@@ -22,7 +22,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
     slots = 3;
   }
   return (
-    <div className="w-full bg-white">
+    <div className="h-full w-full bg-white">
       <div className="mx-auto w-full max-w-[1400px] py-40">
         <div className="w-full">
           <h1 className="mb-8 w-min min-w-[120px] border-b-2 border-yellow-500 pb-8 text-text-xl font-medium">

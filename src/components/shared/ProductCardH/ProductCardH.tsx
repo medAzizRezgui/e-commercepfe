@@ -10,8 +10,9 @@ import { Toast } from '../toast';
 export const ProductCardH = ({ prod }: { prod: Product }) => {
   const { addItem } = useCart();
   const [success, setSuccess] = useState(false);
-  const handleAddToCart = () => {
-    addItem(
+  const handleAddToCart = async () => {
+    await setSuccess(true);
+    await addItem(
       {
         image: prod?.files[0],
         name: prod?.name,
@@ -24,7 +25,6 @@ export const ProductCardH = ({ prod }: { prod: Product }) => {
       },
       1
     );
-    setSuccess(true);
   };
   return (
     <>

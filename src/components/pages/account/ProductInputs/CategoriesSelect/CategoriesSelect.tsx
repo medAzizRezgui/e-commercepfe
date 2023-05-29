@@ -20,7 +20,6 @@ export const CategoriesSelect = ({
     setCategorie(option);
   };
 
-  console.log('HEHE', defaultVal, categorie);
   const [categories, setCategories] = useState<
     {
       value: string;

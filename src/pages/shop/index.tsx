@@ -10,14 +10,17 @@ import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
+import { SousCategory } from '../../types/SousCategory';
 import axiosProduction from '../api/axios';
 
 const Shop = ({
   data,
   transformedOptions,
+  sousCategories,
 }: {
   data: Product[];
   transformedOptions: { value: string; label: string }[];
+  sousCategories: SousCategory[];
 }) => {
   const router = useRouter();
 
@@ -31,23 +34,34 @@ const Shop = ({
   const [selectedCategorie, setSelectedCategorie] = useState(
     pathQuery.category ? pathQuery.category : 'all'
   );
-  let filtredItems = data.filter((item) =>
-    item.price >= price[0] &&
-    item.price <= price[1] &&
-    selectedCategorie === 'all'
-      ? true
-      : // eslint-disable-next-line no-underscore-dangle
-        item.categorie._id === selectedCategorie
+  const [selectedSousCategory, setSelectedSousCategory] = useState(
+    pathQuery.sousCategory ? pathQuery.sousCategory : 'all'
   );
 
+  const handleCategoryChange = (val: string | string[]) => {
+    setSelectedCategorie('');
+    setSelectedSousCategory('all');
+    setSelectedCategorie(val);
+  };
+  let filtredItems = data.filter(
+    (item) =>
+      item.price >= price[0] &&
+      item.price <= price[1] &&
+      (selectedSousCategory === 'all'
+        ? true
+        : item.sousCategorie._id === selectedSousCategory) &&
+      (selectedCategorie === 'all'
+        ? true
+        : item.categorie._id === selectedCategorie)
+  );
   if (pathQuery.word) {
     filtredItems = filtredItems.filter((item) =>
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       item.name.toLowerCase().includes(pathQuery?.word?.toLowerCase())
     );
-    console.log('AWKA', filtredItems);
   }
+
   return (
     <>
       <Head>
@@ -70,8 +84,11 @@ const Shop = ({
           {/* Filter */}
           <div className="w-[20%]">
             <SideCategories
+              sousCategories={sousCategories}
               options={transformedOptions}
-              setSelectedCategorie={setSelectedCategorie}
+              setSelectedCategorie={handleCategoryChange}
+              setSelectedSousCategorie={setSelectedSousCategory}
+              selectedCategory={selectedCategorie}
             />
             <Filter data={data} setPrice={setPrice} price={price} />
           </div>
@@ -110,6 +127,14 @@ Shop.getInitialProps = async () => {
     label: option.name,
   }));
 
-  return { data, transformedOptions };
+  const sousCatRes = await axiosProduction.get('/sousCat/getall'); // replace with your API endpoint
+  // const sousCategories = sousCatRes.data.map((option: any) => ({
+  //   // eslint-disable-next-line no-underscore-dangle
+  //   value: option._id,
+  //   label: option.name,
+  // }));
+  const sousCategories = await sousCatRes?.data;
+  return { data, transformedOptions, sousCategories };
 };
+
 export default Shop;
