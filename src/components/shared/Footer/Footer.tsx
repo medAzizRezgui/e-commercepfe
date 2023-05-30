@@ -28,7 +28,7 @@ export const Footer = () => {
             <p>
               ...and receive{' '}
               <span className="font-semibold">
-                $20 coupon for first shopping
+                20DT coupon for first shopping
               </span>
             </p>
           </div>

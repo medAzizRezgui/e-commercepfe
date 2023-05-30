@@ -46,7 +46,7 @@ const Account = ({
     const getProds = async () => {
       await axiosProduction
         .get('/Product/getall')
-        .then((r) => setProducts(r.data));
+        .then((r) => setProducts(r.data.products));
     };
     const getCategories = async () => {
       await axiosProduction
@@ -67,6 +67,7 @@ const Account = ({
     getOrders();
   }, [refetch]);
 
+  // TODO : Add pagination to dashboard
   // Get user from ls , if not redirect to auth page
   useEffect(() => {
     const getUser = () => {
@@ -141,6 +142,8 @@ const Account = ({
     </>
   );
 };
+
+// TODO : if not an admin don't fetch products
 Account.getInitialProps = async () => {
   try {
     const [ProdsRes, CatRes, SousCatRes, OrdersRes] = await Promise.all([
@@ -150,7 +153,7 @@ Account.getInitialProps = async () => {
       axiosDev.get('/order/getall'),
     ]);
 
-    const initialProducts = ProdsRes.data;
+    const initialProducts = ProdsRes.data.products;
     const initialCategories = CatRes.data;
     const initialSousCategories = SousCatRes.data;
     const initialOrders = OrdersRes.data;

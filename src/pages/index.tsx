@@ -1,6 +1,4 @@
-import axios from 'axios';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 import { BestDeals } from '../components/pages/Home/BestDeals';
@@ -15,7 +13,7 @@ import { Product } from '../types/Product';
 
 import axiosProduction, { axiosDev } from './api/axios';
 
-const Home = ({ data }: { data: Product[] }) => (
+const Home = ({ products }: { products: Product[] }) => (
   <>
     <Head>
       <title>Home</title>
@@ -31,24 +29,23 @@ const Home = ({ data }: { data: Product[] }) => (
       <Hero />
       <div className="mx-auto mt-40 flex w-full max-w-[1400px] gap-[64px]">
         <SpecialOffer
-          item={data && data[Math.floor(Math.random() * data.length)]}
+          item={
+            products && products[Math.floor(Math.random() * products.length)]
+          }
         />
-        <TabsComponent prods={data} />
+        <TabsComponent prods={products} />
       </div>
-      <BestDeals data={data} />
-      <BestSellers data={data} />
+      <BestDeals data={products} />
+      <BestSellers data={products} />
       <Footer />
     </main>
   </>
 );
 Home.getInitialProps = async () => {
-  try {
-    const res = await axiosDev.get('/Product/getall');
-    const { data } = res;
-    return { data };
-  } catch (error) {
+  const res = await axiosDev.get('/Product/getall').catch((error) => {
     console.error(error);
-    return { data: null };
-  }
+  });
+  const products = await res?.data.products;
+  return { products };
 };
 export default Home;

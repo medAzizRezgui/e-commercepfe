@@ -50,7 +50,7 @@ export const BestDeals = ({ data }: Props) => {
             }
           })}
         </div>
-        <HeroItem item={data[2]} />
+        <HeroItem item={data[11]} />
         <div className="grid  w-[30%] grid-cols-2">
           {/* eslint-disable-next-line array-callback-return,consistent-return */}
           {data.map((prod, i) => {

@@ -60,7 +60,7 @@ export const HeroItem = ({ item }: Props) => {
             alt=""
             width={100}
             height={100}
-            className="mx-auto my-40 w-[70%] "
+            className="mx-auto my-40 w-[60%] "
           />
 
           <div className="flex gap-[10px]">

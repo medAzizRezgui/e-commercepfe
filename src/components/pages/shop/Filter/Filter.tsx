@@ -47,7 +47,7 @@ export const Filter = ({ data, setPrice, price }: Props) => (
         <Slider.Thumb className="SliderThumb max" />
       </Slider.Root>
       <p className="py-8 text-text-sm font-medium text-gray-400">
-        Price : ${price[0]} - ${price[1]}
+        Price : {price[0]} DT - {price[1]} DT
       </p>
     </div>
   </>

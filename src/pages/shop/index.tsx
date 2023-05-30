@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 
 import { Filter } from '../../components/pages/shop/Filter';
 import { ShopHeader } from '../../components/pages/shop/Header';
 import { SideCategories } from '../../components/pages/shop/SideCategories';
 import { Categories } from '../../components/shared/Categories';
+import { Footer } from '../../components/shared/Footer';
 import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
@@ -23,13 +24,16 @@ const Shop = ({
   sousCategories: SousCategory[];
 }) => {
   const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const [products, setProducts] = useState(data);
 
   const pathQuery = router.query;
   const [sort, setSort] = useState('high');
-
   const [price, setPrice] = useState([
-    data.reduce((min, item) => (item.price < min.price ? item : min)).price,
-    data.reduce((max, item) => (item.price > max.price ? item : max)).price,
+    products.reduce((min, item) => (item.price < min.price ? item : min)).price,
+    products.reduce((max, item) => (item.price > max.price ? item : max)).price,
   ]);
   const [selectedCategorie, setSelectedCategorie] = useState(
     pathQuery.category ? pathQuery.category : 'all'
@@ -38,12 +42,29 @@ const Shop = ({
     pathQuery.sousCategory ? pathQuery.sousCategory : 'all'
   );
 
+  useEffect(() => {
+    const getProducts = () => {
+      axiosDev
+        .get(`/product/getall?page=${page}`)
+        .then((res) => {
+          setProducts(res.data.products);
+          setTotalPages(res.data.totalPages);
+          setTotalItems(res.data.totalItems);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getProducts();
+  }, [page]);
+
   const handleCategoryChange = (val: string | string[]) => {
     setSelectedCategorie('');
     setSelectedSousCategory('all');
     setSelectedCategorie(val);
   };
-  let filtredItems = data.filter(
+  let filtredItems = products.filter(
     (item) =>
       item.price >= price[0] &&
       item.price <= price[1] &&
@@ -90,7 +111,7 @@ const Shop = ({
               setSelectedSousCategorie={setSelectedSousCategory}
               selectedCategory={selectedCategorie}
             />
-            <Filter data={data} setPrice={setPrice} price={price} />
+            <Filter data={products} setPrice={setPrice} price={price} />
           </div>
           <div className="mx-40 w-[80%]">
             <ShopHeader setSort={setSort} />
@@ -106,9 +127,29 @@ const Shop = ({
                   <ProductCard data={prod} />
                 ))}
             </div>
+            <div className="my-20 flex w-full items-center justify-between py-8">
+              <p>
+                Showing 1-{filtredItems.length} of {totalItems} results
+              </p>
+              <div className="flex items-center gap-[8px]">
+                {[...Array(totalPages)].map((_, index) => (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+                  <span
+                    onClick={() => setPage(index + 1)}
+                    className={`${
+                      page === index + 1
+                        ? 'bg-yellow-500'
+                        : 'border-[1px] border-gray-500 bg-white'
+                    } block flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full  text-dark-500`}
+                  >
+                    {index + 1}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        {/* Route */}
+        <Footer />
       </main>
     </>
   );
@@ -118,7 +159,7 @@ Shop.getInitialProps = async () => {
     console.error(error);
   });
 
-  const data = await res?.data;
+  const data = await res?.data.products;
 
   const response = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
   const transformedOptions = response.data.map((option: any) => ({

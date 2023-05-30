@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../pages/api/axios';
+import { TextArea } from '../../../shared/TextArea';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
@@ -126,13 +127,14 @@ export const ProductInputs = () => {
           type="number"
           setValue={setStock}
         />
-        <Input
+
+        <TextArea
           placeholder="Description..."
           label="Product Description"
           value={description}
-          type="text"
           setValue={setDescription}
         />
+
         <Input
           placeholder="SKU..."
           label="SKU"

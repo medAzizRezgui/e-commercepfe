@@ -49,9 +49,9 @@ export const SideCategories = ({
                 onClick={() => setSelectedSousCategorie(sousCat._id)}
                 className={`${
                   sousCat.categorie._id === selectedCategory
-                    ? 'flex animate-overlayShow'
+                    ? 'flex animate-overlayShow py-4'
                     : 'hidden'
-                }  cursor-pointer items-center py-4`}
+                }  cursor-pointer items-center `}
               >
                 {sousCat.categorie._id === item.value ? <BiChevronRight /> : ''}
                 {sousCat.categorie._id === item.value ? `${sousCat.name}` : ''}
