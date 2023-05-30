@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
+import { refetchCategoriesState } from '../../../../atoms/refetchCategoriesAtom';
 import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
@@ -15,7 +15,9 @@ export const AddCategories = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const [refetchGlobal, setRefetchGlobal] = useRecoilState(refetchProdsState);
+  const [refetchCategories, setRefetchCategories] = useRecoilState(
+    refetchCategoriesState
+  );
 
   const handleAddCategorie = async () => {
     setError(false);
@@ -27,7 +29,7 @@ export const AddCategories = () => {
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);
-        setRefetchGlobal(!refetchGlobal);
+        setRefetchCategories(!refetchCategories);
       })
       .catch(() => setError(true));
   };
@@ -43,7 +45,7 @@ export const AddCategories = () => {
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);
-        setRefetchGlobal(!refetchGlobal);
+        setRefetchCategories(!refetchCategories);
       })
       .catch(() => setError(true));
   };

@@ -7,9 +7,17 @@ import { BiX } from 'react-icons/bi';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { CartItem, useCart } from '../../context/Cart/CartContext';
-import axiosProduction from '../api/axios';
+import { Category } from '../../types/Category';
+import { SousCategory } from '../../types/SousCategory';
+import axiosProduction, { axiosDev } from '../api/axios';
 
-const Cart = () => {
+const Cart = ({
+  categories,
+  sousCategories,
+}: {
+  categories: Category[];
+  sousCategories: SousCategory[];
+}) => {
   const { cartItems, addItem, removeItem } = useCart();
 
   const [coupon, setCoupon] = useState('');
@@ -55,7 +63,7 @@ const Cart = () => {
       <main>
         <Header />
         {/* Categories */}
-        <Categories />
+        <Categories categories={categories} sousCategories={sousCategories} />
         <h1 className="py-40 text-center text-display-md">Cart</h1>
         <div className="mx-auto w-full max-w-[1200px]">
           {/* Heading */}
@@ -188,5 +196,12 @@ const Cart = () => {
     </>
   );
 };
+Cart.getInitialProps = async () => {
+  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
 
+  const categories = await categoriesResponse.data;
+  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCategories = await sousCatRes?.data;
+  return { categories, sousCategories };
+};
 export default Cart;

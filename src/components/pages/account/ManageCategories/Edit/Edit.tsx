@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
+import { refetchCategoriesState } from '../../../../../atoms/refetchCategoriesAtom';
 import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../../pages/api/axios';
 import { Category } from '../../../../../types/Category';
@@ -23,7 +24,7 @@ export const Edit = ({
   setSuccess,
 }: Props) => {
   const [newCategorieName, setNewCategorieName] = useState(item.name);
-  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+  const [refetch, setRefetch] = useRecoilState(refetchCategoriesState);
 
   const updateCategorie = async () => {
     setSuccess(false);

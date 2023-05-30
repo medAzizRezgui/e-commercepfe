@@ -9,11 +9,18 @@ import { SpecialOffer } from '../components/pages/Home/SpecialOffer';
 import { TabsComponent } from '../components/pages/Home/Tabs';
 import { Footer } from '../components/shared/Footer';
 import { Header } from '../components/shared/Header';
+import { Category } from '../types/Category';
 import { Product } from '../types/Product';
 
 import axiosProduction, { axiosDev } from './api/axios';
 
-const Home = ({ products }: { products: Product[] }) => (
+const Home = ({
+  products,
+  categories,
+}: {
+  products: Product[];
+  categories: Category[];
+}) => (
   <>
     <Head>
       <title>Home</title>
@@ -26,7 +33,7 @@ const Home = ({ products }: { products: Product[] }) => (
       <Header />
       <HeroHeader />
 
-      <Hero />
+      <Hero categories={categories} />
       <div className="mx-auto mt-40 flex w-full max-w-[1400px] gap-[64px]">
         <SpecialOffer
           item={
@@ -35,9 +42,9 @@ const Home = ({ products }: { products: Product[] }) => (
         />
         <TabsComponent prods={products} />
       </div>
-      <BestDeals data={products} />
+      <BestDeals data={products} categories={categories} />
       <BestSellers data={products} />
-      <Footer />
+      <Footer categories={categories} />
     </main>
   </>
 );
@@ -46,6 +53,13 @@ Home.getInitialProps = async () => {
     console.error(error);
   });
   const products = await res?.data.products;
-  return { products };
+  const categoriesRes = await axiosDev
+    .get('/categorie/getall')
+    .catch((error) => {
+      console.error(error);
+    });
+  const categories = await categoriesRes?.data;
+
+  return { products, categories };
 };
 export default Home;

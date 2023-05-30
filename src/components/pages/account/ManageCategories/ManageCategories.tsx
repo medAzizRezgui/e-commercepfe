@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
+import { refetchCategoriesState } from '../../../../atoms/refetchCategoriesAtom';
 import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../pages/api/axios';
 import { Category } from '../../../../types/Category';
@@ -19,7 +20,7 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
   const [openSousCategorieModal, setOpenSousCategorieModal] = useState(false);
   const [openCategorieModal, setOpenCategorieModal] = useState(false);
 
-  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+  const [refetch, setRefetch] = useRecoilState(refetchCategoriesState);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const deleteCategorie = async (id: string) => {

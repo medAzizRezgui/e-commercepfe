@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
+import { refetchCategoriesState } from '../../atoms/refetchCategoriesAtom';
 import { refetchProdsState } from '../../atoms/refetchProdsAtom';
 import { AdminOrders } from '../../components/pages/account/AdminOrders';
 import { CategoriesTabs } from '../../components/pages/account/CategoriesTabs';
@@ -35,7 +36,9 @@ const Account = ({
   const [user, setUser] = useState<User>();
   const router = useRouter();
   const [products, setProducts] = useState(initialProducts);
-  const refetch = useRecoilValue(refetchProdsState);
+  const refetchProds = useRecoilValue(refetchProdsState);
+  const refetchCategories = useRecoilValue(refetchCategoriesState);
+
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [sousCategories, setSousCategories] = useState<SousCategory[]>(
     initialSousCategories
@@ -43,29 +46,38 @@ const Account = ({
 
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   useEffect(() => {
-    const getProds = async () => {
-      await axiosProduction
-        .get('/Product/getall')
-        .then((r) => setProducts(r.data.products));
-    };
     const getCategories = async () => {
-      await axiosProduction
-        .get('/categorie/getAll')
-        .then((r) => setCategories(r.data));
+      await axiosProduction.get('/categorie/getAll').then((r) => {
+        setCategories(r.data);
+      });
     };
     const getSousCategories = async () => {
       await axiosDev
         .get('/sousCat/getAll')
         .then((r) => setSousCategories(r.data));
     };
+
+    getCategories();
+    getSousCategories();
+  }, [refetchCategories]);
+
+  useEffect(() => {
+    const getProds = async () => {
+      await axiosProduction
+        .get('/Product/getall')
+        .then((r) => setProducts(r.data.products));
+    };
+
+    getProds();
+  }, [refetchProds]);
+
+  const [refetchOrders, setRefetchOrders] = useState(false);
+  useEffect(() => {
     const getOrders = async () => {
       await axiosDev.get('/order/getAll').then((r) => setOrders(r.data));
     };
-    getProds();
-    getCategories();
-    getSousCategories();
     getOrders();
-  }, [refetch]);
+  }, [refetchOrders]);
 
   // TODO : Add pagination to dashboard
   // Get user from ls , if not redirect to auth page
@@ -100,7 +112,7 @@ const Account = ({
 
       <main>
         <Header />
-        <Categories />
+        <Categories categories={categories} sousCategories={sousCategories} />
 
         {user.isAdmin && (
           <div className="mx-auto my-20 mt-112 flex w-full max-w-[1400px] flex-col gap-[10px]">
@@ -117,7 +129,13 @@ const Account = ({
                   sousCategories={sousCategories}
                 />
               )}
-              {activeTab === 2 && <AdminOrders orders={orders} />}
+              {activeTab === 2 && (
+                <AdminOrders
+                  refetch={refetchOrders}
+                  setRefetch={setRefetchOrders}
+                  orders={orders}
+                />
+              )}
             </div>
           </div>
         )}

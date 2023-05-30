@@ -10,17 +10,18 @@ import { Categories } from '../../components/shared/Categories';
 import { Footer } from '../../components/shared/Footer';
 import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
+import { Category } from '../../types/Category';
 import { Product } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
 import axiosProduction, { axiosDev } from '../api/axios';
 
 const Shop = ({
   data,
-  transformedOptions,
+  categories,
   sousCategories,
 }: {
   data: Product[];
-  transformedOptions: { value: string; label: string }[];
+  categories: Category[];
   sousCategories: SousCategory[];
 }) => {
   const router = useRouter();
@@ -28,6 +29,11 @@ const Shop = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [products, setProducts] = useState(data);
+  const transformedOptions = categories.map((option: any) => ({
+    // eslint-disable-next-line no-underscore-dangle
+    value: option._id,
+    label: option.name,
+  }));
 
   const pathQuery = router.query;
   const [sort, setSort] = useState('high');
@@ -95,7 +101,7 @@ const Shop = ({
       <main>
         <Header />
         {/* Categories */}
-        <Categories />
+        <Categories categories={categories} sousCategories={sousCategories} />
         <div className="mx-auto mt-112  flex max-w-[1400px] items-center gap-[10px] px-16 py-16 text-text-sm">
           <h1>Home</h1>
           <BiChevronRight className="h-[20px] w-[20px]" />
@@ -149,7 +155,7 @@ const Shop = ({
             </div>
           </div>
         </div>
-        <Footer />
+        <Footer categories={categories} />
       </main>
     </>
   );
@@ -161,16 +167,12 @@ Shop.getInitialProps = async () => {
 
   const data = await res?.data.products;
 
-  const response = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
-  const transformedOptions = response.data.map((option: any) => ({
-    // eslint-disable-next-line no-underscore-dangle
-    value: option._id,
-    label: option.name,
-  }));
+  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
 
+  const categories = await categoriesResponse.data;
   const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
-  return { data, transformedOptions, sousCategories };
+  return { data, categories, sousCategories };
 };
 
 export default Shop;

@@ -7,10 +7,18 @@ import { Input } from '../../components/pages/account/Input';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { useCart } from '../../context/Cart/CartContext';
+import { Category } from '../../types/Category';
+import { SousCategory } from '../../types/SousCategory';
 import { User } from '../../types/User';
-import axiosProduction from '../api/axios';
+import axiosProduction, { axiosDev } from '../api/axios';
 
-const Checkout = () => {
+const Checkout = ({
+  categories,
+  sousCategories,
+}: {
+  categories: Category[];
+  sousCategories: SousCategory[];
+}) => {
   const [user, setUser] = useState<User>();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -112,7 +120,7 @@ const Checkout = () => {
       <main>
         <Header />
         {/* Categories */}
-        <Categories />
+        <Categories categories={categories} sousCategories={sousCategories} />
         <div className="mt-112  w-full" />
 
         <h1 className="py-40 text-center text-display-md">Checkout</h1>
@@ -257,5 +265,12 @@ const Checkout = () => {
     </>
   );
 };
+Checkout.getInitialProps = async () => {
+  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
 
+  const categories = await categoriesResponse.data;
+  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCategories = await sousCatRes?.data;
+  return { categories, sousCategories };
+};
 export default Checkout;

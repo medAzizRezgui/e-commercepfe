@@ -5,17 +5,16 @@ import React, { useEffect, useState } from 'react';
 import 'swiper/css';
 import HeroBg from '@/images/HeroBg.jpg';
 
-import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
+import { Category } from '../../../../types/Category';
 import { HeroSwiper } from '../HeroSwiper';
 
-export const Hero = () => {
+export const Hero = ({ categories }: { categories: Category[] }) => {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
   const fetchCategories = async () => {
     try {
-      const response = await axiosDev.get('/categorie/getall'); //
-      const transformedOptions = response.data.map((option: any) => ({
+      const transformedOptions = categories.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,
         label: option.name,

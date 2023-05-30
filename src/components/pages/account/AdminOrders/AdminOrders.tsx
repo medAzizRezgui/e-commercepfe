@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
-import { useRecoilState } from 'recoil';
 
-import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../pages/api/axios';
 import { Order } from '../../../../types/Order';
 import { DeleteModal } from '../../../shared/DeleteModal';
@@ -11,10 +9,11 @@ import { Toast } from '../../../shared/toast';
 
 type Props = {
   orders: Order[];
+  refetch: boolean;
+  setRefetch: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export const AdminOrders = ({ orders }: Props) => {
+export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
   const [openDelModal, setOpenDelModal] = useState(false);
-  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
 

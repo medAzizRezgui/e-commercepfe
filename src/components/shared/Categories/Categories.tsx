@@ -1,44 +1,22 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 
-import axiosProduction, { axiosDev } from '../../../pages/api/axios';
+import { Category } from '../../../types/Category';
 import { SousCategory } from '../../../types/SousCategory';
 
 import HoverComponent from './HoverComponent';
 
-export const Categories = () => {
-  const [options, setOptions] = useState<{ value: string; label: string }[]>(
-    []
-  );
-  const [sousCat, setSousCat] = useState<SousCategory[]>([]);
-  const fetchCategories = async () => {
-    try {
-      const response = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
-      const transformedOptions = response.data.map((option: any) => ({
-        // eslint-disable-next-line no-underscore-dangle
-        value: option._id,
-        label: option.name,
-      }));
-      setOptions(transformedOptions);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchSousCat = async () => {
-    try {
-      await axiosProduction
-        .get('/sousCat/getall')
-        .then((r) => setSousCat(r.data)); // replace with your API endpoint
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchCategories();
-    fetchSousCat();
-  }, []);
+type Props = {
+  categories: Category[];
+  sousCategories: SousCategory[];
+};
+export const Categories = ({ sousCategories, categories }: Props) => {
+  const options = categories.map((option: any) => ({
+    // eslint-disable-next-line no-underscore-dangle
+    value: option._id,
+    label: option.name,
+  }));
 
   return (
     <div className="absolute top-0 w-full border-b-2 border-gray-500 bg-gradient-to-t from-yellow-500  to-yellow-100 pb-8 pt-128">
@@ -52,7 +30,7 @@ export const Categories = () => {
 
           {options?.map((item) => (
             <HoverComponent
-              content={sousCat.map((souscat) => (
+              content={sousCategories.map((souscat) => (
                 <div>
                   <Link
                     href={{
