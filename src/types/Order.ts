@@ -1,4 +1,5 @@
 export type Order = {
+  _id: string;
   fullname: string;
   email: string;
   shippingAddress: {

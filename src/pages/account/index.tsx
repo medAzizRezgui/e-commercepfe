@@ -40,6 +40,8 @@ const Account = ({
   const [sousCategories, setSousCategories] = useState<SousCategory[]>(
     initialSousCategories
   );
+
+  const [orders, setOrders] = useState<Order[]>(initialOrders);
   useEffect(() => {
     const getProds = async () => {
       await axiosProduction
@@ -56,9 +58,13 @@ const Account = ({
         .get('/sousCat/getAll')
         .then((r) => setSousCategories(r.data));
     };
+    const getOrders = async () => {
+      await axiosProduction.get('/order/getAll').then((r) => setOrders(r.data));
+    };
     getProds();
     getCategories();
     getSousCategories();
+    getOrders();
   }, [refetch]);
 
   // Get user from ls , if not redirect to auth page
@@ -110,7 +116,7 @@ const Account = ({
                   sousCategories={sousCategories}
                 />
               )}
-              {activeTab === 2 && <AdminOrders orders={initialOrders} />}
+              {activeTab === 2 && <AdminOrders orders={orders} />}
             </div>
           </div>
         )}
