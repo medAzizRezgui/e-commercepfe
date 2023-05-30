@@ -45,7 +45,7 @@ export const Reviews = ({ prod }: Props) => {
       return;
     }
     await axiosProduction
-      .patch(`/product/update/${prod._id}`, {
+      .patch(`/product/rate/${prod._id}`, {
         rating: {
           rate: starts,
           name,
