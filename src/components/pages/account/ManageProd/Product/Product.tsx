@@ -46,7 +46,6 @@ export const Product = ({ item }: Props) => {
         />
 
         <Edit
-          rating={item.rating}
           oldCategorie={{
             value: item.categorie._id,
             label: item.categorie.name,

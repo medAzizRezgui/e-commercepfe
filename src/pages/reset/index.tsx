@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Toast } from '../../components/shared/toast';
-import axiosProduction from '../api/axios';
+import axiosProduction, { axiosDev } from '../api/axios';
 
 const Reset = () => {
   const [password, setPassword] = useState('');
@@ -53,7 +53,7 @@ const Reset = () => {
       }
     }
     try {
-      const response = await axiosProduction.patch('/auth/changePassword', {
+      const response = await axiosDev.patch('/auth/changePassword', {
         newPassword: password,
         email: decodedEmail,
       });

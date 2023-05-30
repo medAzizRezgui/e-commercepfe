@@ -11,7 +11,7 @@ import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
 import { Product } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import axiosProduction from '../api/axios';
+import axiosProduction, { axiosDev } from '../api/axios';
 
 const Shop = ({
   data,
@@ -114,20 +114,20 @@ const Shop = ({
   );
 };
 Shop.getInitialProps = async () => {
-  const res = await axiosProduction.get('/Product/getall').catch((error) => {
+  const res = await axiosDev.get('/Product/getall').catch((error) => {
     console.error(error);
   });
 
   const data = await res?.data;
 
-  const response = await axiosProduction.get('/categorie/getall'); // replace with your API endpoint
+  const response = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
   const transformedOptions = response.data.map((option: any) => ({
     // eslint-disable-next-line no-underscore-dangle
     value: option._id,
     label: option.name,
   }));
 
-  const sousCatRes = await axiosProduction.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
   return { data, transformedOptions, sousCategories };
 };

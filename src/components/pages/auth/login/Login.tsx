@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiX } from 'react-icons/bi';
 
-import axiosProduction from '../../../../pages/api/axios';
+import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 
 interface ErrorResponse {
@@ -36,7 +36,7 @@ export const Login: React.FC = () => {
     setErrorMsgs([]);
 
     try {
-      const response = await axiosProduction.post('/auth/forgot', {
+      const response = await axiosDev.post('/auth/forgot', {
         email: resetEmail,
       });
       if (response.status === 200) {
@@ -61,7 +61,7 @@ export const Login: React.FC = () => {
     setErrorMsgs([]);
 
     try {
-      const response = await axiosProduction.post('/auth', {
+      const response = await axiosDev.post('/auth', {
         email,
         password,
       });

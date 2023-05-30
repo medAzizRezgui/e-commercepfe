@@ -13,7 +13,7 @@ import { Footer } from '../components/shared/Footer';
 import { Header } from '../components/shared/Header';
 import { Product } from '../types/Product';
 
-import axiosProduction from './api/axios';
+import axiosProduction, { axiosDev } from './api/axios';
 
 const Home = ({ data }: { data: Product[] }) => (
   <>
@@ -43,7 +43,7 @@ const Home = ({ data }: { data: Product[] }) => (
 );
 Home.getInitialProps = async () => {
   try {
-    const res = await axiosProduction.get('/Product/getall');
+    const res = await axiosDev.get('/Product/getall');
     const { data } = res;
     return { data };
   } catch (error) {

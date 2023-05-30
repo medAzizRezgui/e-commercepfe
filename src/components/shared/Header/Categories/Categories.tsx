@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
-import axiosProduction from '../../../../pages/api/axios';
+import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
 
 type Props = {
   setSearchCategory: React.Dispatch<React.SetStateAction<string>>;
@@ -12,7 +12,7 @@ export const Categories = ({ setSearchCategory }: Props) => {
   );
   const fetchCategories = async () => {
     try {
-      const response = await axiosProduction.get('/categorie/getall');
+      const response = await axiosDev.get('/categorie/getall');
       const transformedOptions = response.data.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,

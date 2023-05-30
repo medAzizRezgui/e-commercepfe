@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import 'swiper/css';
 import HeroBg from '@/images/HeroBg.jpg';
 
-import axiosProduction from '../../../../pages/api/axios';
+import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
 import { HeroSwiper } from '../HeroSwiper';
 
 export const Hero = () => {
@@ -14,7 +14,7 @@ export const Hero = () => {
   );
   const fetchCategories = async () => {
     try {
-      const response = await axiosProduction.get('/categorie/getall'); //
+      const response = await axiosDev.get('/categorie/getall'); //
       const transformedOptions = response.data.map((option: any) => ({
         // eslint-disable-next-line no-underscore-dangle
         value: option._id,

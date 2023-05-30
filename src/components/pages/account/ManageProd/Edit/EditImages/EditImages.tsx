@@ -14,10 +14,10 @@ export const EditImages = ({
   deleteImg,
   files,
 }: Props) => (
-  <div className="w-[50%]">
-    <div className="grid grid-cols-3 mb-12 w-full">
+  <div className="w-[100%]">
+    <div className="mb-12 grid w-full grid-cols-3">
       {oldFiles.map((img, i) => (
-        <div className=" flex cursor-pointer group items-center justify-center">
+        <div className=" group flex cursor-pointer items-center justify-center">
           <Image
             className="group-hover:opacity-50 "
             src={img}
@@ -30,14 +30,14 @@ export const EditImages = ({
             onClick={() => deleteImg(i)}
             className="absolute opacity-0 group-hover:opacity-100"
           >
-            <BiTrash className="fill-red-500 w-[20px] h-[20px]" />
+            <BiTrash className="h-[20px] w-[20px] fill-red-500" />
           </div>
         </div>
       ))}
     </div>
-    <div className="  flex items-center flex-col justify-center relative  border-gray-400 h-[150px] border-2 rounded-[12px] p-14 border-dashed w-full ">
+    <div className="  relative flex h-[150px] w-full flex-col  items-center justify-center rounded-[12px] border-2 border-dashed border-gray-400 p-14 ">
       <input
-        className="absolute cursor-pointer opacity-0  w-full h-full"
+        className="absolute h-full w-full  cursor-pointer opacity-0"
         type="file"
         multiple
         onChange={(e) => handleFileChange(e)}
@@ -45,12 +45,12 @@ export const EditImages = ({
 
       <button
         type="button"
-        className="bg-yellow-500 cursor-pointer text-dark-500 font-medium px-24 py-8 rounded-full"
+        className="cursor-pointer rounded-full bg-yellow-500 px-24 py-8 font-medium text-dark-500"
       >
         Add Images
       </button>
       <p>{files.length} images selected</p>
-      <p className="text-text-xs text-center pt-24">
+      <p className="pt-24 text-center text-text-xs">
         Please note that the first selected image will be used as the
         product&apos;s main image
       </p>

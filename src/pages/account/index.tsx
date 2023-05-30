@@ -18,7 +18,7 @@ import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
 import { User } from '../../types/User';
-import axiosProduction from '../api/axios';
+import axiosProduction, { axiosDev } from '../api/axios';
 
 const Account = ({
   initialProducts,
@@ -54,12 +54,12 @@ const Account = ({
         .then((r) => setCategories(r.data));
     };
     const getSousCategories = async () => {
-      await axiosProduction
+      await axiosDev
         .get('/sousCat/getAll')
         .then((r) => setSousCategories(r.data));
     };
     const getOrders = async () => {
-      await axiosProduction.get('/order/getAll').then((r) => setOrders(r.data));
+      await axiosDev.get('/order/getAll').then((r) => setOrders(r.data));
     };
     getProds();
     getCategories();
@@ -144,10 +144,10 @@ const Account = ({
 Account.getInitialProps = async () => {
   try {
     const [ProdsRes, CatRes, SousCatRes, OrdersRes] = await Promise.all([
-      axiosProduction.get('/Product/getall'),
-      axiosProduction.get('/categorie/getall'),
-      axiosProduction.get('/sousCat/getall'),
-      axiosProduction.get('/order/getall'),
+      axiosDev.get('/Product/getall'),
+      axiosDev.get('/categorie/getall'),
+      axiosDev.get('/sousCat/getall'),
+      axiosDev.get('/order/getall'),
     ]);
 
     const initialProducts = ProdsRes.data;

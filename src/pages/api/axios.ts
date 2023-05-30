@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const axiosProduction = axios.create({
-  baseURL: 'https://lazy-gray-termite-cape.cyclic.app',
+  // baseURL: 'https://lazy-gray-termite-cape.cyclic.app',
+  baseURL: 'http://localhost:5000',
 });
 export const axiosDev = axios.create({
   baseURL: 'http://localhost:5000',

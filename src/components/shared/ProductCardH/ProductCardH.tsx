@@ -54,7 +54,7 @@ export const ProductCardH = ({ prod }: { prod: Product }) => {
             </div>
           </Link>
           <div className="flex items-center justify-between">
-            <h1 className="text-text-xl font-medium">${prod?.price}</h1>
+            <h1 className="text-text-xl font-medium">{prod?.price} DT</h1>
             <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-full bg-gray-500 group-hover:bg-yellow-500">
               <BiCartAdd
                 onClick={handleAddToCart}
