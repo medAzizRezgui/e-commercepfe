@@ -47,7 +47,7 @@ export const HeroItem = ({ item }: Props) => {
         />
         <div>
           <p className="text-text-xs text-gray-400 ">
-            {item.sousCategorie.name}
+            {item?.sousCategorie?.name || ''}
           </p>
           <h1 className="text-text-lg font-semibold text-blue-500 ">
             {item.name}

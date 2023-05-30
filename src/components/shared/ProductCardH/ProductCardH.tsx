@@ -46,7 +46,7 @@ export const ProductCardH = ({ prod }: { prod: Product }) => {
           >
             <div>
               <p className="text-text-xs text-gray-400">
-                {prod?.sousCategorie.name}
+                {prod?.sousCategorie?.name || ''}
               </p>
               <h1 className="text-text-sm font-semibold text-blue-500">
                 {prod?.name}

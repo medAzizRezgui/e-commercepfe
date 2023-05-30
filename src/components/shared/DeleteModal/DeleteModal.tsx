@@ -5,8 +5,9 @@ type Props = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   deleteFn: (id: string) => void;
   id: string;
+  name: string;
 };
-export const DeleteModal = ({ deleteFn, setOpen, open, id }: Props) => {
+export const DeleteModal = ({ deleteFn, setOpen, name, open, id }: Props) => {
   const handleDelete = () => {
     deleteFn(id);
     setOpen(false);
@@ -17,13 +18,14 @@ export const DeleteModal = ({ deleteFn, setOpen, open, id }: Props) => {
         open ? 'fixed' : 'hidden'
       }  left-0 top-0 z-[9000]  flex h-[100vh] w-full items-center justify-center`}
     >
+      {/* Overlay */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div
         onClick={() => setOpen(false)}
-        className="absolute left-0 top-0 h-[100vh]  w-full cursor-pointer bg-gray-400 opacity-25"
+        className="absolute left-0 top-0 h-[100vh]  w-full cursor-pointer bg-dark-500 opacity-10"
       />
-      {/* Overlay */}
-      <div className=" absolute flex gap-[10px] rounded-[4px] bg-white p-24 ">
+      <div className=" absolute flex flex-col gap-[10px] rounded-[4px] bg-white p-24 opacity-100 ">
+        <h1>You want to delete : {name} ?</h1>
         {/* eslint-disable-next-line no-underscore-dangle */}
         <button
           type="button"

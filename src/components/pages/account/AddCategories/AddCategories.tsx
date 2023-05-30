@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
@@ -12,6 +14,9 @@ export const AddCategories = () => {
   const [sousCategorieName, setSousCategorieName] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
+  const [refetchGlobal, setRefetchGlobal] = useRecoilState(refetchProdsState);
+
   const handleAddCategorie = async () => {
     setError(false);
     setSuccess(false);
@@ -22,6 +27,7 @@ export const AddCategories = () => {
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);
+        setRefetchGlobal(!refetchGlobal);
       })
       .catch(() => setError(true));
   };
@@ -37,6 +43,7 @@ export const AddCategories = () => {
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);
+        setRefetchGlobal(!refetchGlobal);
       })
       .catch(() => setError(true));
   };
@@ -51,18 +58,18 @@ export const AddCategories = () => {
       <div className="w-full flex-col">
         <div className="border-b-2 border-gray-500 pb-8">
           <Input
-            label="Categorie"
+            label="Category"
             value={categorieName}
             type="text"
             setValue={setCategorieName}
-            placeholder="Categorie Name..."
+            placeholder="Category Name..."
           />
           <button
             className="mt-12 block h-max rounded-[20px] bg-gray-500 px-24 py-8"
             type="button"
             onClick={() => handleAddCategorie()}
           >
-            Add Categorie
+            Add Category
           </button>
         </div>
         <CategoriesSelect
@@ -71,11 +78,11 @@ export const AddCategories = () => {
           refetch={refetch}
         />
         <Input
-          label="Sous Categorie"
+          label="Sub Category"
           value={sousCategorieName}
           type="text"
           setValue={setSousCategorieName}
-          placeholder="Sous Categorie Name..."
+          placeholder="Sub Category Name..."
         />
 
         <button
@@ -83,7 +90,7 @@ export const AddCategories = () => {
           type="button"
           onClick={() => handleAddSousCategorie()}
         >
-          Add Sous Categorie
+          Add Sub Category
         </button>
       </div>
     </div>

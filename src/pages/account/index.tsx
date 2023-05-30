@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil';
 import { refetchProdsState } from '../../atoms/refetchProdsAtom';
 import { AdminOrders } from '../../components/pages/account/AdminOrders';
 import { CategoriesTabs } from '../../components/pages/account/CategoriesTabs';
-import { Input } from '../../components/pages/account/Input';
 import { Menu } from '../../components/pages/account/Menu';
 import { ProductsTabs } from '../../components/pages/account/ProductsTabs';
 import { UserMenu } from '../../components/pages/account/UserMenu';
@@ -14,35 +13,52 @@ import { UserOrders } from '../../components/pages/account/UserOrders';
 import { UserProfile } from '../../components/pages/account/UserProfile';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Category } from '../../types/Category';
 import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
+import { SousCategory } from '../../types/SousCategory';
 import { User } from '../../types/User';
 import axiosProduction from '../api/axios';
 
 const Account = ({
-  prods,
-  categories,
-  sousCategories,
-  orders,
+  initialProducts,
+  initialCategories,
+  initialSousCategories,
+  initialOrders,
 }: {
-  prods: ProdType[];
-  categories: any;
-  sousCategories: any;
-  orders: Order[];
+  initialProducts: ProdType[];
+  initialCategories: any;
+  initialSousCategories: any;
+  initialOrders: Order[];
 }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [user, setUser] = useState<User>();
   const router = useRouter();
-  const [products, setProducts] = useState(prods);
+  const [products, setProducts] = useState(initialProducts);
   const refetch = useRecoilValue(refetchProdsState);
-
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [sousCategories, setSousCategories] = useState<SousCategory[]>(
+    initialSousCategories
+  );
   useEffect(() => {
     const getProds = async () => {
       await axiosProduction
         .get('/Product/getall')
         .then((r) => setProducts(r.data));
     };
+    const getCategories = async () => {
+      await axiosProduction
+        .get('/categorie/getAll')
+        .then((r) => setCategories(r.data));
+    };
+    const getSousCategories = async () => {
+      await axiosProduction
+        .get('/sousCat/getAll')
+        .then((r) => setSousCategories(r.data));
+    };
     getProds();
+    getCategories();
+    getSousCategories();
   }, [refetch]);
 
   // Get user from ls , if not redirect to auth page
@@ -94,7 +110,7 @@ const Account = ({
                   sousCategories={sousCategories}
                 />
               )}
-              {activeTab === 2 && <AdminOrders orders={orders} />}
+              {activeTab === 2 && <AdminOrders orders={initialOrders} />}
             </div>
           </div>
         )}
@@ -109,7 +125,7 @@ const Account = ({
               {/* Menu */}
               <UserMenu setActiveTab={setActiveTab} activeTab={activeTab} />
               {activeTab === 0 && (
-                <UserOrders orders={orders} userEmail={user.email} />
+                <UserOrders orders={initialOrders} userEmail={user.email} />
               )}
               {activeTab === 1 && <UserProfile />}
             </div>
@@ -128,15 +144,25 @@ Account.getInitialProps = async () => {
       axiosProduction.get('/order/getall'),
     ]);
 
-    const prods = ProdsRes.data;
-    const categories = CatRes.data;
-    const sousCategories = SousCatRes.data;
-    const orders = OrdersRes.data;
+    const initialProducts = ProdsRes.data;
+    const initialCategories = CatRes.data;
+    const initialSousCategories = SousCatRes.data;
+    const initialOrders = OrdersRes.data;
 
-    return { prods, categories, sousCategories, orders };
+    return {
+      initialProducts,
+      initialCategories,
+      initialSousCategories,
+      initialOrders,
+    };
   } catch (error) {
     console.error(error);
-    return { prods: [], categories: [], sousCategories: [], orders: [] };
+    return {
+      initialProducts: [],
+      initialCategories: [],
+      initialSousCategories: [],
+      initialOrders: [],
+    };
   }
 };
 export default Account;

@@ -52,8 +52,8 @@ export const Product = ({ item }: Props) => {
             label: item.categorie.name,
           }}
           oldSousCategorie={{
-            value: item.sousCategorie._id,
-            label: item.sousCategorie.name,
+            value: item?.sousCategorie?._id,
+            label: item?.sousCategorie?.name,
           }}
           oldFiles={item.files}
           price={item.price}
@@ -73,8 +73,8 @@ export const Product = ({ item }: Props) => {
         open={deleteModal}
         setOpen={setDeleteModal}
         deleteFn={deleteProd}
-        // eslint-disable-next-line no-underscore-dangle
         id={item._id}
+        name={item.name}
       />
     </div>
   );

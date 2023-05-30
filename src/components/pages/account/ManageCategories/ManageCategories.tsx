@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../pages/api/axios';
 import { Category } from '../../../../types/Category';
 import { SousCategory } from '../../../../types/SousCategory';
 import { DeleteModal } from '../../../shared/DeleteModal';
+import { Toast } from '../../../shared/toast';
 
 import { Edit } from './Edit/Edit';
 
@@ -13,25 +16,65 @@ type Props = {
   sousCategories: SousCategory[];
 };
 export const ManageCategories = ({ categories, sousCategories }: Props) => {
-  const [openDelModal, setOpenDelModal] = useState(false);
+  const [openSousCategorieModal, setOpenSousCategorieModal] = useState(false);
+  const [openCategorieModal, setOpenCategorieModal] = useState(false);
+
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const deleteCategorie = async (id: string) => {
+    setSuccess(false);
+    setError(false);
     await axiosProduction
       .delete(`/categorie/delete/${id}`)
-      .then(() => console.log('done'))
-      .catch((e) => {
-        console.error(e);
+      .then(() => {
+        setSuccess(true);
+        setError(false);
+        setRefetch(!refetch);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setError(true);
       });
   };
   const deleteSousCategorie = async (id: string) => {
+    setSuccess(false);
+    setError(false);
     await axiosProduction
       .delete(`/sousCat/delete/${id}`)
-      .then(() => console.log('done'))
-      .catch((e) => {
-        console.error(e);
+      .then(() => {
+        setSuccess(true);
+        setError(false);
+        setRefetch(!refetch);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setError(true);
       });
+  };
+  const [id, setId] = useState('');
+  const [name, setName] = useState('');
+  const handleDeleteSousCategorie = (
+    selectedId: string,
+    selectedName: string
+  ) => {
+    setName(selectedName);
+    setId(selectedId);
+    setOpenSousCategorieModal(true);
+  };
+  const handleDeleteCategorie = (selectedId: string, selectedName: string) => {
+    setName(selectedName);
+    setId(selectedId);
+    setOpenCategorieModal(true);
   };
   return (
     <div className="mt-8 flex h-full w-full justify-between">
+      <Toast
+        success={success}
+        error={error}
+        text="Success"
+        errorMsgs={[{ msg: 'Something went wrong' }]}
+      />
       <div className="w-full ">
         <h1 className="pb-8 text-text-lg  font-medium">Categories</h1>
         {categories.map((item) => (
@@ -39,19 +82,31 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
             <h1 className="text-text-md font-medium">{item.name}</h1>
             <div className="flex items-center justify-end gap-[10px]">
               {/* Edit */}
-              <Edit item={item} type="categorie" />
+              <Edit
+                item={item}
+                type="categorie"
+                setError={setError}
+                setSuccess={setSuccess}
+              />
               <BiTrash
-                className="h-[24px] w-[24px] fill-red-500"
+                className="h-[24px] w-[24px] cursor-pointer fill-red-500"
                 // eslint-disable-next-line no-underscore-dangle
-                onClick={() => deleteCategorie(item._id)}
+                onClick={() => handleDeleteCategorie(item._id, item.name)}
               />
             </div>
           </div>
         ))}
+        <DeleteModal
+          open={openCategorieModal}
+          setOpen={setOpenCategorieModal}
+          deleteFn={deleteCategorie}
+          name={name}
+          id={id}
+        />
       </div>
       <div className="mx-20 h-full w-[4px] bg-gray-500" />
       <div className="w-full ">
-        <h1 className="pb-8 text-text-lg  font-medium">Sous Categories</h1>
+        <h1 className="pb-8 text-text-lg  font-medium">Sub Categories</h1>
         {sousCategories.map((item) => (
           <div className="flex  w-full items-center justify-between border-b-[1px] border-gray-500 py-8">
             <div>
@@ -61,21 +116,27 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
               </p>
             </div>
             <div className="flex items-center justify-end gap-[10px]">
-              <Edit item={item} type="sousCat" />
+              <Edit
+                item={item}
+                type="sousCat"
+                setError={setError}
+                setSuccess={setSuccess}
+              />
               <BiTrash
-                className="h-[24px] w-[24px] fill-red-500"
+                className="h-[24px] w-[24px] cursor-pointer fill-red-500"
                 // eslint-disable-next-line no-underscore-dangle
-                onClick={() => setOpenDelModal(true)}
+                onClick={() => handleDeleteSousCategorie(item._id, item.name)}
               />
             </div>
-            <DeleteModal
-              open={openDelModal}
-              setOpen={setOpenDelModal}
-              deleteFn={deleteSousCategorie}
-              id={item._id}
-            />
           </div>
         ))}
+        <DeleteModal
+          open={openSousCategorieModal}
+          setOpen={setOpenSousCategorieModal}
+          deleteFn={deleteSousCategorie}
+          name={name}
+          id={id}
+        />
       </div>
     </div>
   );

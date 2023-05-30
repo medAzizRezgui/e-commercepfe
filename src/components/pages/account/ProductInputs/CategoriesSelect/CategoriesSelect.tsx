@@ -44,7 +44,7 @@ export const CategoriesSelect = ({
   }, [refetch]);
   return (
     <div className="flex flex-col gap-[10px] py-4">
-      <p className="font-medium">Categorie</p>
+      <p className="font-medium">Category</p>
       <Select
         value={categorie || defaultVal}
         onChange={(e) => handleCategoriesChange(e)}

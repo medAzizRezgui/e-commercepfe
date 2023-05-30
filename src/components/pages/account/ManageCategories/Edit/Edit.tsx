@@ -1,26 +1,46 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import React, { useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
+import { useRecoilState } from 'recoil';
 
+import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
 import axiosProduction from '../../../../../pages/api/axios';
 import { Category } from '../../../../../types/Category';
 import { Input } from '../../Input';
 
 type Props = {
   item: Category;
+
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
   type: 'categorie' | 'sousCat';
 };
-export const Edit = ({ item, type }: Props) => {
+export const Edit = ({
+  item,
+  type,
+  setError,
+
+  setSuccess,
+}: Props) => {
   const [newCategorieName, setNewCategorieName] = useState(item.name);
+  const [refetch, setRefetch] = useRecoilState(refetchProdsState);
+
   const updateCategorie = async () => {
+    setSuccess(false);
+    setError(false);
     await axiosProduction
       // eslint-disable-next-line no-underscore-dangle
       .patch(`/${type}/${item._id}`, {
         name: newCategorieName,
       })
-      .then(() => console.log('done'))
-      .catch((e) => {
-        console.error(e);
+      .then(() => {
+        setSuccess(true);
+        setError(false);
+        setRefetch(!refetch);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setError(true);
       });
   };
   return (
