@@ -79,7 +79,7 @@ export const Register = () => {
       <button
         type="button"
         onClick={() => register()}
-        className="my-20 block rounded-full bg-gray-500 px-24 py-8 font-semibold"
+        className="my-20 block cursor-pointer rounded-full bg-gray-500 px-24 py-8 font-semibold"
       >
         Register
       </button>
