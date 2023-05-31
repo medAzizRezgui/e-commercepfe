@@ -16,6 +16,7 @@ export const CTA = ({ prod }: Props) => {
     addItem(
       {
         image: prod?.files[0],
+        profit: prod?.profit,
         name: prod?.name,
         // eslint-disable-next-line no-underscore-dangle
         id: prod?._id,

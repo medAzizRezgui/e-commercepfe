@@ -29,6 +29,8 @@ const Shop = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [products, setProducts] = useState(data);
+  const productsPerPage = 12;
+
   const transformedOptions = categories.map((option: any) => ({
     // eslint-disable-next-line no-underscore-dangle
     value: option._id,
@@ -51,7 +53,7 @@ const Shop = ({
   useEffect(() => {
     const getProducts = () => {
       axiosDev
-        .get(`/product/getall?page=${page}`)
+        .get(`/product/getall`)
         .then((res) => {
           setProducts(res.data.products);
           setTotalPages(res.data.totalPages);
@@ -70,7 +72,15 @@ const Shop = ({
     setSelectedSousCategory('all');
     setSelectedCategorie(val);
   };
-  let filtredItems = products.filter(
+
+  const getPageIndices = (page: number) => {
+    const startIndex = (page - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    return { startIndex, endIndex };
+  };
+
+  const { startIndex, endIndex } = getPageIndices(page);
+  let filteredItems = products.filter(
     (item) =>
       item.price >= price[0] &&
       item.price <= price[1] &&
@@ -82,12 +92,15 @@ const Shop = ({
         : item.categorie._id === selectedCategorie)
   );
   if (pathQuery.word) {
-    filtredItems = filtredItems.filter((item) =>
+    filteredItems = filteredItems.filter((item) =>
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       item.name.toLowerCase().includes(pathQuery?.word?.toLowerCase())
     );
   }
+  const currentProducts = filteredItems
+    .sort((a, b) => (sort === 'low' ? a.price - b.price : b.price - a.price))
+    .slice(startIndex, endIndex);
 
   return (
     <>
@@ -111,6 +124,8 @@ const Shop = ({
           {/* Filter */}
           <div className="w-[20%]">
             <SideCategories
+              setPage={setPage}
+              selectedSousCategory={selectedSousCategory}
               sousCategories={sousCategories}
               options={transformedOptions}
               setSelectedCategorie={handleCategoryChange}
@@ -125,19 +140,20 @@ const Shop = ({
               <h1 className="pb-14">Results for {pathQuery.word} :</h1>
             )}
             <div className="grid grid-cols-4 gap-[0px]">
-              {filtredItems
-                .sort((a, b) =>
-                  sort === 'low' ? a.price - b.price : b.price - a.price
-                )
-                .map((prod) => (
-                  <ProductCard data={prod} />
-                ))}
+              {currentProducts.map((prod) => (
+                <ProductCard data={prod} />
+              ))}
             </div>
             <div className="my-20 flex w-full items-center justify-between py-8">
               <p>
-                Showing 1-{filtredItems.length} of {totalItems} results
+                Showing {startIndex + 1}-{currentProducts.length} of{' '}
+                {totalItems} results
               </p>
-              <div className="flex items-center gap-[8px]">
+              <div
+                className={`${
+                  currentProducts.length >= 12 ? 'flex' : 'hidden'
+                }   items-center gap-[8px]`}
+              >
                 {[...Array(totalPages)].map((_, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
                   <span
@@ -160,6 +176,7 @@ const Shop = ({
     </>
   );
 };
+
 Shop.getInitialProps = async () => {
   const res = await axiosDev.get('/Product/getall').catch((error) => {
     console.error(error);

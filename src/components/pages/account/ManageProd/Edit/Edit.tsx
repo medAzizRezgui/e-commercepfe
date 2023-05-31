@@ -27,6 +27,7 @@ type Props = {
   specifications: any;
   oldDiscount: number;
   oldFeatures: string[];
+  profit: number;
 };
 const Edit = ({
   stock,
@@ -40,6 +41,7 @@ const Edit = ({
   oldFeatures,
   oldDiscount,
   sku,
+  profit,
   specifications,
 }: Props) => {
   const [newStock, setNewStock] = useState(stock);
@@ -55,6 +57,7 @@ const Edit = ({
   const [oldFiless, setOldFiless] = useState(oldFiles);
   const [specs, setSpecs] = useState([]);
   const [features, setFeatures] = useState(oldFeatures);
+  const [newProfit, setNewProfit] = useState(profit);
 
   useEffect(() => {
     try {
@@ -113,7 +116,7 @@ const Edit = ({
   formData.append('specifications', JSON.stringify(parseArray(specs)));
   formData.append('discount', discount.toString());
   formData.append('sku', SKU);
-
+  formData.append('profit', newProfit);
   features.forEach((value) => {
     formData.append('features', value);
   });
@@ -224,6 +227,13 @@ const Edit = ({
                     value={SKU}
                     type="text"
                     setValue={setSKU}
+                  />
+                  <Input
+                    placeholder="..."
+                    label="Profit"
+                    value={newProfit}
+                    type="number"
+                    setValue={setNewProfit}
                   />
                   <div className="flex flex-col gap-[10px] py-4">
                     <p className="font-medium">Specifications</p>

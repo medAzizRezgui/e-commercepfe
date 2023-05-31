@@ -9,6 +9,7 @@ export type Product = {
   files: string[];
   name: string;
   price: number;
+  profit: number;
   rating: {
     rate: number;
     name: string;

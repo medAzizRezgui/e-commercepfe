@@ -14,6 +14,7 @@ export const ProductCardH = ({ prod }: { prod: Product }) => {
     await setSuccess(true);
     await addItem(
       {
+        profit: prod?.profit,
         image: prod?.files[0],
         name: prod?.name,
         // eslint-disable-next-line no-underscore-dangle

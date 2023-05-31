@@ -29,7 +29,9 @@ export const Images = ({ prod }: Props) => {
       >
         {prod?.files?.map((img) => (
           <SwiperSlide>
-            <Image src={img} alt="" width={400} height={400} />
+            <div className="flex h-[400px] max-h-[400px] w-[400px] max-w-[400px] items-center justify-center ">
+              <Image src={img} alt="" width={350} height={350} />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

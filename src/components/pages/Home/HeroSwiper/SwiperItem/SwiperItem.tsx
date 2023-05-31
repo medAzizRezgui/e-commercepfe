@@ -1,34 +1,45 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
-import HeroSmartWatch from '@/images/HeroSmartWatch.png';
+import HeroSmartWatch from '@/images/watch.png';
 
 export const SwiperItem = () => (
-  <div className="h-[422px]  gap-[40px] justify-between items-center w-[80%] overflow-hidden flex mx-auto ">
+  <div className="mx-auto  flex h-[422px] w-[80%] items-center justify-between gap-[40px] overflow-hidden ">
     {/* Text */}
     <div className="mr-20">
-      <h1 className="uppercase min-w-[400px] leading-[65px] font-Roboto text-display-xl font-[300]">
-        Le nouveau
+      <h1 className="min-w-[400px] font-Roboto text-display-lg font-[500] uppercase leading-[50px]">
+        Ladies watch collection
       </h1>
-      <h1 className="uppercase font-Roboto  leading-[65px] text-display-xl font-[300]">
-        Standard
+      <h1 className="font-Roboto text-display-lg  font-[500] uppercase leading-[50px]">
+        STRAND by OBAKU
       </h1>
-      <p className="font-medium font-Roboto uppercase text-text-md">
-        sous smartwatches favorable
+      <p className="font-Roboto text-text-md font-medium uppercase">
+        In Watches
       </p>
-      <p className="font-[300] font-Roboto uppercase text-text-sm">From</p>
-      <h1 className="font-Roboto font-medium pb-24 text-display-lg ">
-        $799.99
-      </h1>
-      <button
-        type="button"
-        onClick={() => {}}
-        className="rounded-[8px] text-text-lg text-white font-[300] bg-yellow-500 text-white px-58 py-8"
+      <p className="font-Roboto text-text-sm font-[300] uppercase">From</p>
+      <h1 className="pb-24 font-Roboto text-display-lg font-medium ">520 DT</h1>
+      <Link
+        className="cursor-pointer"
+        href={{
+          pathname: '/product',
+          // eslint-disable-next-line no-underscore-dangle
+          query: {
+            name: "Ladies watch collection STRAND by OBAKU - Magie d'Or",
+            id: '64766ba8a8b2fbd9fa7d8f44',
+          },
+        }}
       >
-        Acheter
-      </button>
+        <button
+          type="button"
+          onClick={() => {}}
+          className="rounded-[8px] bg-yellow-500 px-58 py-8 text-text-lg font-[300] text-white"
+        >
+          Acheter
+        </button>
+      </Link>
     </div>
     {/*  Image */}
-    <Image src={HeroSmartWatch} alt="img" className="w-[110%]" />
+    <Image src={HeroSmartWatch} alt="img" className="w-[45%]" />
   </div>
 );

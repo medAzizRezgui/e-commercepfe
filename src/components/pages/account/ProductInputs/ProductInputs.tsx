@@ -34,6 +34,7 @@ export const ProductInputs = () => {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [specs, setSpecs] = useState([]);
+  const [profit, setProfit] = useState(0);
 
   function parseArray(arr: string[]) {
     const result = [];
@@ -68,7 +69,7 @@ export const ProductInputs = () => {
   });
 
   formData.append('specifications', JSON.stringify(parseArray(specs)));
-
+  formData.append('profit', profit);
   files.forEach((value) => {
     formData.append('files', value);
   });
@@ -92,7 +93,7 @@ export const ProductInputs = () => {
   };
 
   const inputProps = {
-    placeholder: 'Ajouter...',
+    placeholder: 'Add...',
     maxLength: 200,
     // Add any other props you want to pass down
   };
@@ -142,9 +143,15 @@ export const ProductInputs = () => {
           type="text"
           setValue={setSKU}
         />
-
+        <Input
+          placeholder="Profit"
+          label="Profit"
+          value={profit}
+          type="number"
+          setValue={setProfit}
+        />
         <div className="flex flex-col gap-[10px] py-4">
-          <p className="font-medium">Points Forts</p>
+          <p className="font-medium">Featuress</p>
           <TagsInput
             className="border-2 border-gray-500 p-8"
             inputProps={inputProps}

@@ -16,6 +16,7 @@ export const ProductCard = ({ data }: Props) => {
   const handleAddToCart = () => {
     addItem(
       {
+        profit: data?.profit,
         image: data?.files[0],
         name: data?.name,
         // eslint-disable-next-line no-underscore-dangle
@@ -30,7 +31,7 @@ export const ProductCard = ({ data }: Props) => {
     setSuccess(true);
   };
   return (
-    <div className="pt-20 pb-40 px-24 h-[340px] group bg-white hover:shadow-productCardShadow border-r-[2px] border-b-[2px] hover:z-[20] border-gray-300 hover:border-r-0  w-full relative ">
+    <div className="group relative h-[340px] w-full border-b-[2px] border-r-[2px] border-gray-300 bg-white px-24 pb-40 pt-20 hover:z-[20]  hover:border-r-0 hover:shadow-productCardShadow ">
       <Toast
         success={success}
         error={false}
@@ -48,7 +49,7 @@ export const ProductCard = ({ data }: Props) => {
         <p className="text-text-xs text-gray-400 ">
           {data && data.sousCategorie?.name}
         </p>
-        <h1 className="font-semibold text-blue-500 text-text-sm ">
+        <h1 className="text-text-sm font-semibold text-blue-500 ">
           {data?.name}
         </h1>
 
@@ -64,30 +65,30 @@ export const ProductCard = ({ data }: Props) => {
         <div
           className={`  ${data?.discount ? 'flex' : 'hidden'} flex flex-col`}
         >
-          <h1 className="font-[500] text-text-sm text-gray-400 line-through  ">
+          <h1 className="text-text-sm font-[500] text-gray-400 line-through  ">
             {data?.price} DT
           </h1>
-          <h1 className="font-[500] text-text-lg text-green-400 ">
+          <h1 className="text-text-lg font-[500] text-green-400 ">
             {(data.price - (data.price / 100) * data.discount).toFixed(2)} DT
           </h1>
         </div>
 
         {!data.discount && (
-          <h1 className="font-[500] text-text-lg">{data?.price} DT</h1>
+          <h1 className="text-text-lg font-[500]">{data?.price} DT</h1>
         )}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <div
           onClick={handleAddToCart}
-          className="w-[35px] h-[35px] cursor-pointer rounded-full flex items-center justify-center relative z-[99] bg-gray-500 group-hover:bg-yellow-500"
+          className="relative z-[99] flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-full bg-gray-500 group-hover:bg-yellow-500"
         >
-          <BiCartAdd className="fill-white w-[20px] h-[20px]" />
+          <BiCartAdd className="h-[20px] w-[20px] fill-white" />
         </div>
       </div>
 
       <div
         className={`${
           data?.discount ? 'absolute' : 'hidden'
-        }   top-0 right-0 bg-green-400 text-white py-4 px-8`}
+        }   right-0 top-0 bg-green-400 px-8 py-4 text-white`}
       >
         Sale {data?.discount}%
       </div>

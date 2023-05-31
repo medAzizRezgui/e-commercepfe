@@ -48,7 +48,7 @@ export const SousCategoriesSelect = ({
   }, [categorie]);
   return (
     <div className="flex flex-col gap-[10px] py-4">
-      <p className="font-medium">Sous Categorie</p>
+      <p className="font-medium">Sub Category</p>
       <Select
         value={sousCategorie || defaultValue}
         onChange={handleSousCategorieChange}

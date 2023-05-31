@@ -8,6 +8,10 @@ export type Order = {
     postalCode: number;
     street: string;
   };
+  status: {
+    value: number;
+    label: string;
+  };
   phoneNumber: number;
   Products: [
     {

@@ -17,6 +17,7 @@ export const HeroItem = ({ item }: Props) => {
     setSuccess(true);
     addItem(
       {
+        profit: item?.profit,
         image: item?.files[0],
         name: item?.name,
         // eslint-disable-next-line no-underscore-dangle

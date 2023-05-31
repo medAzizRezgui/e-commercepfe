@@ -5,8 +5,17 @@ import { Login } from '../../components/pages/auth/login';
 import { Register } from '../../components/pages/auth/register';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Category } from '../../types/Category';
+import { SousCategory } from '../../types/SousCategory';
+import { axiosDev } from '../api/axios';
 
-const Auth = () => (
+const Auth = ({
+  categories,
+  sousCategories,
+}: {
+  categories: Category[];
+  sousCategories: SousCategory[];
+}) => (
   <>
     <Head>
       <title>Create Next App</title>
@@ -18,7 +27,7 @@ const Auth = () => (
     <main>
       <Header />
       {/* Categories */}
-      <Categories />
+      <Categories categories={categories} sousCategories={sousCategories} />
       <div className="mx-auto mt-128  flex max-w-[1400px] items-center gap-[10px] px-16 py-16 text-text-sm" />
       <div className="mx-auto my-40 flex w-full max-w-[1400px] gap-[20px]">
         {/* Login */}
@@ -36,4 +45,13 @@ const Auth = () => (
     </main>
   </>
 );
+
+Auth.getInitialProps = async () => {
+  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
+
+  const categories = await categoriesResponse.data;
+  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCategories = await sousCatRes?.data;
+  return { categories, sousCategories };
+};
 export default Auth;

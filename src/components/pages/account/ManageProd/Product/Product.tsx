@@ -64,6 +64,7 @@ export const Product = ({ item }: Props) => {
           specifications={item?.specifications}
           oldDiscount={item?.discount}
           oldFeatures={item.features}
+          profit={item?.profit}
         />
       </div>
 

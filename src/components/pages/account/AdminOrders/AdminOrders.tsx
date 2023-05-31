@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
+import Select from 'react-select';
 
 import axiosProduction from '../../../../pages/api/axios';
 import { Order } from '../../../../types/Order';
@@ -41,6 +42,40 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
       });
   };
 
+  const options = [
+    {
+      value: 0,
+      label: 'Not Delivered',
+    },
+    {
+      value: 1,
+      label: 'Delivered',
+    },
+    {
+      value: 2,
+      label: 'Cancelled',
+    },
+    {
+      value: 3,
+      label: 'Returned',
+    },
+  ];
+
+  const handleStatusChange = async (val, orderId) => {
+    setSuccess(false);
+    setError(false);
+    await axiosProduction
+      .patch(`/order/status/${orderId}`, { status: val })
+      .then(() => {
+        setSuccess(true);
+        setError(false);
+        setRefetch(!refetch);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setError(true);
+      });
+  };
   return (
     <div className="w-full">
       <Toast
@@ -53,7 +88,7 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
         <h1 className="w-[150px]">Client</h1>
         <h1 className="w-[400px]">Products</h1>
         <h1 className="w-[100px]">Payment</h1>
-        <h1 className="w-[150px]">Delivery</h1>
+        <h1 className="w-[150px]">Status</h1>
         <h1 className="w-[100px]">Coupon</h1>
         <h1 className="w-[100px] ">Price</h1>
       </div>
@@ -81,13 +116,18 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
           >
             {order.isPaid ? 'Paid' : 'Not Paid'}
           </h1>
-          <h1
-            className={` ${
-              order.isDelivered ? 'bg-green-500' : ' bg-red-500'
-            }  w-[150px] rounded-full py-4 text-center text-white`}
-          >
-            {order.isDelivered ? 'Delivered' : 'Not Delivered'}
-          </h1>
+
+          <div className="w-[150px]">
+            <Select
+              defaultValue={{
+                value: order.status.value,
+                label: order.status.label,
+              }}
+              isSearchable={false}
+              options={options}
+              onChange={(e) => handleStatusChange(e, order._id)}
+            />
+          </div>
           <h1 className="w-[100px]">{order.coupon}</h1>
           <h1 className="w-[100px] text-right font-semibold ">
             {order.totalPrice.toFixed(2)} DT

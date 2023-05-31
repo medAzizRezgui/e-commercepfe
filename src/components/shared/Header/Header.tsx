@@ -42,7 +42,9 @@ export const Header = () => {
   return (
     <div className="relative z-[20] mx-auto my-20 flex w-full max-w-[1400px] items-center justify-between rounded-[50px] bg-dark-500 px-20 py-8 ">
       <Link href="/">
-        <Logo />
+        <h1 className="text-display-md font-semibold text-white">
+          LOGO <span className="text-yellow-500">.</span>
+        </h1>
       </Link>
 
       {/* Input */}
@@ -87,7 +89,7 @@ export const Header = () => {
               <BiShoppingBag className="h-[28px] w-[28px] text-white" />
             </div>
             <h1 className="text-text-md font-medium text-white">
-              ${calculateTotal()}
+              {calculateTotal()} DT
             </h1>
           </div>
 

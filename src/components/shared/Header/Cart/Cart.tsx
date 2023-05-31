@@ -12,14 +12,14 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
     <div
       className={`${
         openCart ? 'absolute' : 'hidden'
-      } right-0 top-[50px] z-[100] w-[300px] rounded-b-[12px] rounded-t-[4px] border-t-[3px] border-yellow-500 bg-white px-24 py-12 drop-shadow-md`}
+      } right-0 top-[50px] z-[100] w-[400px] rounded-b-[12px] rounded-t-[4px] border-t-[3px] border-yellow-500 bg-white px-24 py-12 drop-shadow-md`}
     >
       {cartItems.length <= 0 ? (
         <h1 className="py-18">No products in the cart.</h1>
       ) : (
         cartItems.map((item) => (
-          <div className="flex justify-between gap-[20px] ">
-            <div className="w-[80%]  ">
+          <div className="flex justify-between gap-[20px] pb-4 ">
+            <div className="h-[75px] min-w-[75px]">
               <Image src={item.image} alt="" width={75} height={75} />
             </div>
             <div className="flex">

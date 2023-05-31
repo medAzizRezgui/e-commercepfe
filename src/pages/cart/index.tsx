@@ -6,6 +6,7 @@ import { BiX } from 'react-icons/bi';
 
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Toast } from '../../components/shared/toast';
 import { CartItem, useCart } from '../../context/Cart/CartContext';
 import { Category } from '../../types/Category';
 import { SousCategory } from '../../types/SousCategory';
@@ -21,12 +22,20 @@ const Cart = ({
   const { cartItems, addItem, removeItem } = useCart();
 
   const [coupon, setCoupon] = useState('');
-
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleCoupon = async () => {
-    await axiosProduction
-      .get(`/coupon/${coupon}`)
-      .then(() => console.log('SUCCESS'))
-      .catch(() => console.log('ERROR'));
+    setSuccess(false);
+    setError(false);
+    const res = await axiosProduction.get(`/coupon/${coupon}`);
+    if (res.data.length === 0) {
+      setError(true);
+      setSuccess(false);
+    }
+    if (res.data.length > 0) {
+      setError(false);
+      setSuccess(true);
+    }
   };
   const updateCart = (
     QT: number,
@@ -61,6 +70,12 @@ const Cart = ({
       </Head>
 
       <main>
+        <Toast
+          success={success}
+          error={error}
+          text="Added "
+          errorMsgs={[{ msg: 'Not Found' }]}
+        />
         <Header />
         {/* Categories */}
         <Categories categories={categories} sousCategories={sousCategories} />
@@ -105,7 +120,7 @@ const Cart = ({
                     width={150}
                     height={150}
                     alt=""
-                    className="max-w-[150px]"
+                    className="max-w-[150px] py-8"
                   />
                   <h1>{item.name}</h1>
                 </div>
@@ -155,7 +170,7 @@ const Cart = ({
                 <Link
                   href={{
                     pathname: '/checkout',
-                    query: { coupon },
+                    query: { coupon: success ? coupon : '' },
                   }}
                 >
                   <button

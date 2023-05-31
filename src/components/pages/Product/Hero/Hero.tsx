@@ -10,7 +10,7 @@ type Props = {
   prod: Product;
 };
 export const Hero = ({ prod }: Props) => (
-  <div className="w-full bg-white flex items-start h-min justify-between max-w-[1400px] mx-auto py-40">
+  <div className="mx-auto flex h-min w-full max-w-[1400px] items-start justify-between bg-white py-40">
     <Images prod={prod} />
     {/*  Details */}
     <Details prod={prod} />

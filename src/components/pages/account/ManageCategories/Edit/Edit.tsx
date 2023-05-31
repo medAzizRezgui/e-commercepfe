@@ -68,7 +68,7 @@ export const Edit = ({
               <button
                 type="button"
                 onClick={updateCategorie}
-                className=" inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
+                className=" inline-flex h-[35px] items-center justify-center rounded-[4px] bg-yellow-500 px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
               >
                 Save changes
               </button>
