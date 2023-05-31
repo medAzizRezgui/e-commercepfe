@@ -57,7 +57,7 @@ const Cart = ({
       0
     );
 
-    return (total + 50).toFixed(2);
+    return total.toFixed(2);
   }
 
   return (
@@ -192,10 +192,7 @@ const Cart = ({
                     {calculateTotal()} DT
                   </p>
                 </div>
-                <div className="flex items-center justify-between gap-[250px] border-b-[1px] border-gray-500 py-8">
-                  <p className="text-text-sm font-semibold">Shipping</p>
-                  <p className="text-text-sm text-gray-400">50 DT</p>
-                </div>
+
                 <div className="flex items-center justify-between gap-[250px] border-b-[1px] border-gray-500 py-8">
                   <p className="text-text-sm font-semibold">Total</p>
                   <p className="text-text-sm font-semibold">

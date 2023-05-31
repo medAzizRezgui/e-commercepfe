@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
-import Select from 'react-select';
+import Select, { OnChangeValue } from 'react-select';
 
 import axiosProduction from '../../../../pages/api/axios';
 import { Order } from '../../../../types/Order';
@@ -61,7 +61,10 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
     },
   ];
 
-  const handleStatusChange = async (val, orderId) => {
+  const handleStatusChange = async (
+    val: OnChangeValue<unknown, false>,
+    orderId: string
+  ) => {
     setSuccess(false);
     setError(false);
     await axiosProduction

@@ -116,6 +116,8 @@ const Edit = ({
   formData.append('specifications', JSON.stringify(parseArray(specs)));
   formData.append('discount', discount.toString());
   formData.append('sku', SKU);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   formData.append('profit', newProfit);
   features.forEach((value) => {
     formData.append('features', value);
@@ -174,7 +176,7 @@ const Edit = ({
             onClick={() => setOpenEditModal(false)}
             className="fixed inset-0 top-[-10px] z-[999] bg-dark-500 opacity-90 data-[state=open]:animate-overlayShow"
           />
-          <Dialog.Content className="fixed left-[50%] top-[50%] z-[1000] max-h-[85vh] w-[90vw] max-w-[1200px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
+          <Dialog.Content className="fixed left-[50%] top-[50%] z-[1000] max-h-[85vh] w-[90vw] max-w-[1200px] translate-x-[-50%] translate-y-[-50%] overflow-y-scroll rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
             <Dialog.Title className="m-0 text-[17px] font-medium text-blue-500">
               Edit Product
             </Dialog.Title>

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from '../../components/pages/account/Input';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Toast } from '../../components/shared/toast';
 import { useCart } from '../../context/Cart/CartContext';
 import { Category } from '../../types/Category';
 import { SousCategory } from '../../types/SousCategory';
@@ -70,8 +71,11 @@ const Checkout = ({
         console.error(error);
       });
   };
-
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleAddOrder = async () => {
+    setError(false);
+    setSuccess(false);
     await axiosProduction
       .post('/order/addOrder', {
         fullname: `${firstName} ${lastName}`,
@@ -93,7 +97,15 @@ const Checkout = ({
         totalPrice: calculateTotal(),
         coupon: router.query.coupon,
       })
-      .then((r) => handlePay(r.data._id));
+      .then((r) => {
+        setError(false);
+        setSuccess(true);
+        handlePay(r.data._id);
+      })
+      .catch(() => {
+        setError(true);
+        setSuccess(false);
+      });
   };
   useEffect(() => {
     const getUser = () => {
@@ -119,6 +131,12 @@ const Checkout = ({
       </Head>
 
       <main>
+        <Toast
+          success={success}
+          error={error}
+          text="Done"
+          errorMsgs={[{ msg: 'Please fill out the form' }]}
+        />
         <Header />
         {/* Categories */}
         <Categories categories={categories} sousCategories={sousCategories} />
@@ -184,7 +202,7 @@ const Checkout = ({
               <option value="Zaghouan">Zaghouan</option>
             </select>
             <Input
-              label="Ville *"
+              label="City *"
               value={town}
               type="text"
               setValue={setTown}
@@ -238,7 +256,9 @@ const Checkout = ({
                     {item.name}{' '}
                     <span className="font-semibold">x {item.quantity}</span>
                   </p>
-                  <p>{(item.price * item.quantity).toFixed(2)} DT</p>
+                  <p className="w-[100px]">
+                    {(item.price * item.quantity).toFixed(2)} DT
+                  </p>
                 </div>
               ))}
             </div>
