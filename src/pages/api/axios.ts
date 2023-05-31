@@ -6,6 +6,7 @@ const axiosProduction = axios.create({
 });
 export const axiosDev = axios.create({
   baseURL: 'https://pfeecommerce.azurewebsites.net',
+  // baseURL: 'http://localhost:5000',
 });
 axiosProduction.defaults.headers.common['Access-Control-Allow-Origin'] =
   'https://www.rezgui-aziz.me/';

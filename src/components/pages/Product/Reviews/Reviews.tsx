@@ -242,7 +242,7 @@ export const Reviews = ({ prod }: Props) => {
           <button
             onClick={handleSentReview}
             type="button"
-            className=" max-w-[150px] rounded-full bg-gray-500 px-24 py-16 text-center text-text-sm font-semibold"
+            className=" max-w-[150px] cursor-pointer rounded-full bg-gray-500 px-24 py-16 text-center text-text-sm font-semibold"
           >
             Add Review
           </button>

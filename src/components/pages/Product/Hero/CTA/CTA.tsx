@@ -67,7 +67,7 @@ export const CTA = ({ prod }: Props) => {
       {/* eslint-disable-next-line react/button-has-type */}
       <button
         onClick={() => handleAddToCart()}
-        className="flex items-center gap-[12px] rounded-full bg-yellow-500 px-58 py-18 text-white"
+        className="flex cursor-pointer items-center gap-[12px] rounded-full bg-yellow-500 px-58 py-18 text-white"
       >
         <span>
           <BiCartAdd className="h-[24px] w-[24px]" />

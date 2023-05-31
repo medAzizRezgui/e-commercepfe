@@ -43,7 +43,7 @@ export const Images = ({ prod }: Props) => {
               activeIndex === i
                 ? 'border-t-8 border-yellow-500'
                 : 'border-t-8 border-white'
-            }  flex  h-[75px] w-[75px] items-center justify-center`}
+            }  flex  h-[75px] w-[75px] cursor-pointer items-center justify-center`}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             onClick={() => handleClick(i)}
