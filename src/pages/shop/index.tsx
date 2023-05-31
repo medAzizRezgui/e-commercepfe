@@ -13,7 +13,7 @@ import { ProductCard } from '../../components/shared/ProductCard';
 import { Category } from '../../types/Category';
 import { Product } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { axiosDev } from '../api/axios';
 
 const Shop = ({
   data,
@@ -49,6 +49,13 @@ const Shop = ({
   const [selectedSousCategory, setSelectedSousCategory] = useState(
     pathQuery.sousCategory ? pathQuery.sousCategory : 'all'
   );
+
+  useEffect(() => {
+    setSelectedSousCategory(
+      pathQuery.sousCategory ? pathQuery.sousCategory : 'all'
+    );
+    setSelectedCategorie(pathQuery.category ? pathQuery.category : 'all');
+  }, [pathQuery.category, pathQuery.sousCategory]);
 
   useEffect(() => {
     const getProducts = () => {
