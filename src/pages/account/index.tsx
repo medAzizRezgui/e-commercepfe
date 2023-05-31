@@ -79,7 +79,6 @@ const Account = ({
     getOrders();
   }, [refetchOrders]);
 
-  // TODO : Add pagination to dashboard
   // Get user from ls , if not redirect to auth page
   useEffect(() => {
     const getUser = () => {
@@ -161,7 +160,6 @@ const Account = ({
   );
 };
 
-// TODO : if not an admin don't fetch products
 Account.getInitialProps = async () => {
   try {
     const [ProdsRes, CatRes, SousCatRes, OrdersRes] = await Promise.all([
