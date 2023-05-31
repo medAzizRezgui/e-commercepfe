@@ -45,14 +45,14 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
           <button
             type="button"
             onClick={() => router.push('/cart')}
-            className="w-full cursor-pointer rounded-full bg-gray-300  px-16 py-12 text-text-sm"
+            className="w-full cursor-pointer rounded-full bg-gray-300 px-16  py-12 text-center text-text-sm"
           >
             View Cart
           </button>
           <button
             onClick={() => router.push('/checkout')}
             type="button"
-            className="w-full  cursor-pointer rounded-full bg-yellow-500 px-16 py-12 text-text-sm"
+            className="w-full cursor-pointer  rounded-full bg-yellow-500 px-16 py-12 text-center text-text-sm"
           >
             Checkout
           </button>
