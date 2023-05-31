@@ -19,7 +19,6 @@ export const UserProfile = () => {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  // TODO : Save only the user id in the localstorage and a do a request with it
   useEffect(() => {
     const getUser = () => {
       const res = window.localStorage.getItem('user');
