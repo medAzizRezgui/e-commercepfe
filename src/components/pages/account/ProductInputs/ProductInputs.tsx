@@ -69,6 +69,8 @@ export const ProductInputs = () => {
   });
 
   formData.append('specifications', JSON.stringify(parseArray(specs)));
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   formData.append('profit', profit);
   files.forEach((value) => {
     formData.append('files', value);

@@ -73,8 +73,8 @@ const Shop = ({
     setSelectedCategorie(val);
   };
 
-  const getPageIndices = (page: number) => {
-    const startIndex = (page - 1) * productsPerPage;
+  const getPageIndices = (pg: number) => {
+    const startIndex = (pg - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
     return { startIndex, endIndex };
   };

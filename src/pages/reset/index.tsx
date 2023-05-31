@@ -85,8 +85,6 @@ const Reset = () => {
 
       <main>
         <Header />
-        {/* Categories */}
-        <Categories />
         <div className="mx-auto mt-128 flex  max-w-[400px] flex-col items-center justify-center gap-[10px] px-16 py-16 ">
           <Toast
             success={success}
