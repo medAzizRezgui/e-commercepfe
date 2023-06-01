@@ -48,7 +48,7 @@ export const Images = ({ prod }: Props) => {
             // @ts-ignore
             onClick={() => handleClick(i)}
           >
-            <Image src={img} alt="" height={75} width={75} />
+            <Image src={img} alt="" height={50} width={50} />
           </div>
         ))}
       </div>
