@@ -30,7 +30,13 @@ export const Images = ({ prod }: Props) => {
         {prod?.files?.map((img) => (
           <SwiperSlide>
             <div className="flex h-[400px] max-h-[400px] w-[400px] max-w-[400px] items-center justify-center ">
-              <Image src={img} alt="" width={350} height={350} />
+              <Image
+                src={img}
+                alt=""
+                width={350}
+                height={350}
+                className="max-h-[350px] max-w-[350px]  object-contain"
+              />
             </div>
           </SwiperSlide>
         ))}
@@ -48,7 +54,13 @@ export const Images = ({ prod }: Props) => {
             // @ts-ignore
             onClick={() => handleClick(i)}
           >
-            <Image src={img} alt="" height={50} width={50} />
+            <Image
+              src={img}
+              alt=""
+              height={50}
+              width={50}
+              className="max-h-[50px] max-w-[50px] object-contain"
+            />
           </div>
         ))}
       </div>

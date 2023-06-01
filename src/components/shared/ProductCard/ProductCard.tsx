@@ -58,7 +58,7 @@ export const ProductCard = ({ data }: Props) => {
           alt="product"
           width={200}
           height={200}
-          className="mx-auto"
+          className="mx-auto max-h-[200px] max-w-[200px] object-contain py-8"
         />
       </Link>
       <div className="flex items-center  justify-between">
