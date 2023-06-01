@@ -36,7 +36,13 @@ export const ProductCardH = ({ prod }: { prod: Product }) => {
         errorMsgs={[]}
       />
       <div className="group my-12 flex cursor-pointer gap-[20px] border-r-[1px] border-gray-500 p-12 hover:border-0  hover:shadow-productCardShadow">
-        <Image src={prod?.files[0]} alt="" width={120} height={120} />
+        <Image
+          src={prod?.files[0]}
+          alt=""
+          width={120}
+          height={120}
+          className="max-h-[120px] max-w-[120px] object-contain"
+        />
         <div className="flex flex-col gap-[10px]">
           <Link
             href={{
