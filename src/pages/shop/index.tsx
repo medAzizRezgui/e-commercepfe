@@ -38,7 +38,7 @@ const Shop = ({
   }));
 
   const pathQuery = router.query;
-  const [sort, setSort] = useState('high');
+  const [sort, setSort] = useState('new');
   const [price, setPrice] = useState([
     products.reduce((min, item) => (item.price < min.price ? item : min)).price,
     products.reduce((max, item) => (item.price > max.price ? item : max)).price,
@@ -106,7 +106,25 @@ const Shop = ({
     );
   }
   const currentProducts = filteredItems
-    .sort((a, b) => (sort === 'low' ? a.price - b.price : b.price - a.price))
+    .sort((a, b) => {
+      if (sort === 'low') {
+        return a.price - b.price; // Sort by low price
+      }
+      if (sort === 'high') {
+        return b.price - a.price; // Sort by high price
+      }
+      if (sort === 'old') {
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        ); // Sort by oldest date
+      }
+      if (sort === 'new') {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ); // Sort by oldest date
+      }
+      return 0; // Default case, no sorting applied
+    })
     .slice(startIndex, endIndex);
 
   return (

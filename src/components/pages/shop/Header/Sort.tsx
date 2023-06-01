@@ -2,10 +2,11 @@ import React from 'react';
 import Select from 'react-select';
 
 const options = [
+  { value: 'new', label: 'Sort By Time : New First' },
+  { value: 'old', label: 'Sort By Time: Old First' },
   { value: 'high', label: 'Sort By price : high to low' },
   { value: 'low', label: 'Sort By price : low to high' },
 ];
-
 export const Sort = ({
   setSort,
 }: {
