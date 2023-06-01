@@ -24,7 +24,13 @@ export const SpecialOffer = ({ item }: { item: Product }) => {
       <h1 className="text-center text-display-xs text-yellow-500">
         Special Offer
       </h1>
-      <Image src={item?.files[0]} alt="" width={250} height={250} />
+      <Image
+        src={item?.files[0]}
+        alt=""
+        width={250}
+        height={250}
+        className="my-14 max-h-[250px] max-w-[250px] object-contain"
+      />
       <h1 className="px-24 text-center text-text-md font-medium text-blue-500">
         {item?.name}
       </h1>
