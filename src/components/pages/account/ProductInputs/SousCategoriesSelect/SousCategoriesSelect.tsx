@@ -28,7 +28,6 @@ export const SousCategoriesSelect = ({
       const response = await axiosPublic.get('/sousCat/getall');
 
       const res = response.data;
-      console.log(res);
 
       setSousCategories(
         res

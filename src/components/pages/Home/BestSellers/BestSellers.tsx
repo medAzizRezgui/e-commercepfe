@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import 'swiper/css';
 
 import { A11y, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { axiosPublic } from '../../../../pages/api/axios';
+import { Order } from '../../../../types/Order';
 import { Product } from '../../../../types/Product';
 import { ProductCardH } from '../../../shared/ProductCardH';
 
@@ -21,6 +23,42 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
   } else {
     slots = 3;
   }
+
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const getOrders = async () => {
+      await axiosPublic
+        .get('order/getAll')
+        .then((r) => setOrders(r.data))
+        .catch((e) => console.error(e));
+    };
+
+    getOrders();
+  }, []);
+
+  const [productCounts, setProductCounts] = useState<string[]>([]);
+
+  // Count the products
+  const countProducts = () => {
+    const productIds: string[] = [];
+
+    // Iterating over orders
+    orders.forEach((order) => {
+      // Iterating over products in each order
+      order.Products.forEach((product) => {
+        // Saving product id to the array
+        productIds.push(product.id);
+      });
+    });
+
+    setProductCounts(productIds);
+  };
+
+  useEffect(() => {
+    countProducts();
+  }, [orders, data]);
+  console.log(productCounts);
   return (
     <div className="h-full w-full bg-white">
       <div className="mx-auto w-full max-w-[1400px] py-40">
@@ -41,23 +79,23 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
           <SwiperSlide className="w-full">
             <div className="grid w-full grid-cols-4 ">
               {/* eslint-disable-next-line array-callback-return,consistent-return */}
-              {data.map((prod, i) => {
-                if (i < 8) {
-                  return <ProductCardH prod={prod} />;
-                }
-              })}
+              {data
+                .filter((product) => productCounts.includes(product._id))
+                .map((prod, i) => (
+                  <ProductCardH prod={prod} />
+                ))}
             </div>
           </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <div className="grid w-full grid-cols-4 ">
-              {/* eslint-disable-next-line array-callback-return,consistent-return */}
-              {data.map((prod, i) => {
-                if (i >= 8 && i < 16) {
-                  return <ProductCardH prod={prod} />;
-                }
-              })}
-            </div>
-          </SwiperSlide>
+          {/* <SwiperSlide className="w-full"> */}
+          {/*  <div className="grid w-full grid-cols-4 "> */}
+          {/*    /!* eslint-disable-next-line array-callback-return,consistent-return *!/ */}
+          {/*    {data.map((prod, i) => { */}
+          {/*      if (i >= 8 && i < 16) { */}
+          {/*        return <ProductCardH prod={prod} />; */}
+          {/*      } */}
+          {/*    })} */}
+          {/*  </div> */}
+          {/* </SwiperSlide> */}
         </Swiper>
         <div className="mx-auto mt-20 flex w-full justify-center gap-[10px]">
           {slots >= 1 && (

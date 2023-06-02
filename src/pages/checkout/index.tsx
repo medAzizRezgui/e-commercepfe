@@ -96,6 +96,7 @@ const Checkout = ({
             item_price: item.price,
             image: item.image,
             profit: item.profit,
+            id: item.id,
           })),
           totalPrice: calculateTotal(),
           coupon: router.query.coupon,

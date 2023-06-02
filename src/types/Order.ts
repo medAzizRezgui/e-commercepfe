@@ -19,6 +19,7 @@ export type Order = {
       qty: number;
       item_price: number;
       image: string;
+      id: string;
     }
   ];
   totalPrice: number;
