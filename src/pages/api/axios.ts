@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export const axiosPrivate = axios.create({
-  // baseURL: 'https://pfeecommerce.azurewebsites.net',
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://pfeecommerce.azurewebsites.net',
+  // baseURL: 'http://localhost:5000',
 });
 export const axiosPublic = axios.create({
-  // baseURL: 'https://pfeecommerce.azurewebsites.net',
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://pfeecommerce.azurewebsites.net',
+  // baseURL: 'http://localhost:5000',
 });
 axiosPublic.defaults.headers.common['Access-Control-Allow-Origin'] =
   'https://www.rezgui-aziz.me/';
