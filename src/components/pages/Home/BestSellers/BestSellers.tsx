@@ -58,7 +58,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
   useEffect(() => {
     countProducts();
   }, [orders, data]);
-  console.log(productCounts);
+
   return (
     <div className="h-full w-full bg-white">
       <div className="mx-auto w-full max-w-[1400px] py-40">
@@ -81,21 +81,25 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
               {/* eslint-disable-next-line array-callback-return,consistent-return */}
               {data
                 .filter((product) => productCounts.includes(product._id))
-                .map((prod, i) => (
-                  <ProductCardH prod={prod} />
-                ))}
+                .map((prod, i) => {
+                  if (i >= 0 && i < 8) {
+                    return <ProductCardH prod={prod} />;
+                  }
+                })}
             </div>
           </SwiperSlide>
-          {/* <SwiperSlide className="w-full"> */}
-          {/*  <div className="grid w-full grid-cols-4 "> */}
-          {/*    /!* eslint-disable-next-line array-callback-return,consistent-return *!/ */}
-          {/*    {data.map((prod, i) => { */}
-          {/*      if (i >= 8 && i < 16) { */}
-          {/*        return <ProductCardH prod={prod} />; */}
-          {/*      } */}
-          {/*    })} */}
-          {/*  </div> */}
-          {/* </SwiperSlide> */}
+          <SwiperSlide className="w-full">
+            <div className="grid w-full grid-cols-4 ">
+              {/* eslint-disable-next-line array-callback-return,consistent-return */}
+              {data
+                .filter((product) => productCounts.includes(product._id))
+                .map((prod, i) => {
+                  if (i >= 8 && i < 16) {
+                    return <ProductCardH prod={prod} />;
+                  }
+                })}
+            </div>
+          </SwiperSlide>
         </Swiper>
         <div className="mx-auto mt-20 flex w-full justify-center gap-[10px]">
           {slots >= 1 && (

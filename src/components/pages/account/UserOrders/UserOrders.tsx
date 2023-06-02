@@ -29,8 +29,9 @@ export const UserOrders = ({ orders, userEmail }: Props) => (
                   width={50}
                   height={50}
                   alt=""
+                  className="m-8 max-h-[50px] max-w-[50px] object-contain"
                 />
-                <h1>{prod.name}</h1>
+                <h1 className="border-l-2 border-gray-500 pl-8">{prod.name}</h1>
               </div>
             ))}
           </div>
