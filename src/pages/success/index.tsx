@@ -2,15 +2,25 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
-import axiosProduction from '../api/axios';
+import { useGetUser } from '../../utils/hooks/useGetUser';
+import { axiosPrivate } from '../api/axios';
 
 const Success = () => {
   const router = useRouter();
 
+  const { jwt } = useGetUser();
   const payOrder = async () => {
     if (router.query.orderId) {
-      await axiosProduction
-        .patch(`/order/pay/${router.query.orderId}`)
+      await axiosPrivate
+        .patch(
+          `/order/pay/${router.query.orderId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        )
         .then(() => router.push('/'));
     }
   };

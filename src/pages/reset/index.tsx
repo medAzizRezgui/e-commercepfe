@@ -4,10 +4,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Toast } from '../../components/shared/toast';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { axiosPublic } from '../api/axios';
 
 const Reset = () => {
   const [password, setPassword] = useState('');
@@ -53,7 +52,7 @@ const Reset = () => {
       }
     }
     try {
-      const response = await axiosDev.patch('/auth/changePassword', {
+      const response = await axiosPublic.patch('/auth/changePassword', {
         newPassword: password,
         email: decodedEmail,
       });

@@ -1,12 +1,13 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
 import { refetchCategoriesState } from '../../../../../atoms/refetchCategoriesAtom';
-import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
-import axiosProduction from '../../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../../pages/api/axios';
 import { Category } from '../../../../../types/Category';
+import { useGetUser } from '../../../../../utils/hooks/useGetUser';
 import { Input } from '../../Input';
 
 type Props = {
@@ -25,21 +26,33 @@ export const Edit = ({
 }: Props) => {
   const [newCategorieName, setNewCategorieName] = useState(item.name);
   const [refetch, setRefetch] = useRecoilState(refetchCategoriesState);
-
+  const router = useRouter();
+  const { jwt } = useGetUser();
   const updateCategorie = async () => {
     setSuccess(false);
     setError(false);
-    await axiosProduction
+    await axiosPrivate
       // eslint-disable-next-line no-underscore-dangle
-      .patch(`/${type}/${item._id}`, {
-        name: newCategorieName,
-      })
+      .patch(
+        `/${type}/${item._id}`,
+        {
+          name: newCategorieName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
       .then(() => {
         setSuccess(true);
         setError(false);
         setRefetch(!refetch);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setSuccess(false);
         setError(true);
       });
