@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import Select, { OnChangeValue } from 'react-select';
@@ -18,7 +19,7 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
   const [openDelModal, setOpenDelModal] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-
+  const router = useRouter();
   const handleDeleteOrder = (selectedId: string, selectedName: string) => {
     setName(selectedName);
     setId(selectedId);
@@ -41,7 +42,10 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
         setError(false);
         setRefetch(!refetch);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setSuccess(false);
         setError(true);
       });
@@ -87,7 +91,10 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
         setError(false);
         setRefetch(!refetch);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setSuccess(false);
         setError(true);
       });

@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BiEdit, BiX } from 'react-icons/bi';
 import TagsInput from 'react-tagsinput';
@@ -138,7 +139,7 @@ const Edit = ({
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const updatedProd = async () => {
@@ -157,7 +158,10 @@ const Edit = ({
       })
       .then(() => setOpenEditModal(false))
       .then(() => setRefetch(!refetch))
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setError(true);
         setSuccess(false);
       });

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
@@ -23,7 +24,7 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
   const [refetch, setRefetch] = useRecoilState(refetchCategoriesState);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-
+  const router = useRouter();
   const { jwt } = useGetUser();
   const deleteCategorie = async (id: string) => {
     setSuccess(false);
@@ -39,7 +40,10 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
         setError(false);
         setRefetch(!refetch);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setSuccess(false);
         setError(true);
       });
@@ -58,7 +62,10 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
         setError(false);
         setRefetch(!refetch);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
         setSuccess(false);
         setError(true);
       });

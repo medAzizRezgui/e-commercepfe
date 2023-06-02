@@ -68,37 +68,39 @@ export const UserProfile = () => {
   const handleUpdateUser = async () => {
     setSuccess(false);
     setError(false);
-    try {
-      await axiosPrivate
-        .patch(
-          `/auth/updateUser/${user?._id}`,
-          {
-            email,
-            phoneNumber,
-            fullName,
-            shippingAddress: {
-              region,
-              city,
-              postalCode,
-              street,
-            },
+
+    await axiosPrivate
+      .patch(
+        `/auth/updateUser/${user?._id}`,
+        {
+          email,
+          phoneNumber,
+          fullName,
+          shippingAddress: {
+            region,
+            city,
+            postalCode,
+            street,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        )
-        .then((r) => {
-          setSuccess(true);
-          setError(false);
-          window.localStorage.setItem('user', JSON.stringify(r.data));
-        });
-    } catch (e) {
-      console.error(e);
-      setSuccess(false);
-      setError(true);
-    }
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
+      .then((r) => {
+        setSuccess(true);
+        setError(false);
+        window.localStorage.setItem('user', JSON.stringify(r.data));
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
+        setSuccess(false);
+        setError(true);
+      });
   };
   return (
     <div className="w-full">

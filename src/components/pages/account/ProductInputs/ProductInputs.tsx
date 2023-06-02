@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import TagsInput from 'react-tagsinput';
 import { useRecoilState } from 'recoil';
@@ -76,6 +77,7 @@ export const ProductInputs = () => {
   files.forEach((value) => {
     formData.append('files', value);
   });
+  const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,7 +94,12 @@ export const ProductInputs = () => {
       })
       .then(() => setSuccess(true))
       .then(() => setRefetch(!refetch))
-      .catch(() => setError(true));
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
+        setError(true);
+      });
     setLoading(false);
   };
 

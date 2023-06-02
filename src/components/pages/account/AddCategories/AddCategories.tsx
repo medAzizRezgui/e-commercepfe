@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
@@ -19,6 +20,7 @@ export const AddCategories = () => {
   const [refetchCategories, setRefetchCategories] = useRecoilState(
     refetchCategoriesState
   );
+  const router = useRouter();
   const { jwt } = useGetUser();
   const handleAddCategorie = async () => {
     setError(false);
@@ -40,7 +42,12 @@ export const AddCategories = () => {
         setRefetch(!refetch);
         setRefetchCategories(!refetchCategories);
       })
-      .catch(() => setError(true));
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
+        setError(true);
+      });
   };
 
   const handleAddSousCategorie = async () => {
@@ -64,7 +71,12 @@ export const AddCategories = () => {
         setRefetch(!refetch);
         setRefetchCategories(!refetchCategories);
       })
-      .catch(() => setError(true));
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
+        setError(true);
+      });
   };
   return (
     <div className="mt-8">

@@ -111,7 +111,13 @@ const Checkout = ({
         setSuccess(true);
         handlePay(r.data._id);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response.status === 401) {
+          router.push('/auth');
+        }
+        setSuccess(false);
+        setError(true);
+
         setError(true);
         setSuccess(false);
       });

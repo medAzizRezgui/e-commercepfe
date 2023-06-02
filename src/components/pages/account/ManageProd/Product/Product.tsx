@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
@@ -16,7 +17,7 @@ type Props = {
 export const Product = ({ item }: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [refetch, setRefetch] = useRecoilState(refetchProdsState);
-
+  const router = useRouter();
   const { jwt } = useGetUser();
   const deleteProd = async (id: string) => {
     setDeleteModal(false);
@@ -30,6 +31,9 @@ export const Product = ({ item }: Props) => {
         setRefetch(!refetch);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          router.push('/auth');
+        }
         // Code to handle errors, if any occur during the DELETE request
         console.log(error);
       });
