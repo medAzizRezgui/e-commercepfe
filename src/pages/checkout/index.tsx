@@ -11,8 +11,8 @@ import { Toast } from '../../components/shared/toast';
 import { useCart } from '../../context/Cart/CartContext';
 import { Category } from '../../types/Category';
 import { SousCategory } from '../../types/SousCategory';
-import { User } from '../../types/User';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { useGetUser } from '../../utils/hooks/useGetUser';
+import { axiosPrivate, axiosPublic } from '../api/axios';
 
 const Checkout = ({
   categories,
@@ -21,7 +21,6 @@ const Checkout = ({
   categories: Category[];
   sousCategories: SousCategory[];
 }) => {
-  const [user, setUser] = useState<User>();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [region, setRegion] = useState('');
@@ -32,6 +31,7 @@ const Checkout = ({
 
   const { cartItems } = useCart();
   const router = useRouter();
+  const { user, jwt } = useGetUser();
 
   function calculateTotal() {
     const total = cartItems.reduce(
@@ -77,27 +77,35 @@ const Checkout = ({
   const handleAddOrder = async () => {
     setError(false);
     setSuccess(false);
-    await axiosProduction
-      .post('/order/addOrder', {
-        fullname: `${firstName} ${lastName}`,
-        email: user?.email,
-        shippingAddress: {
-          region,
-          city: town,
-          postalCode: zipCode,
-          street,
+    await axiosPrivate
+      .post(
+        '/order/addOrder',
+        {
+          fullname: `${firstName} ${lastName}`,
+          email: user?.email,
+          shippingAddress: {
+            region,
+            city: town,
+            postalCode: zipCode,
+            street,
+          },
+          phoneNumber,
+          Products: cartItems.map((item) => ({
+            name: item.name,
+            qty: item.quantity,
+            item_price: item.price,
+            image: item.image,
+            profit: item.profit,
+          })),
+          totalPrice: calculateTotal(),
+          coupon: router.query.coupon,
         },
-        phoneNumber,
-        Products: cartItems.map((item) => ({
-          name: item.name,
-          qty: item.quantity,
-          item_price: item.price,
-          image: item.image,
-          profit: item.profit,
-        })),
-        totalPrice: calculateTotal(),
-        coupon: router.query.coupon,
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
       .then((r) => {
         setError(false);
         setSuccess(true);
@@ -108,18 +116,6 @@ const Checkout = ({
         setSuccess(false);
       });
   };
-  useEffect(() => {
-    const getUser = () => {
-      const res = window.localStorage.getItem('user');
-      if (res) {
-        setUser(JSON.parse(res));
-      }
-      if (!res) {
-        router.push('/auth');
-      }
-    };
-    getUser();
-  }, []);
 
   if (!user)
     return (
@@ -293,10 +289,10 @@ const Checkout = ({
   );
 };
 Checkout.getInitialProps = async () => {
-  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
+  const categoriesResponse = await axiosPublic.get('/categorie/getall'); // replace with your API endpoint
 
   const categories = await categoriesResponse.data;
-  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCatRes = await axiosPublic.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
   return { categories, sousCategories };
 };

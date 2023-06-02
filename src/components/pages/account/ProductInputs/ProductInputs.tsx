@@ -3,7 +3,8 @@ import TagsInput from 'react-tagsinput';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { TextArea } from '../../../shared/TextArea';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
@@ -79,13 +80,14 @@ export const ProductInputs = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [refetch, setRefetch] = useRecoilState(refetchProdsState);
-
+  const { jwt } = useGetUser();
   const addProd = async () => {
     setLoading(true);
-    await axiosProduction
+    await axiosPrivate
       .post('/product/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${jwt}`,
         },
       })
       .then(() => setSuccess(true))

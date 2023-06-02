@@ -3,10 +3,10 @@ import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
 import { refetchCategoriesState } from '../../../../atoms/refetchCategoriesAtom';
-import { refetchProdsState } from '../../../../atoms/refetchProdsAtom';
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
 import { Category } from '../../../../types/Category';
 import { SousCategory } from '../../../../types/SousCategory';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { DeleteModal } from '../../../shared/DeleteModal';
 import { Toast } from '../../../shared/toast';
 
@@ -23,11 +23,17 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
   const [refetch, setRefetch] = useRecoilState(refetchCategoriesState);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const { jwt } = useGetUser();
   const deleteCategorie = async (id: string) => {
     setSuccess(false);
     setError(false);
-    await axiosProduction
-      .delete(`/categorie/delete/${id}`)
+    await axiosPrivate
+      .delete(`/categorie/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then(() => {
         setSuccess(true);
         setError(false);
@@ -41,8 +47,12 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
   const deleteSousCategorie = async (id: string) => {
     setSuccess(false);
     setError(false);
-    await axiosProduction
-      .delete(`/sousCat/delete/${id}`)
+    await axiosPrivate
+      .delete(`/sousCat/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then(() => {
         setSuccess(true);
         setError(false);

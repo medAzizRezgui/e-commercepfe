@@ -4,8 +4,9 @@ import { BiTrash } from 'react-icons/bi';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
-import axiosProduction from '../../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../../pages/api/axios';
 import { Product as ProdType } from '../../../../../types/Product';
+import { useGetUser } from '../../../../../utils/hooks/useGetUser';
 import { DeleteModal } from '../../../../shared/DeleteModal';
 import Edit from '../Edit/Edit';
 
@@ -16,10 +17,15 @@ export const Product = ({ item }: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [refetch, setRefetch] = useRecoilState(refetchProdsState);
 
+  const { jwt } = useGetUser();
   const deleteProd = async (id: string) => {
     setDeleteModal(false);
-    await axiosProduction
-      .delete(`/product/delete/${id}`)
+    await axiosPrivate
+      .delete(`/product/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then(() => {
         setRefetch(!refetch);
       })

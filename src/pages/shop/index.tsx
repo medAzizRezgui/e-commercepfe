@@ -10,10 +10,11 @@ import { Categories } from '../../components/shared/Categories';
 import { Footer } from '../../components/shared/Footer';
 import { Header } from '../../components/shared/Header';
 import { ProductCard } from '../../components/shared/ProductCard';
+import { Spinner } from '../../components/shared/Spinner';
 import { Category } from '../../types/Category';
 import { Product } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import { axiosDev } from '../api/axios';
+import { axiosPublic } from '../api/axios';
 
 const Shop = ({
   data,
@@ -59,7 +60,7 @@ const Shop = ({
 
   useEffect(() => {
     const getProducts = () => {
-      axiosDev
+      axiosPublic
         .get(`/product/getall`)
         .then((res) => {
           setProducts(res.data.products);
@@ -127,6 +128,12 @@ const Shop = ({
     })
     .slice(startIndex, endIndex);
 
+  if (!data)
+    return (
+      <div className="flex h-[100vh] w-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
   return (
     <>
       <Head>
@@ -203,16 +210,16 @@ const Shop = ({
 };
 
 Shop.getInitialProps = async () => {
-  const res = await axiosDev.get('/Product/getall').catch((error) => {
+  const res = await axiosPublic.get('/Product/getall').catch((error) => {
     console.error(error);
   });
 
   const data = await res?.data.products;
 
-  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
+  const categoriesResponse = await axiosPublic.get('/categorie/getall'); // replace with your API endpoint
 
   const categories = await categoriesResponse.data;
-  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCatRes = await axiosPublic.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
   return { data, categories, sousCategories };
 };

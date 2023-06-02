@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPublic } from '../../../../pages/api/axios';
 import { Toast } from '../../../shared/toast';
 
 export const Register = () => {
@@ -13,7 +13,7 @@ export const Register = () => {
   const [errorMsgs, setErrorMsgs] = useState([]);
   const router = useRouter();
   const register = async () => {
-    await axiosProduction
+    await axiosPublic
       .post('/auth/register', {
         email: newEmail,
         fullName,

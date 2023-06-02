@@ -10,7 +10,7 @@ import { Toast } from '../../components/shared/toast';
 import { CartItem, useCart } from '../../context/Cart/CartContext';
 import { Category } from '../../types/Category';
 import { SousCategory } from '../../types/SousCategory';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { axiosPublic } from '../api/axios';
 
 const Cart = ({
   categories,
@@ -27,7 +27,7 @@ const Cart = ({
   const handleCoupon = async () => {
     setSuccess(false);
     setError(false);
-    const res = await axiosProduction.get(`/coupon/${coupon}`);
+    const res = await axiosPublic.get(`/coupon/${coupon}`);
     if (res.data.length === 0) {
       setError(true);
       setSuccess(false);
@@ -209,10 +209,10 @@ const Cart = ({
   );
 };
 Cart.getInitialProps = async () => {
-  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
+  const categoriesResponse = await axiosPublic.get('/categorie/getall'); // replace with your API endpoint
 
   const categories = await categoriesResponse.data;
-  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCatRes = await axiosPublic.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
   return { categories, sousCategories };
 };

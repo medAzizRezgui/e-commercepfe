@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import Select, { OnChangeValue } from 'react-select';
 
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
 import { Order } from '../../../../types/Order';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { DeleteModal } from '../../../shared/DeleteModal';
 import { Toast } from '../../../shared/toast';
 
@@ -25,12 +26,16 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
   };
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-
+  const { jwt } = useGetUser();
   const deleteOrder = async (orderId: string) => {
     setSuccess(false);
     setError(false);
-    await axiosProduction
-      .delete(`/order/delete/${orderId}`)
+    await axiosPrivate
+      .delete(`/order/delete/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then(() => {
         setSuccess(true);
         setError(false);
@@ -67,8 +72,16 @@ export const AdminOrders = ({ orders, setRefetch, refetch }: Props) => {
   ) => {
     setSuccess(false);
     setError(false);
-    await axiosProduction
-      .patch(`/order/status/${orderId}`, { status: val })
+    await axiosPrivate
+      .patch(
+        `/order/status/${orderId}`,
+        { status: val },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
       .then(() => {
         setSuccess(true);
         setError(false);

@@ -5,7 +5,8 @@ import TagsInput from 'react-tagsinput';
 import { useRecoilState } from 'recoil';
 
 import { refetchProdsState } from '../../../../../atoms/refetchProdsAtom';
-import axiosProduction from '../../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../../pages/api/axios';
+import { useGetUser } from '../../../../../utils/hooks/useGetUser';
 import { TextArea } from '../../../../shared/TextArea';
 import { Toast } from '../../../../shared/toast';
 import { Input } from '../../Input';
@@ -72,9 +73,12 @@ const Edit = ({
       console.log('String is not valid JSON:');
     }
   }, []);
+
+  const { jwt } = useGetUser();
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
+      Authorization: `Bearer ${jwt}`,
     },
   };
   const inputProps = {
@@ -141,7 +145,7 @@ const Edit = ({
     setError(false);
     setSuccess(false);
     setLoading(true);
-    await axiosProduction
+    await axiosPrivate
       .patch(`/product/update/${id}`, formData, config)
       .then((response) => {
         console.log(response.data);

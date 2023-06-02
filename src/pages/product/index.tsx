@@ -10,7 +10,7 @@ import { Header } from '../../components/shared/Header';
 import { Category } from '../../types/Category';
 import { Product as ProdType } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import { axiosDev } from '../api/axios';
+import { axiosPublic } from '../api/axios';
 
 const Product = ({
   initialProducts,
@@ -56,9 +56,9 @@ const Product = ({
 Product.getInitialProps = async ({ query }) => {
   try {
     const [ProdsRes, CatRes, SousCatRes] = await Promise.all([
-      axiosDev.get(`/Product/${query.id}`),
-      axiosDev.get('/categorie/getall'),
-      axiosDev.get('/sousCat/getall'),
+      axiosPublic.get(`/Product/${query.id}`),
+      axiosPublic.get('/categorie/getall'),
+      axiosPublic.get('/sousCat/getall'),
     ]);
 
     const initialProducts = ProdsRes.data;

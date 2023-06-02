@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiX } from 'react-icons/bi';
 
-import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
+import { axiosPublic } from '../../../../pages/api/axios';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { Toast } from '../../../shared/toast';
 
 interface ErrorResponse {
@@ -27,8 +28,11 @@ export const Login: React.FC = () => {
     setSuccess(true);
     setSuccessMsg('Login Successful !');
     window.localStorage.setItem('user', JSON.stringify(response.data.user));
+    window.localStorage.setItem('jwt', JSON.stringify(response.data.token));
+
     router.push('/account');
   };
+  const { user } = useGetUser();
 
   const handleResetPassword = async () => {
     setError(false);
@@ -36,7 +40,7 @@ export const Login: React.FC = () => {
     setErrorMsgs([]);
 
     try {
-      const response = await axiosDev.post('/auth/forgot', {
+      const response = await axiosPublic.post('/auth/forgot', {
         email: resetEmail,
       });
       if (response.status === 200) {
@@ -61,7 +65,7 @@ export const Login: React.FC = () => {
     setErrorMsgs([]);
 
     try {
-      const response = await axiosDev.post('/auth', {
+      const response = await axiosPublic.post('/auth', {
         email,
         password,
       });

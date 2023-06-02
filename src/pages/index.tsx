@@ -12,7 +12,7 @@ import { Header } from '../components/shared/Header';
 import { Category } from '../types/Category';
 import { Product } from '../types/Product';
 
-import { axiosDev } from './api/axios';
+import { axiosPublic } from './api/axios';
 
 const Home = ({
   products,
@@ -49,11 +49,11 @@ const Home = ({
   </>
 );
 Home.getInitialProps = async () => {
-  const res = await axiosDev.get('/Product/getall').catch((error) => {
+  const res = await axiosPublic.get('/Product/getall').catch((error) => {
     console.error(error);
   });
   const products = await res?.data.products;
-  const categoriesRes = await axiosDev
+  const categoriesRes = await axiosPublic
     .get('/categorie/getall')
     .catch((error) => {
       console.error(error);

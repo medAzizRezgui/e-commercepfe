@@ -4,7 +4,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { BiStar } from 'react-icons/bi';
 import ReactStars from 'react-stars';
 
-import axiosProduction, { axiosDev } from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
 import { Product } from '../../../../types/Product';
 import { User } from '../../../../types/User';
 import { Toast } from '../../../shared/toast';
@@ -36,7 +36,7 @@ export const Reviews = ({ prod }: Props) => {
   }, []);
   const handleSentReview = async () => {
     if (!user) {
-      router.push('/auth');
+      await router.push('/auth');
     }
     setError(false);
     setSuccess(false);
@@ -44,7 +44,7 @@ export const Reviews = ({ prod }: Props) => {
       setError(true);
       return;
     }
-    await axiosDev
+    await axiosPrivate
       .patch(`/product/rate/${prod._id}`, {
         rating: {
           rate: starts,

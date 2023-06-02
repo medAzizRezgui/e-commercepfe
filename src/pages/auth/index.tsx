@@ -7,7 +7,7 @@ import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
 import { Category } from '../../types/Category';
 import { SousCategory } from '../../types/SousCategory';
-import { axiosDev } from '../api/axios';
+import { axiosPublic } from '../api/axios';
 
 const Auth = ({
   categories,
@@ -47,10 +47,10 @@ const Auth = ({
 );
 
 Auth.getInitialProps = async () => {
-  const categoriesResponse = await axiosDev.get('/categorie/getall'); // replace with your API endpoint
+  const categoriesResponse = await axiosPublic.get('/categorie/getall'); // replace with your API endpoint
 
   const categories = await categoriesResponse.data;
-  const sousCatRes = await axiosDev.get('/sousCat/getall'); // replace with your API endpoint
+  const sousCatRes = await axiosPublic.get('/sousCat/getall'); // replace with your API endpoint
   const sousCategories = await sousCatRes?.data;
   return { categories, sousCategories };
 };

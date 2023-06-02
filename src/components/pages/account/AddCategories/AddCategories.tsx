@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { refetchCategoriesState } from '../../../../atoms/refetchCategoriesAtom';
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 import { CategoriesSelect } from '../ProductInputs/CategoriesSelect';
@@ -18,14 +19,22 @@ export const AddCategories = () => {
   const [refetchCategories, setRefetchCategories] = useRecoilState(
     refetchCategoriesState
   );
-
+  const { jwt } = useGetUser();
   const handleAddCategorie = async () => {
     setError(false);
     setSuccess(false);
-    await axiosProduction
-      .post('/categorie/add', {
-        name: categorieName,
-      })
+    await axiosPrivate
+      .post(
+        '/categorie/add',
+        {
+          name: categorieName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);
@@ -37,11 +46,19 @@ export const AddCategories = () => {
   const handleAddSousCategorie = async () => {
     setError(false);
     setSuccess(false);
-    await axiosProduction
-      .post('/sousCat/add', {
-        name: sousCategorieName,
-        categorie: categorie.value,
-      })
+    await axiosPrivate
+      .post(
+        '/sousCat/add',
+        {
+          name: sousCategorieName,
+          categorie: categorie.value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
       .then(() => {
         setSuccess(true);
         setRefetch(!refetch);

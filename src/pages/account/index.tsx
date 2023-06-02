@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -19,8 +18,8 @@ import { Category } from '../../types/Category';
 import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import { User } from '../../types/User';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { useGetUser } from '../../utils/hooks/useGetUser';
+import { axiosPrivate, axiosPublic } from '../api/axios';
 
 const Account = ({
   initialProducts,
@@ -34,12 +33,9 @@ const Account = ({
   initialOrders: Order[];
 }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const [user, setUser] = useState<User>();
-  const router = useRouter();
   const [products, setProducts] = useState(initialProducts);
   const refetchProds = useRecoilValue(refetchProdsState);
   const refetchCategories = useRecoilValue(refetchCategoriesState);
-
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [sousCategories, setSousCategories] = useState<SousCategory[]>(
     initialSousCategories
@@ -48,12 +44,12 @@ const Account = ({
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   useEffect(() => {
     const getCategories = async () => {
-      await axiosProduction.get('/categorie/getAll').then((r) => {
+      await axiosPublic.get('/categorie/getAll').then((r) => {
         setCategories(r.data);
       });
     };
     const getSousCategories = async () => {
-      await axiosDev
+      await axiosPublic
         .get('/sousCat/getAll')
         .then((r) => setSousCategories(r.data));
     };
@@ -64,7 +60,7 @@ const Account = ({
 
   useEffect(() => {
     const getProds = async () => {
-      await axiosProduction
+      await axiosPublic
         .get('/Product/getall')
         .then((r) => setProducts(r.data.products));
     };
@@ -75,24 +71,12 @@ const Account = ({
   const [refetchOrders, setRefetchOrders] = useState(false);
   useEffect(() => {
     const getOrders = async () => {
-      await axiosDev.get('/order/getAll').then((r) => setOrders(r.data));
+      await axiosPublic.get('/order/getAll').then((r) => setOrders(r.data));
     };
     getOrders();
   }, [refetchOrders]);
 
-  // Get user from ls , if not redirect to auth page
-  useEffect(() => {
-    const getUser = () => {
-      const res = window.localStorage.getItem('user');
-      if (res) {
-        setUser(JSON.parse(res));
-      }
-      if (!res) {
-        router.push('/auth');
-      }
-    };
-    getUser();
-  }, []);
+  const { user } = useGetUser();
 
   if (!user)
     return (
@@ -164,10 +148,10 @@ const Account = ({
 Account.getInitialProps = async () => {
   try {
     const [ProdsRes, CatRes, SousCatRes, OrdersRes] = await Promise.all([
-      axiosDev.get('/Product/getall'),
-      axiosDev.get('/categorie/getall'),
-      axiosDev.get('/sousCat/getall'),
-      axiosDev.get('/order/getall'),
+      axiosPublic.get('/Product/getall'),
+      axiosPublic.get('/categorie/getall'),
+      axiosPublic.get('/sousCat/getall'),
+      axiosPublic.get('/order/getall'),
     ]);
 
     const initialProducts = ProdsRes.data.products;

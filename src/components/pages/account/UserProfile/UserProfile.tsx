@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import axiosProduction from '../../../../pages/api/axios';
+import { axiosPrivate } from '../../../../pages/api/axios';
 import { User } from '../../../../types/User';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { Spinner } from '../../../shared/Spinner';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
@@ -56,6 +57,8 @@ export const UserProfile = () => {
     getUser();
   }, []);
 
+  const { jwt } = useGetUser();
+
   if (!user)
     return (
       <div className="flex h-[100vh] w-full items-center justify-center">
@@ -66,18 +69,26 @@ export const UserProfile = () => {
     setSuccess(false);
     setError(false);
     try {
-      await axiosProduction
-        .patch(`/auth/updateUser/${user?._id}`, {
-          email,
-          phoneNumber,
-          fullName,
-          shippingAddress: {
-            region,
-            city,
-            postalCode,
-            street,
+      await axiosPrivate
+        .patch(
+          `/auth/updateUser/${user?._id}`,
+          {
+            email,
+            phoneNumber,
+            fullName,
+            shippingAddress: {
+              region,
+              city,
+              postalCode,
+              street,
+            },
           },
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        )
         .then((r) => {
           setSuccess(true);
           setError(false);
