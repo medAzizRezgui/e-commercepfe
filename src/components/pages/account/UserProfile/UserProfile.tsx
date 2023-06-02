@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import axiosProduction from '../../../../pages/api/axios';
 import { User } from '../../../../types/User';
+import { Spinner } from '../../../shared/Spinner';
 import { Toast } from '../../../shared/toast';
 import { Input } from '../Input';
 
@@ -58,7 +59,7 @@ export const UserProfile = () => {
   if (!user)
     return (
       <div className="flex h-[100vh] w-full items-center justify-center">
-        <h1>Loading</h1>
+        <Spinner />
       </div>
     );
   const handleUpdateUser = async () => {

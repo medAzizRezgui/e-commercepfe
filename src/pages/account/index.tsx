@@ -14,6 +14,7 @@ import { UserOrders } from '../../components/pages/account/UserOrders';
 import { UserProfile } from '../../components/pages/account/UserProfile';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Spinner } from '../../components/shared/Spinner';
 import { Category } from '../../types/Category';
 import { Order } from '../../types/Order';
 import { Product as ProdType } from '../../types/Product';
@@ -96,7 +97,7 @@ const Account = ({
   if (!user)
     return (
       <div className="flex h-[100vh] w-full items-center justify-center">
-        <h1>Loading</h1>
+        <Spinner />
       </div>
     );
 

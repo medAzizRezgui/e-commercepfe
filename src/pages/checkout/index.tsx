@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from '../../components/pages/account/Input';
 import { Categories } from '../../components/shared/Categories';
 import { Header } from '../../components/shared/Header';
+import { Spinner } from '../../components/shared/Spinner';
 import { Toast } from '../../components/shared/toast';
 import { useCart } from '../../context/Cart/CartContext';
 import { Category } from '../../types/Category';
@@ -120,7 +121,12 @@ const Checkout = ({
     getUser();
   }, []);
 
-  if (!user) return <h1>Loading...</h1>;
+  if (!user)
+    return (
+      <div className="flex h-[100vh] w-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
   return (
     <>
       <Head>

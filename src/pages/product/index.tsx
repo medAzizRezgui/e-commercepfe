@@ -10,7 +10,7 @@ import { Header } from '../../components/shared/Header';
 import { Category } from '../../types/Category';
 import { Product as ProdType } from '../../types/Product';
 import { SousCategory } from '../../types/SousCategory';
-import axiosProduction, { axiosDev } from '../api/axios';
+import { axiosDev } from '../api/axios';
 
 const Product = ({
   initialProducts,

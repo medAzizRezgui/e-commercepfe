@@ -6,6 +6,8 @@ import {
   useState,
 } from 'react';
 
+import { Spinner } from '../../components/shared/Spinner';
+
 export type CartItem = {
   id: string;
   name: string;
@@ -57,7 +59,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   if (loading)
     return (
       <div className="flex h-[100vh] w-full items-center justify-center">
-        <h1>Loading</h1>
+        <Spinner />
       </div>
     );
   const addItem = (item: CartItem, quantity: number) => {

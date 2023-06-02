@@ -12,7 +12,7 @@ import { Header } from '../components/shared/Header';
 import { Category } from '../types/Category';
 import { Product } from '../types/Product';
 
-import axiosProduction, { axiosDev } from './api/axios';
+import { axiosDev } from './api/axios';
 
 const Home = ({
   products,

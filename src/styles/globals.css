@@ -4,6 +4,7 @@
 @import "radixRange.css";
 @import "radixTabs.css";
 @import "customTagInput.css";
+@import "spinner.css";
 
 @tailwind base;
 @tailwind components;
