@@ -78,9 +78,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
         >
           <SwiperSlide className="w-full">
             <div className="grid w-full grid-cols-4 ">
-              {/* eslint-disable-next-line array-callback-return,consistent-return */}
               {data
                 .filter((product) => productCounts.includes(product._id))
+                // eslint-disable-next-line array-callback-return,consistent-return
                 .map((prod, i) => {
                   if (i >= 0 && i < 8) {
                     return <ProductCardH prod={prod} />;
@@ -90,9 +90,9 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
           </SwiperSlide>
           <SwiperSlide className="w-full">
             <div className="grid w-full grid-cols-4 ">
-              {/* eslint-disable-next-line array-callback-return,consistent-return */}
               {data
                 .filter((product) => productCounts.includes(product._id))
+                // eslint-disable-next-line array-callback-return,consistent-return
                 .map((prod, i) => {
                   if (i >= 8 && i < 16) {
                     return <ProductCardH prod={prod} />;
