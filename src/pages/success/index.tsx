@@ -10,7 +10,7 @@ const Success = () => {
 
   const { jwt } = useGetUser();
   const payOrder = async () => {
-    if (router.query.orderId) {
+    if (router.query.orderId && jwt) {
       await axiosPrivate
         .patch(
           `/order/pay/${router.query.orderId}`,
