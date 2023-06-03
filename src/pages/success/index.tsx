@@ -21,13 +21,30 @@ const Success = () => {
             },
           }
         )
-        .then(() => router.push('/'));
+        .then(() => router.push('/'))
+        .catch(() => router.push('/'));
     }
   };
 
   useEffect(() => {
-    payOrder();
-  }, [router.query.orderId]);
+    if (router.query.orderId && !jwt) {
+      // If JWT is not available, wait for it to be available
+      const waitForJWT = async () => {
+        await new Promise<void>((resolve) => {
+          const interval = setInterval(() => {
+            if (jwt) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100); // Check every 100 milliseconds if JWT is available
+        });
+      };
+
+      waitForJWT().then(() => payOrder());
+    } else {
+      payOrder();
+    }
+  }, [router.query.orderId, jwt]);
 
   return (
     <>
