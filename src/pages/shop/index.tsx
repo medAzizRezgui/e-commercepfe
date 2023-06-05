@@ -61,7 +61,7 @@ const Shop = ({
   useEffect(() => {
     const getProducts = () => {
       axiosPublic
-        .get(`/product/getall`)
+        .get('/product/getall')
         .then((res) => {
           setProducts(res.data.products);
           setTotalPages(res.data.totalPages);
@@ -109,22 +109,22 @@ const Shop = ({
   const currentProducts = filteredItems
     .sort((a, b) => {
       if (sort === 'low') {
-        return a.price - b.price; // Sort by low price
+        return a.price - b.price;
       }
       if (sort === 'high') {
-        return b.price - a.price; // Sort by high price
+        return b.price - a.price;
       }
       if (sort === 'old') {
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        ); // Sort by oldest date
+        );
       }
       if (sort === 'new') {
         return (
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        ); // Sort by oldest date
+        );
       }
-      return 0; // Default case, no sorting applied
+      return 0;
     })
     .slice(startIndex, endIndex);
 
