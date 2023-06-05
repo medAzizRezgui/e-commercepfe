@@ -32,7 +32,9 @@ export const Toast = ({ success, text, error, errorMsgs }: Props) => (
           }) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <h1 className="text-text-xs">{err.msg}</h1>
+            <h1 key={err.msg} className="text-text-xs">
+              {err.msg}
+            </h1>
           )
         )}
       </div>

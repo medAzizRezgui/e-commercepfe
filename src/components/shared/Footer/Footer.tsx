@@ -1,40 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
-import { BiEnvelopeOpen, BiHeadphone } from 'react-icons/bi';
+import { BiHeadphone } from 'react-icons/bi';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 
 import { Category } from '../../../types/Category';
 
 export const Footer = ({ categories }: { categories: Category[] }) => (
   <div className="relative w-full bg-gray-100 pb-32  pt-24">
-    {/* <div className="w-full  bg-yellow-500"> */}
-    {/*  <div className="mx-auto mb-24 flex w-full max-w-[1400px] items-center justify-between py-12"> */}
-    {/*    <div className="flex items-center gap-[10px]"> */}
-    {/*      <BiEnvelopeOpen className="h-[30px] w-[30px]" /> */}
-    {/*      <h1 className="text-text-xl">Sign up to Newsletter</h1> */}
-    {/*      <p> */}
-    {/*        ...and receive{' '} */}
-    {/*        <span className="font-semibold"> */}
-    {/*          20DT coupon for first shopping */}
-    {/*        </span> */}
-    {/*      </p> */}
-    {/*    </div> */}
-
-    {/*    <div className="relative w-[40%]"> */}
-    {/*      <input */}
-    {/*        type="email" */}
-    {/*        placeholder="Enter your email address" */}
-    {/*        className="w-full rounded-full px-24 py-8" */}
-    {/*      /> */}
-    {/*      <button */}
-    {/*        type="button" */}
-    {/*        className=" absolute right-[0px]  rounded-r-full bg-dark-500 px-24 py-8 text-white" */}
-    {/*      > */}
-    {/*        Subscribe */}
-    {/*      </button> */}
-    {/*    </div> */}
-    {/*  </div> */}
-    {/* </div> */}
     <div className="mx-auto flex w-full max-w-[1400px] justify-between">
       {/* Socials */}
       <div>
@@ -66,6 +38,7 @@ export const Footer = ({ categories }: { categories: Category[] }) => (
         <ul className="flex flex-col gap-[8px]">
           {categories.map((item) => (
             <Link
+              key={item._id}
               href={{
                 pathname: '/shop',
                 query: { category: item._id },

@@ -50,7 +50,10 @@ export const SideCategories = ({
           <p className="text-text-sm">All</p>
         </div>
         {options.map((item) => (
-          <div className="flex w-full  flex-col items-start gap-[8px] border-b-[1px] border-gray-500 py-8">
+          <div
+            key={item.value}
+            className="flex w-full  flex-col items-start gap-[8px] border-b-[1px] border-gray-500 py-8"
+          >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
             <div
               onClick={() => handleSelectedCategory(item.value)}
@@ -69,6 +72,7 @@ export const SideCategories = ({
               {sousCategories.map((sousCat) => (
                 // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
                 <p
+                  key={sousCat._id}
                   onClick={() => handleSelectSubCategory(sousCat._id)}
                   className={`${
                     sousCat._id === selectedSousCategory

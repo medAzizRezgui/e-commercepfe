@@ -30,8 +30,9 @@ export const Categories = ({ sousCategories, categories }: Props) => {
 
           {options?.map((item) => (
             <HoverComponent
+              key={item.value}
               content={sousCategories.map((souscat) => (
-                <div>
+                <div key={souscat._id}>
                   <Link
                     href={{
                       pathname: '/shop',

@@ -18,7 +18,7 @@ export const Cart = ({ openCart }: { openCart: boolean }) => {
         <h1 className="py-18">No products in the cart.</h1>
       ) : (
         cartItems.map((item) => (
-          <div className="flex justify-between gap-[20px] pb-4 ">
+          <div key={item.id} className="flex justify-between gap-[20px] pb-4 ">
             <div className="h-[75px] min-w-[75px]">
               <Image src={item.image} alt="" width={75} height={75} />
             </div>
