@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const handleSuccess = (response) => {
     setSuccess(true);
     setSuccessMsg('Login Successful !');
@@ -50,7 +50,7 @@ export const Login: React.FC = () => {
       }
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       if (err.response && err.response.status === 404) {
         setError(true);
         setErrorMsgs([{ msg: 'Email not found' }]);
@@ -76,7 +76,7 @@ export const Login: React.FC = () => {
       setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       if (err.response && err.response.status === 404) {
         setError(true);
         setErrorMsgs([{ msg: 'Please enter a valid email & Password' }]);

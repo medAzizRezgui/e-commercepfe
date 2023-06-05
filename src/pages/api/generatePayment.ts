@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error
 module.exports = async (req, res) => {
   const url = 'https://developers.flouci.com/api/generate_payment';
   const requestData = req.body;

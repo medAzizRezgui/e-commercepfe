@@ -88,10 +88,10 @@ const Edit = ({
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     const selectedFiles = Array.from(e.target.files);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     setFiles(selectedFiles);
   };
 
@@ -122,7 +122,7 @@ const Edit = ({
   formData.append('discount', discount.toString());
   formData.append('sku', SKU);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   formData.append('profit', newProfit);
   features.forEach((value) => {
     formData.append('features', value);

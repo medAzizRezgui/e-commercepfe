@@ -102,7 +102,7 @@ const Shop = ({
   if (pathQuery.word) {
     filteredItems = filteredItems.filter((item) =>
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       item.name.toLowerCase().includes(pathQuery?.word?.toLowerCase())
     );
   }

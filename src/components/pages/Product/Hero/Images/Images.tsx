@@ -13,7 +13,7 @@ export const Images = ({ prod }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const handleClick = (i: number) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     swiperInstance.slideTo(i);
     setActiveIndex(i);
   };
@@ -24,7 +24,7 @@ export const Images = ({ prod }: Props) => {
         spaceBetween={50}
         slidesPerView={1}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error
         onSwiper={(swiper) => setSwiperInstance(swiper)}
       >
         {prod?.files?.map((img) => (
@@ -52,7 +52,7 @@ export const Images = ({ prod }: Props) => {
                 : 'border-t-8 border-white'
             }  flex  h-[75px] w-[75px] cursor-pointer items-center justify-center`}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             onClick={() => handleClick(i)}
           >
             <Image

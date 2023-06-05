@@ -24,20 +24,20 @@ const Reset = () => {
     }
   }, [router.query.email]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
     setPasswordMatch(event.target.value === confirmPassword);
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
     setPasswordMatch(event.target.value === password);
     setPasswordLenght(event.target.value.length >= 8);
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const handleSubmit = async (event) => {
     event.preventDefault();
 

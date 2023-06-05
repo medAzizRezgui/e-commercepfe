@@ -72,7 +72,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
           spaceBetween={0}
           slidesPerView={1}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+          // @ts-expect-error
           onSwiper={(swiper) => setSwiperInstance(swiper)}
           onSlideChange={(e) => setActiveIndex(e.activeIndex)}
         >
@@ -106,7 +106,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+              // @ts-expect-error
               onClick={() => swiperInstance.slideTo(0)}
               className={`${
                 activeIndex === 0
@@ -119,7 +119,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+              // @ts-expect-error
               onClick={() => swiperInstance.slideTo(1)}
               className={`${
                 activeIndex === 1
@@ -132,7 +132,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+              // @ts-expect-error
               onClick={() => swiperInstance.slideTo(2)}
               className={`${
                 activeIndex === 2

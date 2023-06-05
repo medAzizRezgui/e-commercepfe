@@ -52,7 +52,7 @@ const Product = ({
 );
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error
 Product.getInitialProps = async ({ query }) => {
   try {
     const [ProdsRes, CatRes, SousCatRes] = await Promise.all([

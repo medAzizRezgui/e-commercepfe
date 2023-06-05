@@ -15,7 +15,7 @@ export const Sort = ({
   <Select
     isSearchable={false}
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     onChange={(e) => setSort(e?.value)}
     placeholder="Sort by ..."
     defaultValue={options[0]}

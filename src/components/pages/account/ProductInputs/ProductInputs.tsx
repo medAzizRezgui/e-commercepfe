@@ -18,10 +18,10 @@ export const ProductInputs = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     const selectedFiles = Array.from(e.target.files);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     setFiles(selectedFiles);
   };
   const [SKU, setSKU] = useState('');
@@ -57,10 +57,10 @@ export const ProductInputs = () => {
   const formData = new FormData();
   formData.append('name', name);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   formData.append('price', price);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   formData.append('countInStock', stock);
   formData.append('categorie', categorie.value);
   formData.append('sousCategorie', sousCategorie.value);
@@ -72,7 +72,7 @@ export const ProductInputs = () => {
 
   formData.append('specifications', JSON.stringify(parseArray(specs)));
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   formData.append('profit', profit);
   files.forEach((value) => {
     formData.append('files', value);

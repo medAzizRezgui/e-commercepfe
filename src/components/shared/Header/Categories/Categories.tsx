@@ -29,7 +29,7 @@ export const Categories = ({ setSearchCategory }: Props) => {
   return (
     <Select
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       onChange={(e) => setSearchCategory(e?.value)}
       placeholder="Categories..."
       styles={{

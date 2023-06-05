@@ -40,12 +40,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
 
     const getCartFromLS = async () => {
       setLoading(true);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       const cart = await JSON.parse(window.localStorage.getItem('cart'));
       setCartItems(cart);
       if (!cart) {
