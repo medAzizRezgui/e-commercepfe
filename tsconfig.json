@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,15 +15,9 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/shared/*": [
-        "./components/shared/*"
-      ],
-      "@/icons/*": [
-        "./public/assets/icons/*"
-      ],
-      "@/images/*": [
-        "./public/assets/images/*"
-      ]
+      "@/shared/*": ["./components/shared/*"],
+      "@/icons/*": ["./public/assets/icons/*"],
+      "@/images/*": ["./public/assets/images/*"]
     }
   },
   "include": [
@@ -41,8 +31,5 @@
     "src/pages/api/checkout/create-session.js",
     "src/pages/api/generatePayment.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "tailwind.config.js"
-  ]
+  "exclude": ["node_modules", "tailwind.config.js"]
 }
