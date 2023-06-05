@@ -83,7 +83,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
                 // eslint-disable-next-line array-callback-return,consistent-return
                 .map((prod, i) => {
                   if (i >= 0 && i < 8) {
-                    return <ProductCardH prod={prod} />;
+                    return <ProductCardH key={prod._id} prod={prod} />;
                   }
                 })}
             </div>
@@ -95,7 +95,7 @@ export const BestSellers = ({ data }: { data: Product[] }) => {
                 // eslint-disable-next-line array-callback-return,consistent-return
                 .map((prod, i) => {
                   if (i >= 8 && i < 16) {
-                    return <ProductCardH prod={prod} />;
+                    return <ProductCardH key={prod._id} prod={prod} />;
                   }
                 })}
             </div>

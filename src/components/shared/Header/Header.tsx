@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { BiSearch, BiShoppingBag, BiUser } from 'react-icons/bi';
 
 import { useCart } from '../../../context/Cart/CartContext';
-import Logo from '../Logo';
 
 import { Cart } from './Cart';
 import { Categories } from './Categories';
@@ -14,6 +13,7 @@ export const Header = () => {
   const { cartItems } = useCart();
   const router = useRouter();
 
+  // Used To Calculate the total price of cart items
   function calculateTotal() {
     const total = cartItems.reduce(
       (acc, item) => acc + item.price * item.quantity,
@@ -23,6 +23,7 @@ export const Header = () => {
     return total.toFixed(2);
   }
 
+  // Used To Calculate How Many items in the cart
   function calculateTotalItems() {
     return cartItems.reduce((acc) => acc + 1, 0);
   }
@@ -30,6 +31,7 @@ export const Header = () => {
   const [searchWord, setSearchWord] = useState('');
   const [searchCategory, setSearchCategory] = useState('');
 
+  // Link to shop page with search params in the query
   const handleSearch = () => {
     router.push({
       pathname: '/shop',
@@ -41,14 +43,16 @@ export const Header = () => {
   };
   return (
     <div className="relative z-[20] mx-auto my-20 flex w-full max-w-[1400px] items-center justify-between rounded-[50px] bg-dark-500 px-20 py-8 ">
+      {/* LOGO */}
       <Link href="/">
         <h1 className="text-display-md font-semibold text-white">
           LOGO <span className="text-yellow-500">.</span>
         </h1>
       </Link>
 
-      {/* Input */}
+      {/* Search Bar */}
       <div className="flex w-[50%] items-center justify-between rounded-[50px] bg-dark-400">
+        {/* Search Input */}
         <input
           value={searchWord}
           onChange={(event) => setSearchWord(event.currentTarget.value)}
@@ -58,14 +62,13 @@ export const Header = () => {
         />
         <div className="relative z-[999] flex items-center gap-[16px]">
           <Categories setSearchCategory={setSearchCategory} />
-
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <div
+          <button
+            type="button"
             onClick={handleSearch}
             className="flex h-full w-[56px] cursor-pointer items-center justify-center  rounded-r-[50px] bg-yellow-500 py-8"
           >
             <BiSearch className="h-[28px] w-[28px] text-white" />
-          </div>
+          </button>
         </div>
       </div>
       {/* CTA */}
@@ -77,8 +80,8 @@ export const Header = () => {
           <BiUser className="h-[28px] w-[28px] text-white" />
         </Link>
         <div className="relative">
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <div
+          <button
+            type="button"
             onClick={() => setOpenCart(!openCart)}
             className="relative flex cursor-pointer  items-center gap-[4px] "
           >
@@ -91,7 +94,7 @@ export const Header = () => {
             <h1 className="text-text-md font-medium text-white">
               {calculateTotal()} DT
             </h1>
-          </div>
+          </button>
 
           {/* Cart */}
           <Cart openCart={openCart} />

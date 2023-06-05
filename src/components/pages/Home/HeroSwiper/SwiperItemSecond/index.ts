@@ -1,0 +1,1 @@
+export { SwiperItemSecond } from './SwiperItemSecond';

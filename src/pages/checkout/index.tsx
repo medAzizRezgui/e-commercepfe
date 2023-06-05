@@ -260,7 +260,7 @@ const Checkout = ({
 
             <div className="flex w-full  flex-col items-center justify-between border-b-2 border-gray-500 pb-8 pt-24">
               {cartItems?.map((item) => (
-                <div className="flex w-full justify-between">
+                <div key={item.id} className="flex w-full justify-between">
                   <p>
                     {item.name}{' '}
                     <span className="font-semibold">x {item.quantity}</span>

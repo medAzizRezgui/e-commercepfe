@@ -23,7 +23,10 @@ export const Stats = ({ prod }: Props) => (
         </div>
         {JSON.parse(prod?.specifications).map(
           (item: { Spec: string; Value: string }) => (
-            <div className="mb-8 flex items-center  border-b-[1px] border-gray-500 pb-4">
+            <div
+              key={item.Value}
+              className="mb-8 flex items-center  border-b-[1px] border-gray-500 pb-4"
+            >
               <h1 className="w-[350px] font-medium">{item.Spec}</h1>
               <p className="text-text-sm">{item.Value}</p>
             </div>

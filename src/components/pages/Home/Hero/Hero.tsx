@@ -37,6 +37,7 @@ export const Hero = ({ categories }: { categories: Category[] }) => {
         <div className="h-min w-[20%] rounded-b-[8px] bg-white px-24 py-12">
           {options.map((item) => (
             <Link
+              key={item.value}
               href={{
                 pathname: '/shop',
                 // eslint-disable-next-line no-underscore-dangle

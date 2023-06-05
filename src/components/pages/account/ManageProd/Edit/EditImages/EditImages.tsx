@@ -17,7 +17,10 @@ export const EditImages = ({
   <div className="w-[100%]">
     <div className="mb-12 grid w-full grid-cols-3">
       {oldFiles.map((img, i) => (
-        <div className=" group flex cursor-pointer items-center justify-center">
+        <div
+          key={img.length}
+          className=" group flex cursor-pointer items-center justify-center"
+        >
           <Image
             className="group-hover:opacity-50 "
             src={img}

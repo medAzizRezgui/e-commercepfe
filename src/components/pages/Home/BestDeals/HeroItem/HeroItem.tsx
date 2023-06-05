@@ -67,6 +67,7 @@ export const HeroItem = ({ item }: Props) => {
           <div className="flex gap-[10px]">
             {item.files.map((img) => (
               <Image
+                key={img.length}
                 src={img}
                 alt=""
                 width={100}

@@ -23,7 +23,7 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
           {/* eslint-disable-next-line array-callback-return,consistent-return */}
           {prods.map((prod, i) => {
             if (i < 8) {
-              return <ProductCard data={prod} />;
+              return <ProductCard key={prod._id} data={prod} />;
             }
           })}
         </div>
@@ -33,7 +33,7 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
           {prods
             .filter((item) => item.discount > 0)
             .map((prod) => (
-              <ProductCard data={prod} />
+              <ProductCard key={prod._id} data={prod} />
             ))}
         </div>
       </Tabs.Content>
@@ -53,7 +53,7 @@ export const TabsComponent = ({ prods }: { prods: Product[] }) => (
                   4
             )
             .map((prod) => (
-              <ProductCard data={prod} />
+              <ProductCard key={prod._id} data={prod} />
             ))}
         </div>
       </Tabs.Content>

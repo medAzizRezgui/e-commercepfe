@@ -3,9 +3,11 @@ import { A11y, Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { SwiperItem } from './SwiperItem';
+import { SwiperItemSecond } from './SwiperItemSecond';
+import { SwiperItemThird } from './SwiperItemThird';
 
 export const HeroSwiper = () => (
-  <div className="w-[80%] h-[422px]">
+  <div className="h-[422px] w-[80%]">
     <Swiper
       modules={[Pagination, Autoplay, A11y]}
       spaceBetween={50}
@@ -23,10 +25,10 @@ export const HeroSwiper = () => (
         <SwiperItem />
       </SwiperSlide>
       <SwiperSlide>
-        <SwiperItem />
+        <SwiperItemSecond />
       </SwiperSlide>
       <SwiperSlide>
-        <SwiperItem />
+        <SwiperItemThird />
       </SwiperSlide>
     </Swiper>
   </div>

@@ -2,31 +2,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import HeroSmartWatch from '@/images/watch.png';
+import Pods from '@/images/Pods.png';
 
-export const SwiperItem = () => (
+export const SwiperItemThird = () => (
   <div className="mx-auto  flex h-[422px] w-[80%] items-center justify-between gap-[40px] overflow-hidden ">
     {/* Text */}
     <div className="mr-20">
       <h1 className="min-w-[400px] font-Roboto text-display-lg font-[500] uppercase leading-[50px]">
-        Ladies watch collection
+        Inkax Wireless Earphone
       </h1>
       <h1 className="font-Roboto text-display-lg  font-[500] uppercase leading-[50px]">
-        STRAND by OBAKU
+        Model T02
       </h1>
       <p className="font-Roboto text-text-md font-medium uppercase">
-        In Watches
+        In Accessories
       </p>
       <p className="font-Roboto text-text-sm font-[300] uppercase">From</p>
-      <h1 className="pb-24 font-Roboto text-display-lg font-medium ">520 DT</h1>
+      <h1 className="pb-24 font-Roboto text-display-lg font-medium ">150 DT</h1>
       <Link
         className="cursor-pointer"
         href={{
           pathname: '/product',
           // eslint-disable-next-line no-underscore-dangle
           query: {
-            name: "Ladies watch collection STRAND by OBAKU - Magie d'Or",
-            id: '64766ba8a8b2fbd9fa7d8f44',
+            name: 'Inkax Wireless Earphone - T02 - White',
+            id: '647572648145c4ecde05ccfc',
           },
         }}
       >
@@ -40,6 +40,6 @@ export const SwiperItem = () => (
       </Link>
     </div>
     {/*  Image */}
-    <Image src={HeroSmartWatch} alt="img" className="w-[45%]" />
+    <Image src={Pods} alt="img" className="w-[45%]" />
   </div>
 );

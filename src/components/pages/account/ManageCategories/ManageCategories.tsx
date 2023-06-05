@@ -96,7 +96,10 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
       <div className="w-full ">
         <h1 className="pb-8 text-text-lg  font-medium">Categories</h1>
         {categories.map((item) => (
-          <div className="flex w-full items-center justify-between border-b-[1px] border-gray-500 py-8">
+          <div
+            key={item._id}
+            className="flex w-full items-center justify-between border-b-[1px] border-gray-500 py-8"
+          >
             <h1 className="text-text-md font-medium">{item.name}</h1>
             <div className="flex items-center justify-end gap-[10px]">
               {/* Edit */}
@@ -126,7 +129,10 @@ export const ManageCategories = ({ categories, sousCategories }: Props) => {
       <div className="w-full ">
         <h1 className="pb-8 text-text-lg  font-medium">Sub Categories</h1>
         {sousCategories.map((item) => (
-          <div className="flex  w-full items-center justify-between border-b-[1px] border-gray-500 py-8">
+          <div
+            key={item._id}
+            className="flex  w-full items-center justify-between border-b-[1px] border-gray-500 py-8"
+          >
             <div>
               <h1 className="text-text-md font-medium">{item.name}</h1>
               <p className="text-text-xs text-gray-400">

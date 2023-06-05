@@ -173,7 +173,7 @@ const Shop = ({
             )}
             <div className="grid grid-cols-4 gap-[0px]">
               {currentProducts.map((prod) => (
-                <ProductCard data={prod} />
+                <ProductCard key={prod._id} data={prod} />
               ))}
             </div>
             <div className="my-20 flex w-full items-center justify-between py-8">
@@ -189,6 +189,7 @@ const Shop = ({
                 {[...Array(totalPages)].map((_, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
                   <span
+                    key={_}
                     onClick={() => setPage(index + 1)}
                     className={`${
                       page === index + 1

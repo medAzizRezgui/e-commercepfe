@@ -25,7 +25,7 @@ export const ProductsTabs = ({ products }: Props) => (
     </Tabs.Content>
     <Tabs.Content value="tab2">
       {products?.map((item) => (
-        <Product item={item} />
+        <Product key={item._id} item={item} />
       ))}
     </Tabs.Content>
   </Tabs.Root>

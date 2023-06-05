@@ -17,6 +17,7 @@ export const BestDeals = ({ data, categories }: Props) => (
       <h1 className="font-semibold">Best Deals</h1>
       {categories.map((item) => (
         <Link
+          key={item._id}
           href={{
             pathname: '/shop',
             query: { category: item._id },
@@ -34,7 +35,7 @@ export const BestDeals = ({ data, categories }: Props) => (
         {/* eslint-disable-next-line array-callback-return,consistent-return */}
         {data.map((prod, i) => {
           if (i < 4) {
-            return <ProductCard data={prod} />;
+            return <ProductCard key={prod._id} data={prod} />;
           }
         })}
       </div>
@@ -43,7 +44,7 @@ export const BestDeals = ({ data, categories }: Props) => (
         {/* eslint-disable-next-line array-callback-return,consistent-return */}
         {data.map((prod, i) => {
           if (i > 4 && i < 9) {
-            return <ProductCard data={prod} />;
+            return <ProductCard key={prod._id} data={prod} />;
           }
         })}
       </div>

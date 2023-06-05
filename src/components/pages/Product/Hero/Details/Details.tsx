@@ -28,7 +28,9 @@ export const Details = ({ prod }: Props) => (
     {prod?.features.length > 0 && (
       <ul className="list-disc pl-24 text-text-sm text-dark-500">
         {prod?.features?.map((item) => (
-          <li className="text-gray-400">{item}</li>
+          <li key={item.length} className="text-gray-400">
+            {item}
+          </li>
         ))}
       </ul>
     )}

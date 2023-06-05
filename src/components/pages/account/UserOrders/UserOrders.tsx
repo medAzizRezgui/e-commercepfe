@@ -55,10 +55,16 @@ export const UserOrders = ({ orders, userEmail }: Props) => {
       {orders
         ?.filter((order) => order.email === userEmail)
         .map((order) => (
-          <div className="flex w-full items-center justify-between border-b-2 border-gray-500 pb-8">
+          <div
+            key={order._id}
+            className="flex w-full items-center justify-between border-b-2 border-gray-500 pb-8"
+          >
             <div>
               {order.Products.map((prod) => (
-                <div className="flex w-[400px] items-center justify-start">
+                <div
+                  key={prod.id}
+                  className="flex w-[400px] items-center justify-start"
+                >
                   <Image
                     loading="eager"
                     src={prod?.image}

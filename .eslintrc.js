@@ -42,6 +42,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-return-await': 'off',
     'no-shadow': 'off',
+    'react/jsx-key': 'error',
     endOfLine: 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/no-unused-vars': 'warn',

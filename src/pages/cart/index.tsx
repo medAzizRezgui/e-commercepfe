@@ -109,7 +109,10 @@ const Cart = ({
             </div>
           ) : (
             cartItems.map((item) => (
-              <div className="flex items-center justify-between border-b-[1px] border-gray-500 pb-4">
+              <div
+                key={item.id}
+                className="flex items-center justify-between border-b-[1px] border-gray-500 pb-4"
+              >
                 <div className="flex items-center gap-[40px]">
                   <BiX
                     className="h-[25px] w-[25px] cursor-pointer"

@@ -28,7 +28,7 @@ export const Images = ({ prod }: Props) => {
         onSwiper={(swiper) => setSwiperInstance(swiper)}
       >
         {prod?.files?.map((img) => (
-          <SwiperSlide>
+          <SwiperSlide key={img.length}>
             <div className="flex h-[400px] max-h-[400px] w-[400px] max-w-[400px] items-center justify-center ">
               <Image
                 src={img}
@@ -45,6 +45,7 @@ export const Images = ({ prod }: Props) => {
         {prod?.files?.map((img, i) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
           <div
+            key={prod._id}
             className={`${
               activeIndex === i
                 ? 'border-t-8 border-yellow-500'
