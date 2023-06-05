@@ -79,7 +79,7 @@ export const HeroItem = ({ item }: Props) => {
         </div>
       </Link>
       <div className="flex  w-full items-center justify-between">
-        <h1 className="text-text-xl font-semibold">90 DT</h1>
+        <h1 className="text-text-xl font-semibold">{item.price} DT</h1>
         <button
           type="button"
           onClick={handleAddToCart}
