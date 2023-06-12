@@ -7,6 +7,7 @@ import ReactStars from 'react-stars';
 import { axiosPrivate } from '../../../../pages/api/axios';
 import { Product } from '../../../../types/Product';
 import { User } from '../../../../types/User';
+import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { Toast } from '../../../shared/toast';
 
 type Props = {
@@ -21,6 +22,13 @@ export const Reviews = ({ prod }: Props) => {
   const [success, setSuccess] = useState(false);
   const [user, setUser] = useState<User>();
 
+  const { jwt } = useGetUser();
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+      Authorization: `Bearer ${jwt}`,
+    },
+  };
   // Get user from ls , if not redirect to auth page
   useEffect(() => {
     const getUser = () => {
@@ -45,13 +53,17 @@ export const Reviews = ({ prod }: Props) => {
       return;
     }
     await axiosPrivate
-      .patch(`/product/rate/${prod._id}`, {
-        rating: {
-          rate: starts,
-          name,
-          email,
+      .patch(
+        `/product/rate/${prod._id}`,
+        {
+          rating: {
+            rate: starts,
+            name,
+            email,
+          },
         },
-      })
+        config
+      )
       .then(() => setSuccess(true));
   };
 
