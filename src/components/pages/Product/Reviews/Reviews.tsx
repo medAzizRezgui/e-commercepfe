@@ -25,7 +25,6 @@ export const Reviews = ({ prod }: Props) => {
   const { jwt } = useGetUser();
   const config = {
     headers: {
-      'content-type': 'multipart/form-data',
       Authorization: `Bearer ${jwt}`,
     },
   };
@@ -57,9 +56,9 @@ export const Reviews = ({ prod }: Props) => {
         `/product/rate/${prod._id}`,
         {
           rating: {
-            rate: starts,
-            name,
-            email,
+            rate: 4,
+            name: 'aziz',
+            email: 'aziz@gmail.com',
           },
         },
         config
