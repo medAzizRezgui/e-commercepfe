@@ -56,9 +56,9 @@ export const Reviews = ({ prod }: Props) => {
         `/product/rate/${prod._id}`,
         {
           rating: {
-            rate: 4,
-            name: 'aziz',
-            email: 'aziz@gmail.com',
+            rate: starts,
+            name,
+            email,
           },
         },
         config
