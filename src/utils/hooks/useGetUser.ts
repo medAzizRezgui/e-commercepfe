@@ -10,7 +10,6 @@ export const useGetUser = () => {
   useEffect(() => {
     const getUser = () => {
       const res = window.localStorage.getItem('user');
-      // const tokenRes = window.localStorage.getItem('token');
       if (res) {
         setUser(JSON.parse(res));
       }
@@ -20,7 +19,6 @@ export const useGetUser = () => {
     };
     const getToken = () => {
       const res = window.localStorage.getItem('jwt');
-      // const tokenRes = window.localStorage.getItem('token');
       if (res) {
         setJwt(JSON.parse(res));
       }

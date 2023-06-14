@@ -6,8 +6,6 @@ import ReactStars from 'react-stars';
 
 import { axiosPrivate } from '../../../../pages/api/axios';
 import { Product } from '../../../../types/Product';
-import { User } from '../../../../types/User';
-import { useGetUser } from '../../../../utils/hooks/useGetUser';
 import { Toast } from '../../../shared/toast';
 
 type Props = {
@@ -15,36 +13,29 @@ type Props = {
 };
 export const Reviews = ({ prod }: Props) => {
   const [starts, setStarts] = useState(0);
-  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [user, setUser] = useState<User>();
+  const [jwt, setJwt] = useState('');
+  const router = useRouter();
+  const getToken = () => {
+    const res = window.localStorage.getItem('jwt');
+    if (res) {
+      setJwt(JSON.parse(res));
+    }
+  };
 
-  const { jwt } = useGetUser();
+  useEffect(() => {
+    getToken();
+  }, []);
+
   const config = {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
   };
-  // Get user from ls , if not redirect to auth page
-  useEffect(() => {
-    const getUser = () => {
-      const res = window.localStorage.getItem('user');
-      if (res) {
-        setUser(JSON.parse(res));
-      }
-      if (!res) {
-        //
-      }
-    };
-    getUser();
-  }, []);
   const handleSentReview = async () => {
-    if (!user) {
-      await router.push('/auth');
-    }
     setError(false);
     setSuccess(false);
     if (!name || !email || starts === 0) {
@@ -63,7 +54,12 @@ export const Reviews = ({ prod }: Props) => {
         },
         config
       )
-      .then(() => setSuccess(true));
+      .then(() => setSuccess(true))
+      .catch((e) => {
+        if (e.response.status === 403) {
+          router.push('/auth');
+        }
+      });
   };
 
   const counts: Record<string, number> = {};
@@ -90,9 +86,6 @@ export const Reviews = ({ prod }: Props) => {
         errorMsgs={[{ msg: 'Please fill out the form' }]}
       />
       <div className="relative mx-80 mb-40 flex  items-center justify-center gap-[40px] pb-8">
-        {/* <div className="flex flex-col items-center"> */}
-        {/*  <h1 className="text-text-xl font-[300]">Description</h1> */}
-        {/* </div> */}
         <div className="flex flex-col items-center">
           <h1 className="text-text-xl font-[300]">Specifications</h1>
         </div>
