@@ -40,12 +40,13 @@ export const Categories = ({ setSearchCategory }: Props) => {
           outline: 'none',
           width: '200px',
           boxShadow: 'none',
+          fontSize: '14px',
         }),
         singleValue: (base) => ({
           ...base,
           background: 'transparent',
           border: 'transparent',
-          color: '#D4D4D4',
+          color: '#333e48',
           outline: 'none',
         }),
         input: (base) => ({
@@ -55,22 +56,22 @@ export const Categories = ({ setSearchCategory }: Props) => {
         }),
         menu: (base) => ({
           ...base,
-          background: '#4C4C4C',
+          background: '#FFF',
           color: '#D4D4D4',
           outline: 'none',
           padding: '4px',
         }),
         placeholder: (base) => ({
           ...base,
-          background: '#4C4C4C',
-          color: '#D4D4D4',
+          background: '#FFF',
+          color: '#768b9e',
           outline: 'none',
         }),
         option: () => ({
           height: '100%',
           padding: '4px',
           outline: 'none',
-          color: '#D4D4D4',
+          color: '#333e48',
         }),
       }}
       options={options}

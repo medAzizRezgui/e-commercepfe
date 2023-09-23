@@ -1,7 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { BiSearch, BiShoppingBag, BiUser } from 'react-icons/bi';
+import {
+  AiOutlineHeart,
+  AiOutlineSearch,
+  AiOutlineShop,
+  AiOutlineShopping,
+  AiOutlineUser,
+} from 'react-icons/ai';
 
 import { useCart } from '../../../context/Cart/CartContext';
 
@@ -42,62 +48,65 @@ export const Header = () => {
     });
   };
   return (
-    <div className="relative z-[20] mx-auto my-20 flex w-full max-w-[1400px] items-center justify-between rounded-[50px] bg-dark-500 px-20 py-8 ">
-      {/* LOGO */}
-      <Link href="/">
-        <h1 className="text-display-md font-semibold text-white">
-          LOGO <span className="text-yellow-500">.</span>
-        </h1>
-      </Link>
+    <div className="relative z-[20] flex h-[90px] w-full items-center bg-white">
+      <div className="mx-auto flex  w-full max-w-[1400px]  items-center justify-between rounded-[50px] bg-white px-20 py-8 ">
+        {/* LOGO */}
+        <Link href="/">
+          <h1 className="text-display-md font-bold text-dark-500 ">
+            electro<span className="text-yellow-500">.</span>
+          </h1>
+        </Link>
 
-      {/* Search Bar */}
-      <div className="flex w-[50%] items-center justify-between rounded-[50px] bg-dark-400">
-        {/* Search Input */}
-        <input
-          value={searchWord}
-          onChange={(event) => setSearchWord(event.currentTarget.value)}
-          type="text"
-          placeholder="Search for Products"
-          className=" rounded-l-[50px] bg-dark-400 px-32 py-4 text-text-md text-white placeholder-dark-100 outline-0"
-        />
-        <div className="relative z-[999] flex items-center gap-[16px]">
-          <Categories setSearchCategory={setSearchCategory} />
-          <button
-            type="button"
-            onClick={handleSearch}
-            className="flex h-full w-[56px] cursor-pointer items-center justify-center  rounded-r-[50px] bg-yellow-500 py-8"
-          >
-            <BiSearch className="h-[28px] w-[28px] text-white" />
-          </button>
+        {/* Search Bar */}
+        <div className="flex w-[55%] items-center justify-between rounded-[50px] border-2 border-yellow-500 bg-white">
+          {/* Search Input */}
+          <input
+            value={searchWord}
+            onChange={(event) => setSearchWord(event.currentTarget.value)}
+            type="text"
+            placeholder="Search for Products"
+            className="rounded-l-[50px] bg-white px-32 py-4 text-text-sm text-dark-300 placeholder-gray-400 outline-0"
+          />
+          <div className="relative z-[999] flex items-center gap-[16px]">
+            <Categories setSearchCategory={setSearchCategory} />
+            <button
+              type="button"
+              onClick={handleSearch}
+              className="flex h-full w-[60px] cursor-pointer items-center justify-center  rounded-r-[50px] bg-yellow-500 py-8"
+            >
+              <AiOutlineSearch className="h-[28px] w-[28px] text-dark-300" />
+            </button>
+          </div>
         </div>
-      </div>
-      {/* CTA */}
-      <div className="flex items-center gap-[24px]">
-        <Link href="/shop">
-          <h1 className="font-medium text-white">Shop</h1>
-        </Link>
-        <Link href="/account">
-          <BiUser className="h-[28px] w-[28px] text-white" />
-        </Link>
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setOpenCart(!openCart)}
-            className="relative flex cursor-pointer  items-center gap-[4px] "
-          >
-            <div className="relative ">
-              <span className="absolute bottom-[-7px] left-[12px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-yellow-500 text-text-xs font-semibold text-dark-500">
-                {calculateTotalItems()}
-              </span>
-              <BiShoppingBag className="h-[28px] w-[28px] text-white" />
-            </div>
-            <h1 className="text-text-md font-medium text-white">
-              {calculateTotal()} DT
-            </h1>
-          </button>
+        {/* CTA */}
+        <div className="flex items-center gap-[40px]">
+          <Link href="/shop">
+            <AiOutlineShop className="h-[22px] w-[22px] text-dark-500" />
+          </Link>
+          <AiOutlineHeart className="h-[22px] w-[22px] text-dark-500" />
+          <Link href="/account">
+            <AiOutlineUser className="h-[22px] w-[22px] text-dark-500" />
+          </Link>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenCart(!openCart)}
+              className="relative flex cursor-pointer  items-center gap-[4px] "
+            >
+              <div className="relative ">
+                <span className="absolute bottom-[-7px] left-[12px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-yellow-500 text-text-xs font-semibold text-dark-500">
+                  {calculateTotalItems()}
+                </span>
+                <AiOutlineShopping className="h-[28px] w-[28px] text-dark-500" />
+              </div>
+              <h1 className="text-text-md font-semibold text-dark-500">
+                ${calculateTotal()}
+              </h1>
+            </button>
 
-          {/* Cart */}
-          <Cart openCart={openCart} />
+            {/* Cart */}
+            <Cart openCart={openCart} />
+          </div>
         </div>
       </div>
     </div>
