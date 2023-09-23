@@ -5,18 +5,18 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/shared/**/*.{js,ts,jsx,tsx}',
 
-    // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    extend: {
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+      },
+    },
     boxShadow: {
       item: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
       productCardShadow: 'rgba(0, 0, 0, 0.10) 0px 5px 15px',
       productCardShadowTop: 'rgba(0, 0, 0, 0.10)  0px 10px 10px 0px',
-    },
-    fontFamily: {
-      Inter: ['"Inter"', 'cursive'],
-      Roboto: ['"Roboto"', 'cursive'],
     },
     screens: {
       sm: '640px',

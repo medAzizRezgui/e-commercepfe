@@ -1,31 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
-@import "customPagination.css";
-@import "radixRange.css";
-@import "radixTabs.css";
-@import "customTagInput.css";
-@import "spinner.css";
+@import 'customPagination.css';
+@import 'radixRange.css';
+@import 'radixTabs.css';
+@import 'customTagInput.css';
+@import 'spinner.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html {
-    font-family: 'Inter', serif;
-    background: #FFF;
+
+@layer components {
+  html {
+    background: #fff;
     color: #333e48;
     overflow-y: scroll;
+  }
 }
 
 html::-webkit-scrollbar-track {
-    background-color: transparent;
-
+  background-color: transparent;
 }
 
 html::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 5px;
+  background-color: #888;
+  border-radius: 5px;
 }
 
 html::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
