@@ -31,7 +31,7 @@ export const SpecialOffer = ({ item }: { item: Product }) => {
         height={250}
         className="my-14 max-h-[250px] max-w-[250px] object-contain"
       />
-      <h1 className="px-24 text-center text-text-md font-medium text-blue-500">
+      <h1 className="px-24 text-center text-text-sm font-semibold text-blue-500">
         {item?.name}
       </h1>
       {!item.discount && (
