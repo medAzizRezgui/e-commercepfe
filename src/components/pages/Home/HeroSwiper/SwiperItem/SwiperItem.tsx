@@ -2,44 +2,30 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import HeroSmartWatch from '@/images/watch.png';
+import HeroSmartWatch from '@/images/smartwatch.png';
 
 export const SwiperItem = () => (
-  <div className="mx-auto  flex h-[422px] w-[80%] items-center justify-between gap-[40px] overflow-hidden ">
-    {/* Text */}
-    <div className="mr-20">
-      <h1 className="min-w-[400px] font-Roboto text-display-lg font-[500] uppercase leading-[50px]">
-        Ladies watch collection
+  <div className="mx-auto flex h-[430px] w-[100%] items-center justify-center ">
+    <div className=" w-full pl-128 ">
+      <h1 className=" text-[68px] font-[300] uppercase leading-none">
+        <span className="tracking-widest">the new</span> standard
       </h1>
-      <h1 className="font-Roboto text-display-lg  font-[500] uppercase leading-[50px]">
-        STRAND by OBAKU
-      </h1>
-      <p className="font-Roboto text-text-md font-medium uppercase">
-        In Watches
+      <p className="font-semibold">Under favorable smartwatches</p>
+      <p className="text-text-sm">FROM</p>
+      <p className="pt-4 text-display-xl font-[600]">
+        <sup>$</sup>749<sup>99</sup>
       </p>
-      <p className="font-Roboto text-text-sm font-[300] uppercase">From</p>
-      <h1 className="pb-24 font-Roboto text-display-lg font-medium ">520 DT</h1>
-      <Link
-        className="cursor-pointer"
-        href={{
-          pathname: '/product',
-          // eslint-disable-next-line no-underscore-dangle
-          query: {
-            name: "Ladies watch collection STRAND by OBAKU - Magie d'Or",
-            id: '64766ba8a8b2fbd9fa7d8f44',
-          },
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => {}}
-          className="rounded-[8px] bg-yellow-500 px-58 py-8 text-text-lg font-[300] text-white"
-        >
-          Buy
-        </button>
-      </Link>
+
+      <button className="mt-24 rounded-md bg-yellow-500 px-64 py-12">
+        Start Buying
+      </button>
     </div>
-    {/*  Image */}
-    <Image src={HeroSmartWatch} alt="img" className="w-[45%]" />
+    <div className="relative ml-auto flex h-full w-full items-center overflow-hidden  ">
+      <Image
+        src={HeroSmartWatch}
+        alt=""
+        className="h-[100%] w-[100%] transform animate-slideIn object-cover"
+      />
+    </div>
   </div>
 );

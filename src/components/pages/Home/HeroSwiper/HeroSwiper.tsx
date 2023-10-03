@@ -24,12 +24,13 @@ export const HeroSwiper = () => (
       <SwiperSlide>
         <SwiperItem />
       </SwiperSlide>
-      <SwiperSlide>
-        <SwiperItemSecond />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SwiperItemThird />
-      </SwiperSlide>
+
+      {/* <SwiperSlide> */}
+      {/*   <SwiperItemSecond /> */}
+      {/* </SwiperSlide> */}
+      {/* <SwiperSlide> */}
+      {/*   <SwiperItemThird /> */}
+      {/* </SwiperSlide> */}
     </Swiper>
   </div>
 );

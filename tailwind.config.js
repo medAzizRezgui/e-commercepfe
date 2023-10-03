@@ -145,6 +145,30 @@ module.exports = {
       white: '#ffffff',
     },
     keyframes: {
+      slideIn: {
+        '0%': {
+          transform: 'translateX(100%)',
+          opacity: 1,
+        },
+        '50%': {
+          transform: 'translateX(100%)',
+        },
+        '100%': {
+          transform: 'translateX(0)',
+          opacity: 1,
+        },
+      },
+      slideOut: {
+        '0%': {
+          transform: 'translateX(0)',
+        },
+        '50%': {
+          transform: 'translateX(0)',
+        },
+        '100%': {
+          transform: 'translateX(100%)',
+        },
+      },
       slideLeft: {
         '0%': {
           transform: 'translateX(100%)',
@@ -171,6 +195,8 @@ module.exports = {
     animation: {
       overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+      slideIn: 'slideIn 2s cubic-bezier(0.16, 1, 0.3, 1)',
+      slideOut: 'slideOut 2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       slideLeft: 'slideLeft 5s linear forwards',
     },
   },
