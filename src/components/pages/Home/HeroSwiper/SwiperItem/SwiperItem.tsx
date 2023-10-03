@@ -8,17 +8,15 @@ export const SwiperItem = () => (
   <div className="mx-auto  flex h-[422px] w-[80%] items-center justify-between gap-[40px] overflow-hidden ">
     {/* Text */}
     <div className="mr-20">
-      <h1 className="min-w-[400px] font-Roboto text-display-lg font-[500] uppercase leading-[50px]">
+      <h1 className="min-w-[400px]  text-display-lg font-[500] uppercase leading-[50px]">
         Ladies watch collection
       </h1>
-      <h1 className="font-Roboto text-display-lg  font-[500] uppercase leading-[50px]">
+      <h1 className=" text-display-lg  font-[500] uppercase leading-[50px]">
         STRAND by OBAKU
       </h1>
-      <p className="font-Roboto text-text-md font-medium uppercase">
-        In Watches
-      </p>
-      <p className="font-Roboto text-text-sm font-[300] uppercase">From</p>
-      <h1 className="pb-24 font-Roboto text-display-lg font-medium ">520 DT</h1>
+      <p className=" text-text-md font-medium uppercase">In Watches</p>
+      <p className=" text-text-sm font-[300] uppercase">From</p>
+      <h1 className="pb-24  text-display-lg font-medium ">520 DT</h1>
       <Link
         className="cursor-pointer"
         href={{
